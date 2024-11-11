@@ -14,7 +14,7 @@ dist-ssr
 
 
 # Prevent json and imgs proliferating on github
-public
+public/data
 
 
 # Editor directories and files
