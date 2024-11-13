@@ -15,6 +15,7 @@ dist-ssr
 
 # Prevent json and imgs proliferating on github
 public/data
+public/data/
 public/collection
 
 
