@@ -47,6 +47,7 @@ interface Ref<T> {
 
 // UseFetchReturn
 // useFetch is app-agnostic - returns meta info, api methods and json payload from server/file
+// future : review Ref<..> usage below - taken from example in VueUse and from intellsense hints - but little docs about it
 interface UseFetchReturn<T> {
    url?:string | null,
    loading:Ref<boolean>,
@@ -97,7 +98,9 @@ interface RouteError {
 
 interface CollectionsItem {
    title:string
+   slug:string
    content_desc?:string
+   file_name:string
    file_type:string
    folder_path:string
    imgDesc?:string
@@ -113,6 +116,6 @@ interface CollectionsItem {
    updated_at:string
    deleted_at?:string
 }
-interface CollectionsItemList {
+interface CollectionsItemsList {
    list: CollectionsItem[]
 }
