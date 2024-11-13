@@ -8,12 +8,12 @@ export default function useFetch<T>(
 
   const payload = ref<Payload<T> | null>(null) 
   const error = ref<string | null>(null)
-  const loading = ref<boolean>(false) 
+  const loading = ref<boolean>(true) 
   const { signal, abort } = new AbortController()
 
   console.log('use url',url)
 
-  const baseUrl = '/data/collection-items.json'
+  const baseUrl = '/data/collection-items - sm.json'  // '/data/collection-items - sm.json'
 
   const headers = {
     "Content-Type":"application/json",
@@ -27,13 +27,14 @@ export default function useFetch<T>(
 
   const fetchData = async() => {
     loading.value = true
-    console.log('fetchData')
+    setTimeout(async() => {
     try {
       const res = await fetch(baseUrl,{signal,...initialRequestOptions})
       if(!res.ok) {
         error.value = "Could not fetch"
       }
       payload.value = <Payload<T>> await res.json()
+      console.log('fetchData',payload.value)
     }
     catch(e) {
       console.log('error happened')
@@ -48,6 +49,7 @@ export default function useFetch<T>(
          }
     }
     loading.value = false
+  },5000)
   }
 
 

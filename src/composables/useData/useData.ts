@@ -1,5 +1,5 @@
 import useFetch from '../useFetch/useFetch'
-import reqInit from '../requestInit/RequestInit'
+import reqInit from '../../utilities/requestInit/RequestInit'
 import get_end_point from '../useEndPoints/useEndPoints'
 import { query_params_str, is_empty_obj } from '../../utilities/utilities/utilities'
 
@@ -20,13 +20,6 @@ import { query_params_str, is_empty_obj } from '../../utilities/utilities/utilit
 // @url_params  : array of url params (ids/slugs) to include in url path
 // @query_params: object containing key/value pairs to build query string
 // @body        : pass js object or json string
-
-
-// -----------------------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------------------
-// to do : not working like useState() in React - so, any useFetch example w/ Vue we can review?
-// -----------------------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------------------
 
 
 export default function useData<T>(endPoint: string, url_params: string[], query_params: QueryParams, body?: T | null) : UseDataReturn<T> {
