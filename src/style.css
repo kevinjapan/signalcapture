@@ -4,8 +4,8 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: black;
+  background-color: hsl(160, 100%, 60%);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -45,4 +45,63 @@ songs and albms list views
      -ms-grid-columns:      .25fr 2fr 1fr 1fr 1fr;
      grid-template-columns: .25fr 2fr 1fr 1fr 1fr;
   }
+}
+
+a {
+  cursor:pointer;
+}
+a:hover {
+  color:blue;
+}
+
+.grid {
+  display:-ms-grid;
+  display:grid;
+}
+.grid_cards_layout {
+  /* while completely responsive is nice, unneccessary overhead
+  -ms-grid-columns:repeat(auto-fit,minmax(300px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); */
+
+  /* we opt for simple fixed divisions and media queries */
+  grid-template-columns:repeat(4,1fr);
+
+  gap:.75rem;
+  width:100%;
+  align-items:start;
+}
+@media screen and (max-width: 1200px) {
+  .grid_cards_layout {
+     grid-template-columns:repeat(3,1fr);
+  }
+}
+@media screen and (max-width: 910px) {
+  .grid_cards_layout {
+     grid-template-columns:repeat(2,1fr);
+  }
+}
+@media screen and (max-width: 660px) {
+  .grid_cards_layout {
+     grid-template-columns:repeat(1,1fr);
+     gap:2rem;
+  }
+}
+.collection_item_card {
+  display:-ms-grid;
+  display:grid;
+  -ms-grid-rows:      200px max-content max-content max-content max-content max-content 1fr max-content;  
+  grid-template-rows: 200px max-content max-content max-content max-content max-content 1fr max-content; 
+  -ms-flex-item-align:start;
+  align-self:flex-start;
+  border-radius:.5rem;
+  width:100%;
+  margin:0;
+  margin-left:auto;
+  margin-right:auto;
+  padding:0;
+  padding-left:0rem;
+  padding-right:0rem;
+  background:white;
+  color:black;
+  overflow:hidden;
 }
