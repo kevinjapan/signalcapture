@@ -105,3 +105,76 @@ a:hover {
   color:black;
   overflow:hidden;
 }
+
+
+/* 
+   loading
+*/
+.loading_spin {
+  margin:auto;
+  margin-top:30vh;
+  width:30px;
+  height:30px;
+  border:6px solid hsl(0, 0%, 75%);
+  border-radius:50%;
+  border-top-color:white;
+
+  -webkit-animation:spin .7s linear infinite;
+  animation:spin .7s linear infinite;
+}
+@keyframes spin {
+  to {
+     -webkit-transform: rotate(360deg);
+     -ms-transform: rotate(360deg);
+     transform: rotate(360deg);
+  }
+}
+
+
+
+/* 
+   forms 
+*/
+form {
+  max-width:600px;
+  margin:1rem;
+  margin-left:auto;
+  margin-right:auto;
+  padding:1rem;
+  text-align:right;
+}
+.form_grid {
+  -ms-grid-columns: 1fr;
+  grid-template-columns: 1fr;
+  gap:1rem;
+}
+@media (min-width: 680px) {
+  .form_grid {
+     -ms-grid-columns: 1fr 4fr;
+     grid-template-columns: 1fr 4fr;
+     gap:1rem;
+  }
+}
+.form_ctrls {
+  width:100%;
+  background:yellow;
+}
+label {
+  text-align:left;
+  color:grey;
+  padding-top:.15rem;
+}
+input {
+  outline:none;
+  padding:.3rem;
+  border:solid 1px lightgrey;
+  border-radius:.25rem;
+  font-size:1.05rem;
+  color:hsl(0, 0%, 10%);
+  max-width:90%;
+}
+.readonly_input,
+input[readonly] {
+  min-width:fit-content;
+  border:solid 1px transparent;
+}
