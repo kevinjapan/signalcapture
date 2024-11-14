@@ -3,6 +3,9 @@ import { useRouter } from 'vue-router'
 
 
 
+// CollectionItemCard
+// we use id as url param since 'slug' is not ideal, duplicates in dffrnt locations are valid
+
 // Component Interface - props and emits
 const props = defineProps<{
    item: CollectionsItem
@@ -10,6 +13,7 @@ const props = defineProps<{
 
 const root_folder = '/collection'
 
+// future : some examples using this please
 // const emit = defineEmits<{
 //   change: [id: number]
 //   updade: [value: string]
@@ -17,11 +21,10 @@ const root_folder = '/collection'
 
 const router = useRouter()
 
-// we push rather than RouterLink to allow close app_nav
+// we push rather than RouterLink to allow close app_nav etc
 const open_nav_link = (route:string) => {
    router.push(route)
 }
-
 
 </script>
 
@@ -35,7 +38,7 @@ const open_nav_link = (route:string) => {
 
         <section class="text_container">
             <h3>
-                <a @click.stop="open_nav_link(`/browse/collections-item/${props.item.slug}`)" >{{ props.item.title }}</a>
+                <a @click.stop="open_nav_link(`/browse/collections-item/${props.item.id}`)" >{{ props.item.title }}</a>
             </h3>
             <p>{{ props.item.file_type }}</p>
             <p>{{ props.item.file_name }}</p>
