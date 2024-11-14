@@ -1,29 +1,29 @@
 import { ref, watchEffect } from 'vue'
 import { defineStore, acceptHMRUpdate } from 'pinia'
-// import useData from '../utilities/useData/useData'
-
 import useFetch from '../composables/useFetch/useFetch'
 
 
 
-// TechStore
+// CollectionsItemsListStore
+
+// to do : investigate : can we cache, say, last 10 pages - so if id matches we can just review from in here?
+//           will need to implement and then test against filtering collections_items_list - any difference?
+
+
 
 export const useCollectionsItemsListStore = defineStore('collections_items_store', () => {
-
-
-   // to do : 1. call load_collection_items() (if collection_items !== null)in BrowseView.vue and access store.collection_items as required
 
 
    // state
 
    const baseUrl = '/data/collection-items - sm.json'
 
-   const { payload, error, loading, fetchData } = useFetch<CollectionsItemsList>(baseUrl,{}) as UseFetchReturn<CollectionsItemsList>
+   const { payload, error, loading, fetchData } = useFetch<CollectionsItem[]>(baseUrl,{}) as UseFetchReturn<CollectionsItem[]>
 
    // The CollectionsItemsList
    // in our no-server demo, we load all (limited no.) items into this array and paginate on client,
    // future, we will pagination server-side and handle most (& complex) operations server-side.
-   const collections_items_list = ref<CollectionsItemsList | null>(null)
+   const collections_items_list = ref<CollectionsItem[] | null>(null)
 
    // The CollectionsItem (current selected/viewed)
    const collections_item = ref<CollectionsItem | null>(null)
@@ -44,40 +44,33 @@ export const useCollectionsItemsListStore = defineStore('collections_items_store
       else {
          console.log('no payload')
       }
-
-      // console.log('error',error)
-
       return {
          outcome:"success",
          error:'to do : assign error here'
       }
-
-
-
    }
 
    // we need to update state herein on changes in useFetch composable
    watchEffect(() => {
-      collections_items_list.value = payload.value?.data
+      // to do : add error handling for invalid json - test w/ broken/invalid json files
+      collections_items_list.value = payload.value?.data //payload.value?.data
    })
 
 
-   
-   function refresh() {
-      // to do : call fetchData / reload into collections_items_list
+   function load_collection_items_list() {
+
+      if(!collections_items_list.value) load_collection_items()
+      return collections_items_list
    }
-  
-
-
 
    return { 
       load_collection_items,
       payload, 
       error, 
       loading,
-      refresh,
       collections_items_list,
-      collections_item
+      collections_item,
+      load_collection_items_list
    }
  })
 
