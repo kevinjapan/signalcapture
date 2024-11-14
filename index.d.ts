@@ -98,7 +98,7 @@ interface RouteError {
 
 interface CollectionsItem {
    title:string
-   slug:string
+   slug?:string
    content_desc?:string
    file_name:string
    file_type:string
@@ -115,7 +115,4 @@ interface CollectionsItem {
    created_at:string
    updated_at:string
    deleted_at?:string
-}
-interface CollectionsItemsList {
-   list: CollectionsItem[]
 }
