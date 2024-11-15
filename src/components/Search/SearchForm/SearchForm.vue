@@ -1,0 +1,33 @@
+<script setup lang="ts">
+
+// we use Component v-model to implement two-way binding
+const search_term = defineModel({ type: String, required: true })
+
+// using defineEmits macro makes it function much more easily in the template w/ $emit
+// otherwise we have a lot of probs getting this working w/ converting event name's case btwn emit and @.
+const emit = defineEmits(
+   ['submit-search-term']
+)
+
+</script>
+
+<template>
+   <form class="grid form_grid flex_col" @submit.prevent>
+      <label for="title">Search</label>
+      <input id="title" name="title" v-model="search_term" placeholder="enter your search term here"/>      
+      <div class="btn_row">
+         <button v-if="search_term?.length > 0" @click="$emit('submit-search-term')">Search</button>
+         <button v-else disabled>Search</button>
+      </div>      
+   </form>
+</template>
+
+
+<style scoped>
+.btn_row {
+   grid-column: 1 / 3;
+   text-align:center;
+}
+</style>
+
+
