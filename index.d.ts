@@ -107,7 +107,7 @@ interface CollectionsItem {
    item_ref?:string
    item_Date?:string
    item_Type?:string
-   author_Creator?:string
+   author_creator?:string
    people?:string
    source?:string
    tags?:string

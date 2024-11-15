@@ -40,7 +40,7 @@ watchEffect(() => {
       <div>item ref</div><div>{{ item?.item_ref }}</div>
       <div>item date</div><div>{{ item?.item_Date }}</div>
       <div>item type</div><div>{{ item?.item_Type }}</div>
-      <div>author / creator</div><div>{{ item?.author_Creator }}</div>
+      <div>author / creator</div><div>{{ item?.author_creator }}</div>
       <div>people</div><div>{{ item?.people }}</div>
       <div>source</div><div>{{ item?.source }}</div>
       <div>tags</div><div>{{ item?.tags }}</div>
