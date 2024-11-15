@@ -112,7 +112,7 @@ a:hover {
 */
 .loading_spin {
   margin:auto;
-  margin-top:30vh;
+  margin-top:25vh;
   width:30px;
   height:30px;
   border:6px solid hsl(0, 0%, 75%);
@@ -130,6 +130,17 @@ a:hover {
   }
 }
 
+.no_results {
+  margin:auto;
+  margin-top:25vh;
+  width:fit-content;
+  color:white;
+  background:hsl(180, 100%, 25%);
+  padding:.5rem;
+  border-radius:.5rem;
+  border-right:solid 2px hsl(180, 100%, 35%);;
+  border-bottom:solid 2px hsl(180, 100%, 35%);;
+}
 
 
 /* 
@@ -177,4 +188,9 @@ input {
 input[readonly] {
   min-width:fit-content;
   border:solid 1px transparent;
+}
+input::placeholder {
+  font-weight:100;
+  font-style:italic;
+  color:lightgrey;
 }
