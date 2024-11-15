@@ -1,6 +1,6 @@
 import { ref, watchEffect } from 'vue'
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import { useCollectionsItemsListStore } from '../stores/collectionsItemsListStore'
+import { useCollectionsItemsListStore } from './CollectionsItemsListStore'
 
 
 
@@ -10,34 +10,27 @@ import { useCollectionsItemsListStore } from '../stores/collectionsItemsListStor
 export const useCollectionsItemStore = defineStore('collections_item_store', () => {
 
    // we access the CollectionsItemsList
-   const collectionsItemsListStore = useCollectionsItemsListStore()
-
-
-   // state
+   const CollectionsItemsListStore = useCollectionsItemsListStore()
 
    const curr_target_id = ref<number | null>(null)
    const single_collection_item = ref<CollectionsItem | null>(null)
 
    watchEffect(() => {
-      single_collection_item.value = <CollectionsItem>collectionsItemsListStore.collections_items_list?.find((elem: CollectionsItem) => {
+      single_collection_item.value = <CollectionsItem>CollectionsItemsListStore.collections_items_list?.find((elem: CollectionsItem) => {
          return elem.id === curr_target_id.value
       })
    })
 
 
-   // methods
-
    function load_single_collection_item(target_id: number) {
 
       curr_target_id.value = target_id
-      collectionsItemsListStore.load_collection_items_list()
-
-      if(collectionsItemsListStore.collections_items_list) {
-         single_collection_item.value = <CollectionsItem>collectionsItemsListStore.collections_items_list?.find((elem: CollectionsItem) => {
+      CollectionsItemsListStore.load_collection_items_list()
+      if(CollectionsItemsListStore.collections_items_list) {
+         single_collection_item.value = <CollectionsItem>CollectionsItemsListStore.collections_items_list?.find((elem: CollectionsItem) => {
             return elem.id === target_id
          })
       }
-      
    }
 
    return {

@@ -9,7 +9,7 @@ import { defineStore, acceptHMRUpdate } from 'pinia'
 export const useAppStore = defineStore('app_store', () => {
 
    // site title
-   // const site_title = 'TiMTIG in app' // to do : set window title here (not static text in index.html)
+   // const site_title = 'Signal Capture Online Demo'
 
    // toggle web_api/static
    const is_static = false
