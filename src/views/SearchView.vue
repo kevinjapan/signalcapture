@@ -1,19 +1,43 @@
-<script setup lang="ts">
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+import SearchForm from '../components/Search/SearchForm/SearchForm.vue'
+import SearchResults from '../components/Search/SearchResults/SearchResults.vue'
 
+
+// SearchView
+
+// building search_term w/ SearchForm
+const search_term = ref('') // (search_store.last_search_term)
+
+// assigning search_term to SearchResults and execute search
+const real_search_term = ref('')
+
+const submit_search_term = () => {
+   real_search_term.value = search_term.value 
+}
+
+// to do : review : crude, we re-instate any existing last_search_term,
+// future : distinguish from 'back' and navigation to Search page
+onMounted(() => {
+   // real_search_term.value = search_store.last_search_term
+   window.scroll(0,0)
+})
+
+onUnmounted(() => {
+   // search_store.set_last_search_term(real_search_term.value)
+})
 
 </script>
 
-
 <template>
-
-   <section>
-      <h1>SearchView in here</h1>
-   </section>
-
+   <h3>Search</h3>
+   <SearchForm 
+      v-model="search_term" 
+      @submit-search-term="submit_search_term" 
+   />   
+   <SearchResults 
+      :search_term="real_search_term"
+   />
 </template>
 
 
-<style scoped>
-
-
-</style>
