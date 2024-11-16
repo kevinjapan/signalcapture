@@ -116,3 +116,10 @@ interface CollectionsItem {
    updated_at:string
    deleted_at?:string
 }
+
+
+interface PageLink {
+   url:string
+   label:string
+   active:boolean
+}
