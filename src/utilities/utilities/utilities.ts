@@ -31,3 +31,12 @@ export const query_params_str = (query_params: QueryParams) => {
    }
    return query_string
 }
+
+// sequenced number generator
+export const number_range = (start: number, stop: number, step: number) => 
+   Array.from(
+      {length: Math.ceil((stop-start/step))},
+      (_,index) => start + index * step
+   )
+
+
