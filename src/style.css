@@ -194,3 +194,31 @@ input::placeholder {
   font-style:italic;
   color:lightgrey;
 }
+
+/* 
+  grid and flex
+*/
+.flex {
+  display:flex;
+}
+.gap_1 {gap:1rem;}
+
+/* 
+  Utility classes
+*/
+.mt_2 {margin-top:2rem;}
+.p_1  {padding:1rem;}
+
+.cursor_pointer {
+  cursor:pointer;
+}
+.greyed_out {
+  color:lightgrey;
+  cursor:unset;
+}
+
+
+.italic {font-style:italic;}
+
+.border {border:solid 1px hsl(0, 0%, 90%);}
+.corner_1 {border-radius:.15rem;}
