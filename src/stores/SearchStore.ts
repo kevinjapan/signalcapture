@@ -1,6 +1,6 @@
 import { ref, watchEffect } from 'vue'
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import { useCollectionsItemsListStore } from './CollectionsItemsListStore'
+import { useCollectionsItemsListStore } from '../stores/CollectionsItemsListStore'
 
 
 // SearchStore
@@ -26,6 +26,10 @@ export const useSearchStore = defineStore('search_store', () => {
    // the results dataset - SearchStore will return 'pages' from this dataset
    const search_results = ref<CollectionsItem[] | null>(null)
 
+   
+   function preload_collection_items() {
+      CollectionsItemsListStore.load_collection_items()
+   }
 
    function search(search_term: string) {
 
@@ -42,20 +46,17 @@ export const useSearchStore = defineStore('search_store', () => {
          return false
       }
       // perception - show the loading
-      setTimeout(() => loading.value = false,500)
+      setTimeout(() => loading.value = false,1000)
       return true      
    }
 
    function filter_search_results(search_term: string) {
       search_results.value = <CollectionsItem[]>CollectionsItemsListStore.collections_items_list?.filter((elem: CollectionsItem) => {
          const target = elem.title + elem.content_desc + elem.file_name + elem.author_creator + elem.people
-         if(target.includes(search_term)) return elem
+         if(target.toUpperCase().includes(search_term.toUpperCase())) return elem
       })
    }
 
-   function load_collection_items() {
-      CollectionsItemsListStore.load_collection_items()
-   }
 
    // watch store.collections_items_list
    watchEffect(() => {
@@ -68,7 +69,7 @@ export const useSearchStore = defineStore('search_store', () => {
    return {
       search,
       search_results,
-      load_collection_items,
+      preload_collection_items,
       loading,
       no_matches
    }

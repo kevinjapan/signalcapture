@@ -2,7 +2,7 @@
 import { ref, watch, onBeforeMount } from 'vue'
 import { useSearchStore }  from '../../../stores/SearchStore'
 import CollectionsItemCard from '../../../components/CollectionsItems/CollectionsItemCard/CollectionsItemCard.vue'
-import { storeToRefs } from 'pinia';
+import { storeToRefs } from 'pinia'
 
 
 
@@ -21,7 +21,7 @@ const local_search_term = ref('')
 
 onBeforeMount(() => {
    // pre-load the store if required (eg on page refresh)
-   search_store.load_collection_items()
+   search_store.preload_collection_items()
 })
 
 watch(() => props.search_term, async(newValue) => {
@@ -58,7 +58,7 @@ const get_search_results = () => {
       <CollectionsItemCard v-for="item in search_results" :key="item.id"  :item="item as unknown as CollectionsItem" />
    </section>
    <div v-if="no_matches && !loading" class="no_results mt_1">no matches were found</div>
-   <div v-if="loading" class="loading_spin mt_1"></div>
+   <div v-if="loading && !search_results" class="loading_spin mt_1"></div>
 
 </template>
 
