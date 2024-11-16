@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
-import { useCollectionsItemsListStore } from '../stores/collectionsItemsListStore'
+import { useCollectionsItemsListStore } from '../stores/CollectionsItemsListStore'
 import CollectionsItemCard from '../components/CollectionsItems/CollectionsItemCard/CollectionsItemCard.vue'
+import PaginationNav from '../components/PaginationNav/PaginationNav.vue'
 
 
 // BrowseView
@@ -15,6 +16,8 @@ import CollectionsItemCard from '../components/CollectionsItems/CollectionsItemC
 
 const list = ref<CollectionsItem[] | null>(null)
 const is_loading = ref<boolean>(true)
+
+
 const CollectionsItemsListStore = useCollectionsItemsListStore()
 CollectionsItemsListStore.load_collection_items()
 
@@ -25,20 +28,42 @@ watchEffect(() => {
 })
 
 watchEffect(() => {
-   list.value = <CollectionsItem[]>CollectionsItemsListStore.collections_items_list
+   list.value = <CollectionsItem[]>CollectionsItemsListStore.paginated_collections_items_list
 })
 
+const set_page = (page: number) => {
+   CollectionsItemsListStore.set_page(page)
+}
 
+
+const step_to_page = (step: number) => {
+   // to do : don't step from edges!
+   const new_page = CollectionsItemsListStore.page + step
+   CollectionsItemsListStore.set_page(new_page)
+}
+const navigate_to_page = (target_page: number) => {
+   set_page(target_page)
+}
 </script>
 
 <template>
       <!-- to do : error comes from useFetch - how to pass to client here? <div v-if="error">
       <p>Oops! Error encountered: {{ error }}</p>
    </div> -->
+
+   <PaginationNav    
+      title="PageNav for SongsList" 
+      :page=CollectionsItemsListStore.page
+      :total_num_items=CollectionsItemsListStore.total_num_items
+      :items_per_page=CollectionsItemsListStore.items_per_page
+      @step-to-page="step_to_page" 
+      @navigate-to-page="navigate_to_page" 
+   />
+
    <div v-if="CollectionsItemsListStore.loading" class="loading_spin"></div>
    <section class="grid grid_cards_layout" style="margin-top:5rem;">
       <!-- to do : the current big hit on 4000+ records is from loading imgs for all herein - this will be removed once we paginate and handle c20 at a time here... -->
-         <CollectionsItemCard v-for="(item,index) in list" :key="index"  :item="item as unknown as CollectionsItem" />
+         <CollectionsItemCard v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
    </section>
 </template>
 

@@ -5,6 +5,7 @@ import useFetch from '../composables/useFetch/useFetch'
 
 
 // CollectionsItemsListStore
+// generally, we always extract paginated list
 
 export const useCollectionsItemsListStore = defineStore('collections_items_store', () => {
 
@@ -18,8 +19,16 @@ export const useCollectionsItemsListStore = defineStore('collections_items_store
    // in our no-server demo, we load all (limited no.) items into this array and paginate on client.
    const collections_items_list = ref<CollectionsItem[] | null>(null)
 
+   const paginated_collections_items_list = ref<CollectionsItem[] | null>(null)
+
    // The CollectionsItem (current selected/viewed)
    const collections_item = ref<CollectionsItem | null>(null)
+
+   const page = ref<number>(1)
+
+   const total_num_items = ref<number>(0)
+
+   const items_per_page = ref<number>(20)
 
 
    // load_collection_items
@@ -30,6 +39,8 @@ export const useCollectionsItemsListStore = defineStore('collections_items_store
       
       if(payload) {
          collections_items_list.value = payload.value?.data
+         if(collections_items_list.value) total_num_items.value = collections_items_list.value?.length
+         build_paginated_list()
       }
       else {
          console.log('no payload')
@@ -40,10 +51,21 @@ export const useCollectionsItemsListStore = defineStore('collections_items_store
       }
    }
 
+   const build_paginated_list = () => {
+      if(collections_items_list.value) {
+         // to do : edge cases
+         const start_index = ((page.value - 1) * items_per_page.value)
+         console.log('page',page.value,'start_index',start_index)
+         paginated_collections_items_list.value = collections_items_list.value.slice(start_index,start_index + items_per_page.value)
+      }
+   }
+
    // we need to update state herein on changes in useFetch composable
    watchEffect(() => {
       // to do : add error handling for invalid json - test w/ broken/invalid json files
       collections_items_list.value = payload.value?.data
+      if(collections_items_list.value) total_num_items.value = collections_items_list.value?.length
+      build_paginated_list()
    })
 
 
@@ -52,14 +74,24 @@ export const useCollectionsItemsListStore = defineStore('collections_items_store
       return collections_items_list
    }
 
+   function set_page(new_page: number) {
+      page.value = new_page
+      console.log('will filter by page',page.value)
+   }
+
    return { 
       load_collection_items,
       payload, 
       error, 
       loading,
       collections_items_list,
+      paginated_collections_items_list,
       collections_item,
-      load_collection_items_list
+      load_collection_items_list,
+      set_page,
+      page,
+      total_num_items,
+      items_per_page
    }
  })
 
