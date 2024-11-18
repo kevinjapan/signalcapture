@@ -2,27 +2,26 @@
 import { ref, watchEffect } from 'vue'
 import { useCollectionsItemsListStore } from '../stores/CollectionsItemsListStore'
 import CollectionsItemCard from '../components/CollectionsItems/CollectionsItemCard/CollectionsItemCard.vue'
+import CollectionsItemListItem from '../components/CollectionsItems/CollectionsItemListItem/CollectionsItemListItem.vue'
 import PaginationNav from '../components/PaginationNav/PaginationNav.vue'
+
 
 
 // BrowseView
 
-// ------------------------------------------------------------------------------------------------------------
-// to do : pagination 
-// - provide page here
-// - appStore provides page size (num records per page)
-// ------------------------------------------------------------------------------------------------------------
-
-
-const list = ref<CollectionsItem[] | null>(null)
-const is_loading = ref<boolean>(true)
-
-
+// CollectionsItemsStore
 const CollectionsItemsListStore = useCollectionsItemsListStore()
 CollectionsItemsListStore.load_collection_items()
 
+// local ref to store's Collections Items list
+const list = ref<CollectionsItem[] | null>(null)
 
-// we can't directly use payload - some TS confusion -  but we can use an intermediate 'list'
+// display loading spinner
+const is_loading = ref<boolean>(true)
+
+// toggle card / list view
+const card_view = ref<boolean>(true)
+
 watchEffect(() => {
    is_loading.value = CollectionsItemsListStore.loading.value
 })
@@ -35,15 +34,20 @@ const set_page = (page: number) => {
    CollectionsItemsListStore.set_page(page)
 }
 
-
 const step_to_page = (step: number) => {
    // to do : don't step from edges!
    const new_page = CollectionsItemsListStore.page + step
    CollectionsItemsListStore.set_page(new_page)
 }
+
 const navigate_to_page = (target_page: number) => {
    set_page(target_page)
 }
+
+const toggle_view = () => {
+   card_view.value = !card_view.value
+}
+
 </script>
 
 <template>
@@ -51,8 +55,14 @@ const navigate_to_page = (target_page: number) => {
       <p>Oops! Error encountered: {{ error }}</p>
    </div> -->
 
-   <PaginationNav    
-      title="PageNav for SongsList" 
+   <!-- to do : maybe have a ListCtrl incorporating Card/List and PaginationNav ? -->
+   <div class="mt_2">
+      <!-- to do : sep. component to manage toggle icon -->
+      <button @click="toggle_view">card/list</button>
+   </div>
+
+   <PaginationNav
+      title="top_page_nav"
       :page=CollectionsItemsListStore.page
       :total_num_items=CollectionsItemsListStore.total_num_items
       :items_per_page=CollectionsItemsListStore.items_per_page
@@ -60,16 +70,34 @@ const navigate_to_page = (target_page: number) => {
       @navigate-to-page="navigate_to_page" 
    />
 
+   <img scr="../assets/imgs/list.svg"/>
+
    <div v-if="CollectionsItemsListStore.loading" class="loading_spin"></div>
-   <section class="grid grid_cards_layout" style="margin-top:5rem;">
-      <!-- to do : the current big hit on 4000+ records is from loading imgs for all herein - this will be removed once we paginate and handle c20 at a time here... -->
-         <CollectionsItemCard v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
+
+   <!-- to do : provide alternate list_view <CollectionsItemListItem> component : rollout to Search etc -->
+   <section v-if="card_view" class="grid grid_cards_layout">
+      <CollectionsItemCard v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
    </section>
+   <section v-else="!card_view" class="flex flex_list_layout">
+      <CollectionsItemListItem v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
+   </section>
+
+   <!-- to do : make bottom pagnav conditional on list present -->
+   <PaginationNav
+      title="bottom_page_nav"
+      :page=CollectionsItemsListStore.page
+      :total_num_items=CollectionsItemsListStore.total_num_items
+      :items_per_page=CollectionsItemsListStore.items_per_page
+      @step-to-page="step_to_page" 
+      @navigate-to-page="navigate_to_page" 
+   />
+   
 </template>
 
 
 <style scoped>
 .songs_list {
+   /* to do : songs_list? */
    display:-webkit-box;
    display:-ms-flexbox;
    display:flex;

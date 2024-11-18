@@ -2,6 +2,7 @@
 import { ref, watch, watchEffect, onBeforeMount } from 'vue'
 import { useSearchStore }  from '../../../stores/SearchStore'
 import CollectionsItemCard from '../../../components/CollectionsItems/CollectionsItemCard/CollectionsItemCard.vue'
+import CollectionsItemListItem from '../../../components/CollectionsItems/CollectionsItemListItem/CollectionsItemListItem.vue'
 import { storeToRefs } from 'pinia'
 import PaginationNav from '../../../components/PaginationNav/PaginationNav.vue'
 
@@ -21,6 +22,9 @@ const local_search_term = ref('')
 
 // local ref to store's Collections Items list
 const list = ref<CollectionsItem[] | null>(null)
+
+// toggle card / list view
+const card_view = ref<boolean>(true)
 
 onBeforeMount(() => {
    // pre-load the store if required (eg on page refresh)
@@ -73,11 +77,20 @@ const navigate_to_page = (target_page: number) => {
    set_page(target_page)
 }
 
+const toggle_view = () => {
+   card_view.value = !card_view.value
+}
 
 </script>
 
 
 <template>
+
+   <!-- to do : maybe have a ListCtrl incorporating Card/List and PaginationNav ? -->
+   <div class="mt_2">
+      <!-- to do : sep. component to manage toggle icon -->
+      <button @click="toggle_view">card/list</button>
+   </div>
 
    <PaginationNav
       title="top_page_nav"
@@ -88,9 +101,13 @@ const navigate_to_page = (target_page: number) => {
       @navigate-to-page="navigate_to_page" 
    />
 
-   <section v-if="search_results" class="grid grid_cards_layout" style="margin-top:2rem;">
+   <section v-if="card_view && search_results" class="grid grid_cards_layout" style="margin-top:1rem;">
       <CollectionsItemCard v-for="item in list" :key="item?.id"  :item="item as unknown as CollectionsItem" />
    </section>
+   <section v-else="!card_view && search_results" class="flex flex_list_layout" style="margin-top:1rem;">
+      <CollectionsItemListItem v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
+   </section>
+
    <div v-if="no_matches && !loading" class="no_results mt_1">no matches were found</div>
    <div v-if="loading && !search_results" class="loading_spin mt_1"></div>
 
