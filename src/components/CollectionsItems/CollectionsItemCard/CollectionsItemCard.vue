@@ -30,7 +30,7 @@ const open_nav_link = (route:string) => {
 
 <template>
 
-    <section class="collection_item_card">
+    <section v-if="props.item" class="collection_item_card">
 
         <section class="img_container">
             <img :src="root_folder + props.item.folder_path + props.item.file_name"/>
