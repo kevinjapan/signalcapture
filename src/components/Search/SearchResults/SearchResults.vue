@@ -4,6 +4,7 @@ import { useSearchStore }  from '../../../stores/SearchStore'
 import CollectionsItemCard from '../../../components/CollectionsItems/CollectionsItemCard/CollectionsItemCard.vue'
 import CollectionsItemListItem from '../../../components/CollectionsItems/CollectionsItemListItem/CollectionsItemListItem.vue'
 import { storeToRefs } from 'pinia'
+import ListCtrls from '../../../components/ListCtrls/ListCtrls.vue'
 import PaginationNav from '../../../components/PaginationNav/PaginationNav.vue'
 
 
@@ -92,14 +93,18 @@ const toggle_view = () => {
       <button @click="toggle_view">card/list</button>
    </div>
 
-   <PaginationNav
-      title="top_page_nav"
-      :page=SearchStore.page
-      :total_num_items=SearchStore.total_num_items
-      :items_per_page=SearchStore.items_per_page
-      @step-to-page="step_to_page" 
-      @navigate-to-page="navigate_to_page" 
-   />
+   <ListCtrls
+      @toggle-view="toggle_view"
+   >
+      <PaginationNav
+         title="top_page_nav"
+         :page=SearchStore.page
+         :total_num_items=SearchStore.total_num_items
+         :items_per_page=SearchStore.items_per_page
+         @step-to-page="step_to_page" 
+         @navigate-to-page="navigate_to_page" 
+      />
+   </ListCtrls>
 
    <section v-if="card_view && search_results" class="grid grid_cards_layout" style="margin-top:1rem;">
       <CollectionsItemCard v-for="item in list" :key="item?.id"  :item="item as unknown as CollectionsItem" />
@@ -111,15 +116,20 @@ const toggle_view = () => {
    <div v-if="no_matches && !loading" class="no_results mt_1">no matches were found</div>
    <div v-if="loading && !search_results" class="loading_spin mt_1"></div>
 
-   <PaginationNav
-      v-if="!loading && search_results"
-      title="bottom_page_nav"
-      :page=SearchStore.page
-      :total_num_items=SearchStore.total_num_items
-      :items_per_page=SearchStore.items_per_page
-      @step-to-page="step_to_page" 
-      @navigate-to-page="navigate_to_page" 
-   />
+   <ListCtrls
+      @toggle-view="toggle_view"
+   >
+      <PaginationNav
+         v-if="!loading && search_results"
+         title="bottom_page_nav"
+         :page=SearchStore.page
+         :total_num_items=SearchStore.total_num_items
+         :items_per_page=SearchStore.items_per_page
+         @step-to-page="step_to_page" 
+         @navigate-to-page="navigate_to_page" 
+      />
+   </ListCtrls>
+
 
 </template>
 

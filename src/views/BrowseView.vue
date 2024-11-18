@@ -3,6 +3,7 @@ import { ref, watchEffect } from 'vue'
 import { useCollectionsItemsListStore } from '../stores/CollectionsItemsListStore'
 import CollectionsItemCard from '../components/CollectionsItems/CollectionsItemCard/CollectionsItemCard.vue'
 import CollectionsItemListItem from '../components/CollectionsItems/CollectionsItemListItem/CollectionsItemListItem.vue'
+import ListCtrls from '../components/ListCtrls/ListCtrls.vue'
 import PaginationNav from '../components/PaginationNav/PaginationNav.vue'
 
 
@@ -51,24 +52,27 @@ const toggle_view = () => {
 </script>
 
 <template>
-      <!-- to do : error comes from useFetch - how to pass to client here? <div v-if="error">
+
+   <!-- to do : error comes from useFetch - how to pass to client here? 
+      <div v-if="error">
       <p>Oops! Error encountered: {{ error }}</p>
-   </div> -->
-
-   <!-- to do : maybe have a ListCtrl incorporating Card/List and PaginationNav ? -->
-   <div class="mt_2">
-      <!-- to do : sep. component to manage toggle icon -->
-      <button @click="toggle_view">card/list</button>
    </div>
+   -->
 
-   <PaginationNav
-      title="top_page_nav"
-      :page=CollectionsItemsListStore.page
-      :total_num_items=CollectionsItemsListStore.total_num_items
-      :items_per_page=CollectionsItemsListStore.items_per_page
-      @step-to-page="step_to_page" 
-      @navigate-to-page="navigate_to_page" 
-   />
+   <ListCtrls
+      @toggle-view="toggle_view"
+   >
+      <PaginationNav
+         title="top_page_nav"
+         :page=CollectionsItemsListStore.page
+         :total_num_items=CollectionsItemsListStore.total_num_items
+         :items_per_page=CollectionsItemsListStore.items_per_page
+         @step-to-page="step_to_page" 
+         @navigate-to-page="navigate_to_page" 
+      />
+   </ListCtrls>
+
+
 
    <img scr="../assets/imgs/list.svg"/>
 
@@ -82,15 +86,18 @@ const toggle_view = () => {
       <CollectionsItemListItem v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
    </section>
 
-   <!-- to do : make bottom pagnav conditional on list present -->
-   <PaginationNav
-      title="bottom_page_nav"
-      :page=CollectionsItemsListStore.page
-      :total_num_items=CollectionsItemsListStore.total_num_items
-      :items_per_page=CollectionsItemsListStore.items_per_page
-      @step-to-page="step_to_page" 
-      @navigate-to-page="navigate_to_page" 
-   />
+   <ListCtrls
+      @toggle-view="toggle_view"
+   >
+      <PaginationNav
+         title="bottom_page_nav"
+         :page=CollectionsItemsListStore.page
+         :total_num_items=CollectionsItemsListStore.total_num_items
+         :items_per_page=CollectionsItemsListStore.items_per_page
+         @step-to-page="step_to_page" 
+         @navigate-to-page="navigate_to_page" 
+      />
+   </ListCtrls>
    
 </template>
 
