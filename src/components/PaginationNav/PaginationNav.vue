@@ -68,12 +68,13 @@ section.nav_bar {
    display:-webkit-box;
    display:-ms-flexbox;
    display:flex;
+   -webkit-box-align:center;
+   -ms-flex-align:center;
    align-items:center;
+   -ms-flex-wrap:wrap;
    flex-wrap:wrap;
    gap:1rem;
    width:fit-content;
-   /* margin-left:auto;
-   margin-right:auto; */
    padding:.35rem 1rem;
    list-style:none;
    background:white;

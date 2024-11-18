@@ -42,7 +42,6 @@ const open_nav_link = (route:string) => {
             <p class="sm_text">{{ props.item.file_name }}</p>
             <p>{{ props.item.item_Date }}</p>
 
-
     </section>
 
 </template>
@@ -67,27 +66,33 @@ h3 {
     margin:0;
 }
 .collection_item_list_item {
-    /* to do : webkit.. */
+    display:-ms-grid;
     display:grid;
+    -ms-grid-columns:1fr;
     grid-template-columns:1fr;
+    -webkit-box-align:center;
+    -ms-flex-align:center;
     align-items:center;
     gap:0;
     background:white;
 }
-@media screen and (min-width: 660px) {
-    
+@media screen and (min-width: 660px) {    
     img {
+        -ms-grid-row: 1; 
+        -ms-grid-row-span: 5;
         grid-row: 1 / 6;
     }
-  .collection_item_list_item {
-     grid-template-columns:100px 3fr ;
-     gap:0;
-  }
+    .collection_item_list_item {
+        -ms-grid-columns:100px 3fr;
+        grid-template-columns:100px 3fr;
+        gap:0;
+    }
 }
 @media screen and (min-width: 910px) {
-  .collection_item_list_item {
-     grid-template-columns:100px 3fr 2fr ;
-     gap:.2rem;
-  }
+    .collection_item_list_item {
+        -ms-grid-columns:100px 3fr 2fr;
+        grid-template-columns:100px 3fr 2fr;
+        gap:.2rem;
+    }
 }
 </style>
