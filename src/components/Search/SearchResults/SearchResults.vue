@@ -86,13 +86,6 @@ const toggle_view = () => {
 
 
 <template>
-
-   <!-- to do : maybe have a ListCtrl incorporating Card/List and PaginationNav ? -->
-   <div class="mt_2">
-      <!-- to do : sep. component to manage toggle icon -->
-      <button @click="toggle_view">card/list</button>
-   </div>
-
    <ListCtrls
       @toggle-view="toggle_view"
    >
@@ -117,10 +110,10 @@ const toggle_view = () => {
    <div v-if="loading && !search_results" class="loading_spin mt_1"></div>
 
    <ListCtrls
+      v-if="!loading && search_results"
       @toggle-view="toggle_view"
    >
-      <PaginationNav
-         v-if="!loading && search_results"
+      <PaginationNav         
          title="bottom_page_nav"
          :page=SearchStore.page
          :total_num_items=SearchStore.total_num_items

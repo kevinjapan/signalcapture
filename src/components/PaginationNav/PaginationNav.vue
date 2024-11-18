@@ -50,7 +50,7 @@ const items_of = computed(() => {
 </script>
 
 <template>
-   <section class="nav_bar mt_2"> 
+   <section class="nav_bar"> 
       <div>Page 
          <input :value="page" class="curr_page_input" :name="title"/></div>
          <div>of {{ num_pages }}</div>
@@ -75,6 +75,9 @@ section.nav_bar {
    flex-wrap:wrap;
    gap:1rem;
    width:fit-content;
+   height:fit-content;
+   margin:0;
+   padding:0;
    padding:.35rem 1rem;
    list-style:none;
    background:white;

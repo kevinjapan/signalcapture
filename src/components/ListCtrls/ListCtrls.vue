@@ -14,7 +14,7 @@ const emit = defineEmits([
       <!-- PaginationNav slot -->
       <slot></slot>
 
-      <div class="mt_2">
+      <div>
          <button @click="$emit('toggle-view')">card/list</button>
       </div>
 
@@ -33,7 +33,11 @@ const emit = defineEmits([
    justify-content:space-between;
    -webkit-box-align:center;
    -ms-flex-align:center;
-   align-items:center
+   align-items:center;
+   margin:0;
+   margin-top:2rem;
+   padding:0;
+   background:white;
 }
 </style>
 
