@@ -12,11 +12,11 @@ const pinia = createPinia()
 app.use(pinia)
 
 // a .config object allows us to configure a few app-level options
-app.config.errorHandler = (err) => {
+app.config.errorHandler = (err,instance) => {
    /* handle error */
-
-   const err_obj = err as Error
+   const err_obj = err as Error   
    console.log('App Error:',err_obj.message)
+   console.error("Vue component:", instance)
 }
 
 
