@@ -56,6 +56,7 @@ export const tokenize_search_term = (full_search_term: string) => {
 
 // remove common words from array of search tokens, returns array of permitted
 export const remove_stopwords = (search_term_tokens: string[]) => {
+   
    const search_excluded_words = [
       'also','and','are','been','but','for','from',
       'has','have','not','our',
@@ -63,7 +64,7 @@ export const remove_stopwords = (search_term_tokens: string[]) => {
       'was','were','with',
    ]
    let tokens = null
-   if(search_term_tokens.length > 1) {
+   if(search_term_tokens.length > 0) {
       tokens = search_term_tokens.filter(token => {
          return !search_excluded_words.includes(token)
       })
