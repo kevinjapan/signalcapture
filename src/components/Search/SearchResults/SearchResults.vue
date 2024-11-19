@@ -71,6 +71,7 @@ const step_to_page = (step: number) => {
    const new_page = SearchStore.page + step
    if(new_page < 1 || new_page > Math.ceil(SearchStore.total_num_items / SearchStore.items_per_page)) return
    SearchStore.set_page(new_page)
+   window.scroll(0,0)
 }
 
 const navigate_to_page = (target_page: number) => {
@@ -111,7 +112,7 @@ const toggle_view = () => {
    <div v-if="loading && !search_results" class="loading_spin mt_1"></div>
 
    <ListCtrls
-      v-if="!loading && search_results"
+      v-if="!loading && search_results && !no_matches"
       :card_view="card_view"
       @toggle-view="toggle_view"
    >
