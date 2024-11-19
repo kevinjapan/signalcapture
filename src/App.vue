@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { useAppStore } from '../src/stores/appStore'     // to do : enable '@'
+import { useAppStore } from '../src/stores/AppStore'
 import AppNav from './components/App/AppNav/AppNav.vue'
 import AppStatus from './components/App/AppStatus/AppStatus.vue'
 

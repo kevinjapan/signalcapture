@@ -3,7 +3,7 @@ declare module '*.vue' {
    export default Vue
 }
 
-declare module 'appStore'
+declare module 'AppStore'
 declare module 'useEndPoints'
 
 

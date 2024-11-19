@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useAppStore } from '../../../stores/appStore'
+import { useAppStore } from '../../../stores/AppStore'
 
 
 

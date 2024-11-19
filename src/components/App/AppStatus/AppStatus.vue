@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useAppStore } from '../../../stores/appStore'
+import { useAppStore } from '../../../stores/AppStore'
 
 
 // AppStatus
