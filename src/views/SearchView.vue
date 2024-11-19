@@ -16,8 +16,6 @@ const submit_search_term = () => {
    real_search_term.value = search_term.value 
 }
 
-// to do : review : crude, we re-instate any existing last_search_term,
-// future : distinguish from 'back' and navigation to Search page
 onMounted(() => {
    // real_search_term.value = search_store.last_search_term
    window.scroll(0,0)

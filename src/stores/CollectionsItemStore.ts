@@ -1,6 +1,6 @@
 import { ref, watchEffect } from 'vue'
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import { useCollectionsItemsListStore } from './CollectionsItemsListStore'
+import { useCollectionsItemsListStore } from '../stores/CollectionsItemsListStore' 
 
 
 

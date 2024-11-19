@@ -1,6 +1,6 @@
 import { ref, watchEffect } from 'vue'
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import { useCollectionsItemsListStore } from '../stores/CollectionsItemsListStore'
+import { useCollectionsItemsListStore } from '../stores/CollectionsItemsListStore' 
 import { remove_stopwords } from '../utilities/utilities/utilities'
 
 
@@ -93,8 +93,7 @@ export const useSearchStore = defineStore('search_store', () => {
    
    const build_paginated_list = () => {
       if(search_results.value) {
-         // to do : edge cases
-         const start_index = ((page.value - 1) * items_per_page.value)
+         let start_index = ((page.value - 1) * items_per_page.value)
          paginated_search_results.value = search_results.value.slice(start_index,start_index + items_per_page.value)
       }
    }

@@ -47,9 +47,6 @@ const open_nav_link = (route:string) => {
 </template>
 
 <style scoped>
-/* to do : improve layout of list item
-    - bring folder_path and file_name closer together while not changing width of title
-*/
 img {
     width:100px;
     max-width:100px;

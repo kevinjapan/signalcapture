@@ -9,11 +9,9 @@ import useFetch from '../composables/useFetch/useFetch'
 
 export const useCollectionsItemsListStore = defineStore('collections_items_store', () => {
 
-   // dataset
-   const baseUrl = '/data/collection-items - sm.json'
+   const url = '/data/collection-items.json'
 
-   const { payload, error, loading, fetchData } = useFetch<CollectionsItem[]>(baseUrl,{}) as UseFetchReturn<CollectionsItem[]>
-
+   const { payload, error, loading, fetchData } = useFetch<CollectionsItem[]>(url,{}) as UseFetchReturn<CollectionsItem[]>
 
    // The CollectionsItemsList
    // in our no-server demo, we load all (limited no.) items into this array and paginate on client.
@@ -53,9 +51,7 @@ export const useCollectionsItemsListStore = defineStore('collections_items_store
 
    const build_paginated_list = () => {
       if(collections_items_list.value) {
-         // to do : edge cases
-         const start_index = ((page.value - 1) * items_per_page.value)
-         console.log('page',page.value,'start_index',start_index)
+         let start_index = ((page.value - 1) * items_per_page.value)
          paginated_collections_items_list.value = collections_items_list.value.slice(start_index,start_index + items_per_page.value)
       }
    }
@@ -76,7 +72,6 @@ export const useCollectionsItemsListStore = defineStore('collections_items_store
 
    function set_page(new_page: number) {
       page.value = new_page
-      console.log('will filter by page',page.value)
    }
 
    return { 

@@ -7,10 +7,6 @@ import { useCollectionsItemStore } from '../stores/CollectionsItemStore'
 
 // CollectionsItemView - view a single record
 
-
-// to do : investigate : can we cache, say, last 10 records - so if id matches we can just review from in here?
-//           will need to implement and then test against calling CollectionsItemStore()
-
 const item = ref<CollectionsItem | null>(null)
 const is_loading = ref<boolean>(true)
 
