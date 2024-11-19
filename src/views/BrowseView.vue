@@ -39,6 +39,7 @@ const step_to_page = (step: number) => {
    const new_page = CollectionsItemsListStore.page + step
    if(new_page < 1 || new_page > Math.ceil(CollectionsItemsListStore.total_num_items / CollectionsItemsListStore.items_per_page)) return
    CollectionsItemsListStore.set_page(new_page)
+   window.scroll(0,0)
 }
 
 const navigate_to_page = (target_page: number) => {
@@ -53,53 +54,57 @@ const toggle_view = () => {
 
 <template>
 
-   <!-- to do : error comes from useFetch - how to pass to client here? 
-      <div v-if="error">
-      <p>Oops! Error encountered: {{ error }}</p>
-   </div>
-   -->
+   <section class="mt_3">
 
-   <ListCtrls
-      :card_view="card_view"
-      @toggle-view="toggle_view"
-   >
-      <PaginationNav
-         title="top_page_nav"
-         :page=CollectionsItemsListStore.page
-         :total_num_items=CollectionsItemsListStore.total_num_items
-         :items_per_page=CollectionsItemsListStore.items_per_page
-         @step-to-page="step_to_page" 
-         @navigate-to-page="navigate_to_page" 
-      />
-   </ListCtrls>
+      <!-- to do : error comes from useFetch - how to pass to client here? 
+         <div v-if="error">
+         <p>Oops! Error encountered: {{ error }}</p>
+      </div>
+      -->
+
+      <ListCtrls
+         :card_view="card_view"
+         @toggle-view="toggle_view"
+      >
+         <PaginationNav
+            title="top_page_nav"
+            :page=CollectionsItemsListStore.page
+            :total_num_items=CollectionsItemsListStore.total_num_items
+            :items_per_page=CollectionsItemsListStore.items_per_page
+            @step-to-page="step_to_page" 
+            @navigate-to-page="navigate_to_page" 
+         />
+      </ListCtrls>
 
 
 
    <img scr="../assets/imgs/list.svg"/>
 
-   <div v-if="CollectionsItemsListStore.loading" class="loading_spin"></div>
+      <div v-if="CollectionsItemsListStore.loading" class="loading_spin"></div>
 
-   <!-- card / list view -->
-   <section v-if="card_view" class="grid grid_cards_layout">
-      <CollectionsItemCard v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
-   </section>
-   <section v-else="!card_view" class="flex flex_list_layout">
-      <CollectionsItemListItem v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
-   </section>
+      <!-- card / list view -->
+      <section v-if="card_view" class="grid grid_cards_layout">
+         <CollectionsItemCard v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
+      </section>
+      <section v-else="!card_view" class="flex flex_list_layout">
+         <CollectionsItemListItem v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
+      </section>
 
-   <ListCtrls
-      :card_view="card_view"
-      @toggle-view="toggle_view"
-   >
-      <PaginationNav
-         title="bottom_page_nav"
-         :page=CollectionsItemsListStore.page
-         :total_num_items=CollectionsItemsListStore.total_num_items
-         :items_per_page=CollectionsItemsListStore.items_per_page
-         @step-to-page="step_to_page" 
-         @navigate-to-page="navigate_to_page" 
-      />
-   </ListCtrls>
-   
+      <ListCtrls
+         :card_view="card_view"
+         @toggle-view="toggle_view"
+      >
+         <PaginationNav
+            title="bottom_page_nav"
+            :page=CollectionsItemsListStore.page
+            :total_num_items=CollectionsItemsListStore.total_num_items
+            :items_per_page=CollectionsItemsListStore.items_per_page
+            @step-to-page="step_to_page" 
+            @navigate-to-page="navigate_to_page" 
+         />
+      </ListCtrls>
+      
+   </section>
+      
 </template>
 
