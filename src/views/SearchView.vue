@@ -13,7 +13,7 @@ const search_term = ref('') // (search_store.last_search_term)
 const real_search_term = ref('')
 
 const submit_search_term = () => {
-   real_search_term.value = search_term.value 
+   real_search_term.value = search_term.value.trim()
 }
 
 onMounted(() => {
@@ -28,14 +28,15 @@ onUnmounted(() => {
 </script>
 
 <template>
-   <h3>Search</h3>
-   <SearchForm 
-      v-model="search_term" 
-      @submit-search-term="submit_search_term" 
-   />   
-   <SearchResults 
-      :search_term="real_search_term"
-   />
+   <section class="mt_3">
+      <SearchForm 
+         v-model="search_term" 
+         @submit-search-term="submit_search_term" 
+      />   
+      <SearchResults 
+         :search_term="real_search_term"
+      />
+   </section>
 </template>
 
 
