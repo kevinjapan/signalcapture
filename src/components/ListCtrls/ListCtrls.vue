@@ -1,4 +1,10 @@
 <script setup lang="ts">
+import ViewToggle from './ViewToggle/ViewToggle.vue'
+
+const props = defineProps<{
+   card_view: boolean
+}>()
+
 
 const emit = defineEmits([
    'toggle-view'
@@ -14,9 +20,9 @@ const emit = defineEmits([
       <!-- PaginationNav slot -->
       <slot></slot>
 
-      <div>
-         <button @click="$emit('toggle-view')">card/list</button>
-      </div>
+      <ViewToggle 
+         :card_view="props.card_view"
+         @toggle-view="$emit('toggle-view')" />
 
    </section>
 
