@@ -68,9 +68,8 @@ const set_page = (page: number) => {
 }
 
 const step_to_page = (step: number) => {
-   // to do : don't step from edges!
-   console.log('in',step)
-   const new_page = SearchStore.page + step  // to do : enable
+   const new_page = SearchStore.page + step
+   if(new_page < 1 || new_page > Math.ceil(SearchStore.total_num_items / SearchStore.items_per_page)) return
    SearchStore.set_page(new_page)
 }
 
@@ -87,6 +86,7 @@ const toggle_view = () => {
 
 <template>
    <ListCtrls
+      :card_view="card_view"
       @toggle-view="toggle_view"
    >
       <PaginationNav
@@ -99,6 +99,7 @@ const toggle_view = () => {
       />
    </ListCtrls>
 
+   <!-- card / list view -->
    <section v-if="card_view && search_results" class="grid grid_cards_layout" style="margin-top:1rem;">
       <CollectionsItemCard v-for="item in list" :key="item?.id"  :item="item as unknown as CollectionsItem" />
    </section>
@@ -111,6 +112,7 @@ const toggle_view = () => {
 
    <ListCtrls
       v-if="!loading && search_results"
+      :card_view="card_view"
       @toggle-view="toggle_view"
    >
       <PaginationNav         

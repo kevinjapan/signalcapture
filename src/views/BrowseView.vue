@@ -36,8 +36,8 @@ const set_page = (page: number) => {
 }
 
 const step_to_page = (step: number) => {
-   // to do : don't step from edges!
    const new_page = CollectionsItemsListStore.page + step
+   if(new_page < 1 || new_page > Math.ceil(CollectionsItemsListStore.total_num_items / CollectionsItemsListStore.items_per_page)) return
    CollectionsItemsListStore.set_page(new_page)
 }
 
@@ -60,6 +60,7 @@ const toggle_view = () => {
    -->
 
    <ListCtrls
+      :card_view="card_view"
       @toggle-view="toggle_view"
    >
       <PaginationNav
@@ -78,7 +79,7 @@ const toggle_view = () => {
 
    <div v-if="CollectionsItemsListStore.loading" class="loading_spin"></div>
 
-   <!-- to do : provide alternate list_view <CollectionsItemListItem> component : rollout to Search etc -->
+   <!-- card / list view -->
    <section v-if="card_view" class="grid grid_cards_layout">
       <CollectionsItemCard v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
    </section>
@@ -87,6 +88,7 @@ const toggle_view = () => {
    </section>
 
    <ListCtrls
+      :card_view="card_view"
       @toggle-view="toggle_view"
    >
       <PaginationNav
@@ -101,73 +103,3 @@ const toggle_view = () => {
    
 </template>
 
-
-<style scoped>
-.songs_list {
-   /* to do : songs_list? */
-   display:-webkit-box;
-   display:-ms-flexbox;
-   display:flex;
-   -webkit-box-orient:vertical;
-   -webkit-box-direction:normal;
-   -ms-flex-direction:column;
-   flex-direction:column;
-   gap:2rem;
-   max-width:100%;
-   padding-right:2rem;
-}
-.grid_list_row {
-   padding-top:2rem;
-}
-.song_title {
-   font-size:1.75rem;
-}
-li.titles_row {
-   visibility:hidden;
-}
-.col_title {
-   color:hsl(0, 0%, 73%);
-   font-style:italic;
-}
-.col {
-   text-align:center;
-}
-.date_col {
-   text-align:center;
-}
-img.list_teaser_img {
-   width:160px;
-   margin-top:.25rem;
-   height:100px;
-   border-radius:1rem;
-}
-div.no_img {
-   width:160px;
-}
-@media (min-width: 768px) {
-   li.titles_row {
-      /* toggling display will interfere w/ grid display */
-      visibility:visible;
-   }
-   .songs_list {
-      gap:1rem;
-   }
-   .song_title {
-      font-size:1.05rem;
-      font-weight:500;
-   }
-   .col {
-      text-align:left;
-   }
-   .date_col {
-      text-align:right;
-   }
-   img.list_teaser_img {
-      width:80px;
-      height:50px;
-   }
-   div.no_img {
-      width:80px;
-   }
-}
-</style>
