@@ -11,10 +11,6 @@ export default function useFetch<T>(
   const loading = ref<boolean>(true) 
   const { signal, abort } = new AbortController()
 
-  console.log('use url',url)
-
-  const baseUrl = '/data/collection-items - sm.json'  // '/data/collection-items - sm.json'
-
   const headers = {
     "Content-Type":"application/json",
     Accept: "application/json",
@@ -29,7 +25,7 @@ export default function useFetch<T>(
     loading.value = true
     setTimeout(async() => {
     try {
-      const res = await fetch(baseUrl,{signal,...initialRequestOptions})
+      const res = await fetch(url,{signal,...initialRequestOptions})
       if(!res.ok) {
         error.value = "Could not fetch"
       }
