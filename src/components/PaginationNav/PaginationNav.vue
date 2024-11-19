@@ -52,9 +52,9 @@ const items_of = computed(() => {
    <section class="nav_bar"> 
       <div>Page 
          <input :value="page" class="curr_page_input" :name="title"/></div>
-         <div>of {{ num_pages }}</div>
-      <div>Items {{ items_of }} of {{ total_num_items }}</div>
-      <div class="flex ">
+         <div style="padding-left:.15rem;"> of {{ num_pages }}</div>
+      <div class="ml_2">Items <span class="items_of">{{ items_of }}</span> of {{ total_num_items }}</div>
+      <div class="flex ml_2">
          <button v-on:click="step(-1)" class="page_nav_btn start_btn" :class="{greyed_out: on_first_page}"></button>
          <button v-on:click="step(1)" class="page_nav_btn end_btn" :class="{greyed_out: on_last_page}"></button>
       </div>
@@ -72,7 +72,7 @@ section.nav_bar {
    align-items:center;
    -ms-flex-wrap:wrap;
    flex-wrap:wrap;
-   gap:1rem;
+   gap:.15rem;
    width:fit-content;
    height:fit-content;
    margin:0;
@@ -107,13 +107,14 @@ section.nav_bar {
 }
 input.curr_page_input {
    width:3rem;
-   text-align:center;padding:0;
+   text-align:center;
+   padding:0;
    color:hsl(0, 0%, 40%);
    font-size:.8rem;
    font-weight:100;
    padding:.15rem;
    border-radius:0;
-   border:solid 1px hsl(0, 0%, 85%);
+   border:solid 1px hsl(0, 0%, 60%);
 }
 .page_nav_btn {
    cursor:pointer;
@@ -139,5 +140,12 @@ input.curr_page_input {
 }
 .page_nav_btn:hover {
    border:solid 1px hsl(0, 0%, 75%);
+}
+.items_of {
+   display:inline-block;
+   width:5rem;
+   padding-left:.15rem;
+   border:solid 1px hsl(0, 0%, 88%);
+   text-align:center;
 }
 </style>

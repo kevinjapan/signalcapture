@@ -14,17 +14,27 @@ const emit = defineEmits([
 </script>
 
 <template>
-    <div>
+    <section class="m_.5">
         <button @click="$emit('toggle-view')">
             <img v-if="props.card_view"
-                src="../../../assets/imgs/file.svg" />
+                src="../../../assets/imgs/grid.svg" />
             <img v-else="!props.card_view"
-                src="../../../assets/imgs/list.svg" />
+                src="../../../assets/imgs/list-columns-reverse.svg" />
         </button>
-    </div>
+    </section>
 </template>
 
 <style scoped>
+section {
+    padding:0;
+}
+button {
+    display:flex;
+    align-items:center;
+    outline:none;
+    border:none;
+    background:none;
+}
 img {
     cursor:pointer;
 }
