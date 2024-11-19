@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, watchEffect, onBeforeMount } from 'vue'
+import { useAppStore } from '@/stores/AppStore'
 import { useSearchStore }  from '../../../stores/SearchStore'
 import CollectionsItemCard from '../../../components/CollectionsItems/CollectionsItemCard/CollectionsItemCard.vue'
 import CollectionsItemListItem from '../../../components/CollectionsItems/CollectionsItemListItem/CollectionsItemListItem.vue'
@@ -11,9 +12,13 @@ import PaginationNav from '../../../components/PaginationNav/PaginationNav.vue'
 
 // SearchResults
 
+
 const props = defineProps({
    search_term:String
 })
+
+
+const AppStore = useAppStore()
 
 const SearchStore = useSearchStore()
 const { search_results, loading, no_matches } = storeToRefs(SearchStore)
@@ -25,7 +30,7 @@ const local_search_term = ref('')
 const list = ref<CollectionsItem[] | null>(null)
 
 // toggle card / list view
-const card_view = ref<boolean>(true)
+const card_view = ref<boolean>(AppStore.card_view)
 
 onBeforeMount(() => {
    // pre-load the store if required (eg on page refresh)
@@ -42,6 +47,10 @@ watch(() => props.search_term, async(newValue) => {
 
 watchEffect(() => {
    list.value = <CollectionsItem[]>SearchStore.paginated_search_results
+})
+
+watchEffect(() => {
+   card_view.value = AppStore.card_view
 })
 
 const get_search_results = () => {
@@ -79,7 +88,7 @@ const navigate_to_page = (target_page: number) => {
 }
 
 const toggle_view = () => {
-   card_view.value = !card_view.value
+   AppStore.toggle_card_view()
 }
 
 </script>

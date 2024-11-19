@@ -29,6 +29,9 @@ export const useAppStore = defineStore('app_store', () => {
    // to tell TypeScript we intend to store Strings in this array, we pass a type parameter to the ref function
    const notify_msg_list = ref<String[]>([])
 
+   // card_view
+   const card_view = ref<boolean>(true)
+
    // getters
    const get_api = computed(() => app_api.value)
 
@@ -67,6 +70,10 @@ export const useAppStore = defineStore('app_store', () => {
       app_api.value = new_api
    }
 
+   function toggle_card_view() {
+      card_view.value = !card_view.value
+   }
+
    const is_logged_in = () => {
       return bearer_token.value !== '' ? true : false
    }
@@ -80,7 +87,9 @@ export const useAppStore = defineStore('app_store', () => {
       username,
       notify_msg_list,
       set_notify_msg_list,
-      is_logged_in
+      is_logged_in,
+      card_view,
+      toggle_card_view
    }
  })
 

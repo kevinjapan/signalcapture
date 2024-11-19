@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
+import { useAppStore } from '@/stores/AppStore'
 import { useCollectionsItemsListStore } from '../stores/CollectionsItemsListStore'
 import CollectionsItemCard from '../components/CollectionsItems/CollectionsItemCard/CollectionsItemCard.vue'
 import CollectionsItemListItem from '../components/CollectionsItems/CollectionsItemListItem/CollectionsItemListItem.vue'
@@ -9,6 +10,9 @@ import PaginationNav from '../components/PaginationNav/PaginationNav.vue'
 
 
 // BrowseView
+
+
+const AppStore = useAppStore()
 
 // CollectionsItemsStore
 const CollectionsItemsListStore = useCollectionsItemsListStore()
@@ -21,7 +25,7 @@ const list = ref<CollectionsItem[] | null>(null)
 const is_loading = ref<boolean>(true)
 
 // toggle card / list view
-const card_view = ref<boolean>(true)
+const card_view = ref<boolean>(AppStore.card_view)
 
 watchEffect(() => {
    is_loading.value = CollectionsItemsListStore.loading.value
@@ -29,6 +33,10 @@ watchEffect(() => {
 
 watchEffect(() => {
    list.value = <CollectionsItem[]>CollectionsItemsListStore.paginated_collections_items_list
+})
+
+watchEffect(() => {
+   card_view.value = AppStore.card_view
 })
 
 const set_page = (page: number) => {
@@ -47,7 +55,7 @@ const navigate_to_page = (target_page: number) => {
 }
 
 const toggle_view = () => {
-   card_view.value = !card_view.value
+   AppStore.toggle_card_view()
 }
 
 </script>
