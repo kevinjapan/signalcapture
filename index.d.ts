@@ -123,3 +123,38 @@ interface PageLink {
    label:string
    active:boolean
 }
+
+
+
+interface FileTeaser {
+   id:number,
+   title:string,
+   slug:string
+}
+
+interface FilesTree {
+   teaser:FileTeaser,
+   children?:FilesTree[]
+}
+
+
+
+// to do : review these against WeeSites etc - we can simplify to one interface only?
+
+// DataPackage returned from server on a request
+// server level
+interface DataPackage {
+   data?:DataPackageContents,
+   error:string
+}
+
+// Contents of DataPackage - 'success'/'fail' and data (optional)
+// application level
+interface DataPackageContents {
+   outcome:string,
+   data:object,
+   error?:string
+}
+
+
+

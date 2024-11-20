@@ -1,19 +1,35 @@
 <script setup lang="ts">
+import { ref, onMounted, watchEffect } from 'vue'
+import { useFilesStore } from '@/stores/FilesStore'
+import FilesTreeNode from '../components/FilesTreeNode/FilesTreeNode.vue'
+
+
+
+
+const FilesStore = useFilesStore()
+FilesStore.load_files_tree()
+
+// FilesTreeView
+const tree = ref<FilesTree | null>(null)
+
+onMounted(() => {
+   window.scroll(0,0)
+})
+
+watchEffect(() => {
+   tree.value = FilesStore.files_tree
+})
 
 
 </script>
 
-
 <template>
-
-   <section>
-      <h1>FilesView in here</h1>
+   <section class="mt_2">
+      <ul>
+         <FilesTreeNode v-if="tree"
+            :model="tree"
+            :file_teaser="{id:1,title:'tester',slug:'tester'}"
+         />
+      </ul>
    </section>
-
 </template>
-
-
-<style scoped>
-
-
-</style>
