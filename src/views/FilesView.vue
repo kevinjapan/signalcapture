@@ -27,6 +27,7 @@ watchEffect(() => {
    <section class="mt_2">
       <ul>
          <FilesTreeNode v-if="tree"
+         parent_level="0"
             :model="tree"
             :file_teaser="{id:1,title:'tester',slug:'tester'}"
          />
