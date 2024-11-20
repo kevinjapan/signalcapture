@@ -25,8 +25,7 @@ export default function useFetch<T>(
     
     loading.value = true
 
-    // to do : remove this timeout !
-    setTimeout(async() => {
+
     try {
       const res = await fetch(url,{signal,...initialRequestOptions})
       if(!res.ok) {
@@ -46,8 +45,9 @@ export default function useFetch<T>(
             error.value = err_obj.message
          }
     }
+    
     loading.value = false
-  },0)
+    
   }
 
 
