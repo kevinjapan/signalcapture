@@ -1,7 +1,7 @@
 import { ref, watchEffect } from 'vue'
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import useFetch from '../composables/useFetch/useFetch'
-
+import { is_valid_payload } from '../utilities/utilities/validation'
 
 
 // CollectionsItemsListStore
@@ -9,9 +9,12 @@ import useFetch from '../composables/useFetch/useFetch'
 
 export const useCollectionsItemsListStore = defineStore('collections_items_store', () => {
 
+   // future : for demo, we use json dataset named here
+   // full server-supported app will useData and useEndPoints to resolve queries
    const url = '/data/collection-items.json'
 
    const { payload, error, loading, fetchData } = useFetch<CollectionsItem[]>(url,{}) as UseFetchReturn<CollectionsItem[]>
+
 
    // The CollectionsItemsList
    // in our no-server demo, we load all (limited no.) items into this array and paginate on client.
@@ -58,10 +61,15 @@ export const useCollectionsItemsListStore = defineStore('collections_items_store
 
    // we need to update state herein on changes in useFetch composable
    watchEffect(() => {
-      // to do : add error handling for invalid json - test w/ broken/invalid json files
-      collections_items_list.value = payload.value?.data
-      if(collections_items_list.value) total_num_items.value = collections_items_list.value?.length
-      build_paginated_list()
+      if(!payload.value) return
+      if(is_valid_payload(payload.value as Payload<CollectionsItem[]>)) {
+         collections_items_list.value = payload.value?.data
+         if(collections_items_list.value) total_num_items.value = collections_items_list.value?.length
+         build_paginated_list()
+      }
+      else {
+         console.log('to do : notify user invalid data rcvd')
+      }
    })
 
 
