@@ -13,7 +13,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+  scroll-behavior:smooth;
+  box-sizing: border-box;
+}
 
+main {
+  min-height:100vh;
+}
 /*
 songs and albms list views
 */
@@ -226,7 +233,10 @@ input::placeholder {
 /* 
   Utility classes
 */
+.m_\.5 {margin:.5rem;}
 .mt_2 {margin-top:2rem;}
+.mt_3 {margin-top:3rem;}
+.ml_2 {margin-left:2rem;}
 .p_1  {padding:1rem;}
 
 .cursor_pointer {
@@ -244,3 +254,5 @@ input::placeholder {
 .corner_1 {border-radius:.15rem;}
 
 .sm_text {font-size:.95rem;}
+
+.bg_yellow {background:yellow;}

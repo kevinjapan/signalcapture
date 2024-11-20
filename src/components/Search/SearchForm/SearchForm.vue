@@ -38,6 +38,7 @@ form {
 input {
    font-weight:100;
    color:hsl(0, 0%, 40%);
+   margin-top:.2rem;
 }
 </style>
 

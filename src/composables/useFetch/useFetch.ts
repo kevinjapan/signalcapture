@@ -22,7 +22,10 @@ export default function useFetch<T>(
   }
 
   const fetchData = async() => {
+    
     loading.value = true
+
+    // to do : remove this timeout !
     setTimeout(async() => {
     try {
       const res = await fetch(url,{signal,...initialRequestOptions})
@@ -30,7 +33,6 @@ export default function useFetch<T>(
         error.value = "Could not fetch"
       }
       payload.value = <Payload<T>> await res.json()
-      console.log('fetchData',payload.value)
     }
     catch(e) {
       console.log('error happened')
@@ -45,7 +47,7 @@ export default function useFetch<T>(
          }
     }
     loading.value = false
-  },5000)
+  },0)
   }
 
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
+import { ref, onMounted, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCollectionsItemStore } from '../stores/CollectionsItemStore'
 
@@ -13,6 +13,10 @@ const is_loading = ref<boolean>(true)
 const route = useRoute()
 const CollectionsItemStore = useCollectionsItemStore()
 CollectionsItemStore.load_single_collection_item(parseInt(route.params.id as string))
+
+onMounted(() => {
+   window.scroll(0,0)
+})
 
 watchEffect(() => {
    if(CollectionsItemStore.single_collection_item) is_loading.value = false

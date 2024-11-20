@@ -112,6 +112,7 @@ nav.app_nav {
    overflow:hidden;
 
    font-size:1.1rem;
+   background:white;
 
    /* 
    transitions
