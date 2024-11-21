@@ -5,7 +5,7 @@ declare module '*.vue' {
 
 declare module 'AppStore'
 declare module 'useEndPoints'
-
+declare module 'PackagesStore'
 
 // ----------------------------------------------------
 // Fetch and Data interfaces
@@ -103,18 +103,20 @@ interface CollectionsItem {
    file_name:string
    file_type:string
    folder_path:string
+   keywords?:string
    imgDesc?:string
    item_ref?:string
    item_Date?:string
    item_Type?:string
+   location?:string
    author_creator?:string
    people?:string
    source?:string
+   donor?:string
+   owner?:string
+   copyright?:string
    tags?:string
    id:number
-   created_at:string
-   updated_at:string
-   deleted_at?:string
 }
 
 
@@ -125,6 +127,7 @@ interface PageLink {
 }
 
 
+// FilesTree
 
 interface FileTeaser {
    id:number,
@@ -137,3 +140,25 @@ interface FilesTree {
    children:FilesTree[]
 }
 
+
+
+// Packages
+
+interface Package {
+   id:number
+   title:string
+   slug?:string
+   content_desc?:string
+   keywords?:string
+   file_name:string
+   file_type:string
+   folder_path:string
+   imgDesc?:string
+   author_creator?:string
+   owner?:string
+   tags?:string
+   created_at:string
+   updated_at:string
+   viewed_at?:string
+   deleted_at?:string
+}
