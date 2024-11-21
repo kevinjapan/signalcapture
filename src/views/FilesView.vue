@@ -12,6 +12,8 @@ FilesStore.load_files_tree()
 // FilesTreeView
 const tree = ref<FilesTree | null>(null)
 
+const parent_level = ref<number>(1)
+
 onMounted(() => {
    window.scroll(0,0)
 })
@@ -27,7 +29,7 @@ watchEffect(() => {
    <section class="mt_2">
       <ul>
          <FilesTreeNode v-if="tree"
-         parent_level="0"
+            :level="parent_level"
             :model="tree"
             :file_teaser="{id:1,title:'tester',slug:'tester'}"
          />

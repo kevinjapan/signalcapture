@@ -134,6 +134,6 @@ interface FileTeaser {
 
 interface FilesTree {
    teaser:FileTeaser,
-   children?:FilesTree[]
+   children:FilesTree[]
 }
 

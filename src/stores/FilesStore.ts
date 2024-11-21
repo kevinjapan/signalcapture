@@ -4,34 +4,44 @@ import useFetch from '../composables/useFetch/useFetch'
 import { is_valid_payload } from '@/utilities/utilities/validation'
 
 
+
 // FilesStore
 
 export const useFilesStore = defineStore('files_store', () => {
 
-
+   // the Files Tree dataset url
    const url = '/data/files_tree.json'
    
-   //
+   // fetched properties
    const { payload, error, loading, fetchData } = useFetch<FilesTree>(url,{}) as UseFetchReturn<FilesTree>
 
-
-   // The CollectionsItem (current selected/viewed)
+   // the loaded Files Tree (current selected/viewed)
    const files_tree = ref<FilesTree | null>(null)
 
+   // the current closed level (peer-to-peer closing)
+   const closed_at_level = ref<number>(1)
 
    // The Tech (current selected/viewed)
    const file = ref({})
 
+   const set_closed_level = (level: number) => {
+      closed_at_level.value = level
+   }
+
    // load_files_tree
    function load_files_tree() {
 
-      // to do : remove 'payload.outcome' etc from json file - handle well here - i don't think so! :)
+      // to do : do we need fet
 
       // ensure the tree has been downloaded
       if(!files_tree.value) fetchData()
       
          if(payload) {
-            files_tree.value = payload.value?.data
+            if(payload.value) {
+               if(is_valid_payload(payload.value as Payload<FilesTree>)) {
+                  files_tree.value = payload.value.data
+               }
+            }
          }
          else {
             console.log('no payload')
@@ -49,7 +59,7 @@ export const useFilesStore = defineStore('files_store', () => {
          files_tree.value = payload.value?.data
       }
       else {
-         console.log('to do : notify user invalid data rcvd')
+         console.log('to do : notify user invalid data rcvd') // use error..
       }
    })
 
@@ -59,7 +69,9 @@ export const useFilesStore = defineStore('files_store', () => {
       error,
       loading,
       file,
-      load_files_tree
+      load_files_tree,
+      closed_at_level,
+      set_closed_level
    }
  })
 
