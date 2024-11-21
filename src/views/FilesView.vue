@@ -36,3 +36,12 @@ watchEffect(() => {
       </ul>
    </section>
 </template>
+
+<style scoped>
+ul {
+   margin:0;
+   padding-left:1rem;
+   text-align:left;
+   list-style:none;
+}
+</style>
