@@ -54,8 +54,8 @@ const toggle = () => {
 
 // to do : 
 // - on 'open' - display record or file list on right panel?
-//          -  display files as nodes?    'open' record or list of files fro that folder?
-// - change 'F' below to folder icon for nodes w/ children
+//             - display files as nodes?    'open' record or list of files fro that folder?
+
 
 const has_children = (children: FilesTree[]): boolean => {
    return children.length > 0
@@ -68,12 +68,17 @@ const has_children = (children: FilesTree[]): boolean => {
    <li>
 
       <div :class="{ bold: isFolder }" class="cursor_pointer"
-         @click="toggle"
-         @dblclick="changeType">
+         @click="toggle">
          <div>
-            <span v-if="model.children && has_children(model?.children)">F</span>
+            <span v-if="model.children && has_children(model?.children)">
+               <img v-if="!isOpen" src="../../assets/imgs/folder.svg" alt="folder" />
+               <img v-else src="../../assets/imgs/folder-open.svg" alt="folder" />
+            </span>
+            <span v-else>
+               <img src="../../assets/imgs/file.svg" alt="folder" />
+            </span>
             {{ model.teaser?.title }}
-            <a @click.stop="open_teaser(model.teaser.slug)">open</a>
+            <a v-if="!model.children || !has_children(model?.children)" @click.stop="open_teaser(model.teaser.slug)">open</a>
       </div>
       </div>
 
@@ -97,5 +102,6 @@ ul {
    margin:0;
    padding-left:1rem;
    text-align:left;
+   list-style:none;
 }
 </style>
