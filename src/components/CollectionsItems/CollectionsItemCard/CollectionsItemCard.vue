@@ -63,4 +63,12 @@ img {
 .text_container {
     padding:0 .75rem;
 }
+h3 {
+    max-width:90%;
+    overflow-wrap:anywhere;
+}
+p {
+    max-width:90%;
+    overflow-wrap:anywhere;
+}
 </style>
