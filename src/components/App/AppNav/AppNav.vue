@@ -1,16 +1,24 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useAppStore } from '../../../stores/AppStore'
+import { useAppStore } from '@/stores/AppStore'
 
 
 
 // AppNav
 
 const router = useRouter()
+const route = useRoute()
 const app_store = useAppStore()
 
+
+
 const display = ref(false)
+
+onMounted(async() => {
+   await router.isReady()
+   app_store.curr_view_route = route.fullPath
+})
 
 // we push rather than RouterLink to allow close app_nav
 const open_nav_link = route => {
@@ -26,6 +34,9 @@ const clicked_bg = () => {
 const is_curr_view_route = (route) => {
    return route === app_store.curr_view_route
 }
+
+
+
 </script>
 
 
@@ -52,6 +63,9 @@ const is_curr_view_route = (route) => {
          <!-- <div v-else class="text_lightgrey">
             <a class="no_cursor_pointer">Files</a>
          </div> -->
+
+         <a @click.stop="open_nav_link('/packages')" 
+               :class="{sel_view:is_curr_view_route('/packages')}">Packages</a>
 
          <a @click.stop="open_nav_link('/search')" 
             :class="{sel_view:is_curr_view_route('/search')}">Search</a>
