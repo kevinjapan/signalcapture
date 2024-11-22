@@ -19,10 +19,10 @@ export const useFilesStore = defineStore('files_store', () => {
    const files_tree = ref<FilesTree | null>(null)
 
    // the current closed level (peer-to-peer closing)
-   const closed_at_level = ref<number>(1)
+   const closed_at_level = ref<number>(3)
 
    // The Tech (current selected/viewed)
-   const file = ref({})
+   const curr_file_id = ref(0-1)
 
    const set_closed_level = (level: number) => {
       closed_at_level.value = level
@@ -68,7 +68,7 @@ export const useFilesStore = defineStore('files_store', () => {
       payload,
       error,
       loading,
-      file,
+      curr_file_id,
       load_files_tree,
       closed_at_level,
       set_closed_level
