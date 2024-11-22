@@ -117,6 +117,10 @@ interface CollectionsItem {
    copyright?:string
    tags?:string
    id:number
+   created_at:string
+   updated_at:string
+   viewed_at:string
+   deleted_at:string
 }
 
 
