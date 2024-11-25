@@ -26,6 +26,10 @@ const props = defineProps<{
         <div>folder</div><div>{{ item?.folder_path }}</div>
         <div>keywords</div><div>{{ item?.keywords }}</div>
         <div>img desc</div><div>{{ item?.imgDesc }}</div>
+        
+        <div></div><section class="img_container">
+            <img :src="'\\collection\\' + item?.folder_path + item?.file_name"/>
+        </section>
         <div>item ref</div><div>{{ item?.item_ref }}</div>
         <div>item date</div><div>{{ item?.item_Date }}</div>
         <div>item type</div><div>{{ item?.item_Type }}</div>
@@ -51,11 +55,19 @@ section.record_card{
    display:grid;
    grid-template-columns:1fr 2fr;
    gap:.75rem;
-   margin:5rem 3rem;
+   margin:1rem 2rem;
    max-width:600px;
    background:white;
    padding:1rem;
    border-radius:.5rem;
 }
-
+.img_container {
+    width:100%;
+    max-height:200px;
+    overflow-y:hidden;
+}
+img {
+    width:100%;
+    object-fit:fill;
+}
 </style>
