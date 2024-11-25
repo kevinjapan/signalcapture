@@ -29,7 +29,12 @@ const router = createRouter({
       {
          name: 'packages',
          path: '/packages',
-         component: () => import('../views/PackagesView.vue') 
+         component: () => import('../views/PackagesListView.vue') 
+      },
+      {
+         name: 'package',
+         path: '/packages/:id',
+         component: () => import('../views/PackageView.vue') 
       },
       {
          name: 'collection-item',
