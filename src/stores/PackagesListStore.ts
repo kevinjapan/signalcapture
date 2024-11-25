@@ -4,13 +4,14 @@ import useFetch from '../composables/useFetch/useFetch'
 import { is_valid_payload } from '../utilities/utilities/validation'
 
 
-// PackagesStore
+// PackageStore
 // generally, we always extract paginated list
 
-export const usePackagesStore = defineStore('packages_store', () => {
+export const usePackagesListStore = defineStore('packages_store', () => {
 
    // future : for demo, we use json dataset named here
    // full server-supported app will useData and useEndPoints to resolve queries
+   
    const url = '/data/packages.json'
 
    const { payload, error, loading, fetchData } = useFetch<Package[]>(url,{}) as UseFetchReturn<Package[]>
@@ -102,5 +103,5 @@ export const usePackagesStore = defineStore('packages_store', () => {
 
 // hot module replacement for pinia
 if (import.meta.hot) {
-   import.meta.hot.accept(acceptHMRUpdate(usePackagesStore, import.meta.hot))
+   import.meta.hot.accept(acceptHMRUpdate(usePackagesListStore, import.meta.hot))
 }

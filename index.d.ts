@@ -5,7 +5,7 @@ declare module '*.vue' {
 
 declare module 'AppStore'
 declare module 'useEndPoints'
-declare module 'PackagesStore'
+declare module 'PackageStore'
 
 // ----------------------------------------------------
 // Fetch and Data interfaces
@@ -123,6 +123,27 @@ interface CollectionsItem {
    deleted_at:string
 }
 
+
+// to do : list of CollectionItems in the Package? (ie the package's content)
+
+interface Package {
+   id:number
+   title:string
+   slug?:string
+   content_desc?:string
+   file_name:string
+   file_type:string
+   folder_path:string
+   collection_items:number[]
+   keywords?:string
+   imgDesc?:string
+   author_creator?:string
+   tags?:string
+   created_at:string
+   updated_at:string
+   viewed_at?:string
+   deleted_at?:string
+}
 
 interface PageLink {
    url:string
