@@ -33,6 +33,7 @@ export const useCollectionsItemsListStore = defineStore('collections_items_store
 
 
    // load_collection_items
+   // loads list *if* list is empty
    function load_collection_items() {
 
       // ensure the list has been downloaded
@@ -68,7 +69,7 @@ export const useCollectionsItemsListStore = defineStore('collections_items_store
          build_paginated_list()
       }
       else {
-         console.log('to do : notify user invalid data rcvd')
+         console.log('to do : notify user invalid data rcvd') // use error..
       }
    })
 
@@ -76,6 +77,14 @@ export const useCollectionsItemsListStore = defineStore('collections_items_store
    function load_collection_items_list() {
       if(!collections_items_list.value) load_collection_items()
       return collections_items_list
+   }
+
+
+   function get_collection_items_by_id(ids_list: number[]) {
+      const list = <CollectionsItem[]>collections_items_list?.value?.filter((elem: CollectionsItem) => {
+         return ids_list.includes(elem.id)
+      })
+      return list
    }
 
    function set_page(new_page: number) {
@@ -94,7 +103,8 @@ export const useCollectionsItemsListStore = defineStore('collections_items_store
       set_page,
       page,
       total_num_items,
-      items_per_page
+      items_per_page,
+      get_collection_items_by_id
    }
  })
 
