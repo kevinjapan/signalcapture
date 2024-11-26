@@ -84,10 +84,6 @@ const toggle_view = () => {
          />
       </ListCtrls>
 
-
-
-   <img scr="../assets/imgs/list.svg"/>
-
       <div v-if="PackageListStore.loading" class="loading_spin"></div>
 
       <!-- card / list view -->

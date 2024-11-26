@@ -1,38 +1,61 @@
 <script setup lang="ts">
-
+import PackageCollectionsItems from '@/components/Packages/PackageCollectionsItems/PackageCollectionsItems.vue'
+import PackageRecordCtrls from './PackageRecordCtrls/PackageRecordCtrls.vue'
 
 
 // PackageRecord
 
-// Component Interface - props and emits
+
 const props = defineProps<{
     item: Package
 }>()
 
 // to do : ensure if a record doesn't have a field it isn't populated w/ last records field value
 
+// to do :
+// - produce an html / pdf of all items in the package
+// - user can check which items to include in above
+
 </script>
 
 <template>
 
-    <section v-if="props.item.id" class="record_card">
-        <div>title</div><div>{{ item?.title }}</div>
-        <div>desc</div><div>{{ item?.content_desc }}</div>
-        <div>file name</div><div>{{ item?.file_name }}</div>
-        <div>file type</div><div>{{ item?.file_type }}</div>
-        <div>folder</div><div>{{ item?.folder_path }}</div>
-        <div>keywords</div><div>{{ item?.keywords }}</div>
-        <div>img desc</div><div>{{ item?.imgDesc }}</div>
-        
-        <div></div><section class="img_container">
+    <section v-if="props.item.id" class="package_record_card">
+        <div></div>
+        <section class="img_container">
             <img :src="'\\collection\\' + item?.folder_path + item?.file_name"/>
         </section>
 
+        <div></div>
+        <PackageRecordCtrls />
+
+        <div class="v_center text_flex_end">title</div><div class="lg_text">{{ item?.title }}</div>
+        <div>description</div><div>{{ item?.content_desc }}</div>
+        <div>keywords</div><div>{{ item?.keywords }}</div>
+
+
+        <div></div>
+        <PackageCollectionsItems 
+            :collection_items="item.collection_items"
+        />
+
+        <div>img desc</div><div>{{ item?.imgDesc }}</div>
+
         <div>author / creator</div><div>{{ item?.author_creator }}</div>
 
-        <div>tags</div><div>{{ item?.tags }}</div>
-        <div>id</div><div>{{ item?.id }}</div>
-        <div>created</div><div>{{ item?.created_at }}</div>
+        <div class="divider">package image file</div>
+        <div class="divider"></div>
+
+        <div>file name</div><div>{{ item?.file_name }}</div>
+        <div>file type</div><div>{{ item?.file_type }}</div>
+        <div>folder</div><div>{{ item?.folder_path }}</div>
+      
+        <div class="divider"></div>
+        <div class="divider"></div>
+
+        <div>tags</div>         <div>{{ item?.tags }}</div>
+        <div>id</div>           <div>{{ item?.id }}</div>
+        <div>created</div>      <div>{{ item?.created_at }}</div>
         <div>last updated</div><div>{{ item?.updated_at }}</div>
         <div>last viewed</div><div>{{ item?.viewed_at }}</div>
         <div>deleted</div><div>{{ item?.deleted_at }}</div>
@@ -41,23 +64,38 @@ const props = defineProps<{
 </template>
 
 <style scoped>
-section.record_card{
+section.package_record_card {
    display:grid;
-   grid-template-columns:1fr 2fr;
+   grid-template-columns:1fr 4fr;
    gap:.75rem;
-   margin:1rem 2rem;
-   max-width:600px;
+   margin:3rem 2rem;
+   height:80%;
    background:white;
    padding:1rem;
    border-radius:.5rem;
 }
+
+section.package_record_card > *:nth-child(2n + 1) {
+    text-align:right;
+    color:hsl(0, 0%, 40%);
+    padding-right:.5rem;
+    font-size:.95rem;
+}
 .img_container {
     width:100%;
-    max-height:200px;
+    height:200px;
     overflow-y:hidden;
+    border-radius:.5rem;
 }
 img {
     width:100%;
     object-fit:fill;
+}
+.divider {
+    padding:.25rem;
+    padding-top:1rem;
+    font-style:italic;
+    font-size:.95rem;
+    color:hsl(0, 0%, 40%);
 }
 </style>
