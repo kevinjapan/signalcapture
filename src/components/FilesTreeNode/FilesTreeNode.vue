@@ -17,6 +17,10 @@ const props = defineProps<{
    file_teaser: FileTeaser
 }>()
 
+const emit = defineEmits([
+   'child-opened'
+])
+
 
 
 const FilesStore = useFilesStore()
@@ -49,12 +53,25 @@ const open_record = (id: number) => {
 // expand/close this node
 const toggle = () => {
    isOpen.value = !isOpen.value
+
+   if(isOpen.value) emit('child-opened')
    FilesStore.set_closed_level(!isOpen.value ?  my_level.value - 1 : my_level.value)
 }
 
 const has_children = (children: FilesTree[]): boolean => {
    return children.length > 0
 }
+
+const child_opened = () => {
+   // to do : we now know if a child of the curr node has opened, so we can close our other children?
+   console.log('my child opened',props.model.teaser.title)
+}
+
+// to do : on opening file lower down on the tree, do we scroll up?
+
+// to do : highlight selected file in tree
+
+// to do : open in sm/mobile overlay tree
 
 </script>
 
@@ -66,11 +83,11 @@ const has_children = (children: FilesTree[]): boolean => {
          @click="toggle">
          <div class="flex align_items_center gap_.25">
             <span v-if="model.children && has_children(model?.children)">
-               <img v-if="!isOpen" src="../../assets/imgs/folder.svg" alt="folder" />
-               <img v-else src="../../assets/imgs/folder-open.svg" alt="folder" />
+               <img v-if="!isOpen" src="../../assets/icons/folder.svg" alt="folder" />
+               <img v-else src="../../assets/icons/folder-open.svg" alt="folder" />
             </span>
             <span v-else>
-               <img src="../../assets/imgs/file.svg" alt="folder" />
+               <img src="../../assets/icons/file.svg" alt="folder" />
             </span>
             
             <a v-if="!model.children || !has_children(model?.children)" @click.stop="open_record(model.teaser.id)">{{ model.teaser?.title }}</a>
@@ -84,6 +101,7 @@ const has_children = (children: FilesTree[]): boolean => {
             v-for="model in model.children"
             :model="model"
             :file_teaser="model.teaser"
+            @child-opened="child_opened"
          />
       </ul>
    </li>
@@ -101,6 +119,10 @@ ul {
 }
 .bold {
    font-weight:500;
+}
+a {
+   width:fit-content;
+   overflow-wrap:anywhere;
 }
 
 </style>
