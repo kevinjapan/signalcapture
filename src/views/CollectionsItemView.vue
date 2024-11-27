@@ -37,25 +37,37 @@ watchEffect(() => {
 
    <div v-if="is_loading" class="loading_spin"></div>
 
-    <CollectionsItemRecord
-        v-if="item"
-        :item="item"
-    />
+   <section v-if="item" class="record_view_container mt_2">
+      
+      <section>
+         
+      </section>
 
+      <section >
+         <CollectionsItemRecord
+            :item="item"
+         />
+      </section>
+
+   </section>
 
 </template>
 
 
 <style scoped>
-section.record_card{
-   display:grid;
-   grid-template-columns:1fr 2fr;
-   gap:.75rem;
-   margin:5rem 3rem;
-   max-width:600px;
-   background:white;
-   padding:1rem;
-   border-radius:.5rem;
-}
 
+section.record_view_container {
+  display:-ms-grid;
+  display:grid;
+  -ms-grid-columns:       1fr;
+  grid-template-columns:  1fr;
+}
+@media (min-width: 768px) {
+   section.record_view_container {
+      display:-ms-grid;
+      display:grid;
+      -ms-grid-columns:       1fr 2fr;
+      grid-template-columns:  1fr 2fr;
+   }
+}
 </style>
