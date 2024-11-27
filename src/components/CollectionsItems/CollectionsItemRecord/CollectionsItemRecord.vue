@@ -22,7 +22,13 @@ const props = defineProps<{
 <template>
 <section class="page_break">
     <section v-if="props.item.id" class="record_card_header">
-        <div class="v_center">title</div><div class="lg_text">{{ item?.title }}</div>
+        
+        <div></div>
+        <section class="img_container">
+            <img :src="'\\collection\\' + item?.folder_path + item?.file_name"/>
+        </section>
+
+        <div class="v_center text_flex_end">title</div><div class="lg_text">{{ item?.title }}</div>
         <div>desc</div><div>{{ item?.content_desc }}</div>
         <div>file name</div><div>{{ item?.file_name }}</div>
         <div>file type</div><div>{{ item?.file_type }}</div>
@@ -30,9 +36,7 @@ const props = defineProps<{
         <div>keywords</div><div>{{ item?.keywords }}</div>
         <div>img desc</div><div>{{ item?.imgDesc }}</div>
         
-        <div></div><section class="img_container">
-            <img :src="'\\collection\\' + item?.folder_path + item?.file_name"/>
-        </section>
+
     </section>
 
     <section v-if="props.item.id" class="record_card_footer">
@@ -69,6 +73,14 @@ section.record_card_header{
    padding:1rem;
    border-radius:.5rem .5rem 0 0;
 }
+
+section.record_card_header > *:nth-child(2n + 1),
+section.record_card_footer > *:nth-child(2n + 1) {
+    text-align:right;
+    color:hsl(0, 0%, 40%);
+    padding-right:.5rem;
+    font-size:.95rem;
+}
 section.record_card_footer {
    display:grid;
    grid-template-columns:1fr 1fr 1fr 1fr;
@@ -85,6 +97,7 @@ section.record_card_footer {
     width:100%;
     max-height:200px;
     overflow-y:hidden;
+    border-radius:.5rem;
 }
 img {
     width:100%;
