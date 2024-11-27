@@ -6,11 +6,11 @@ import PackageCard from '../components/Packages/PackageCard/PackageCard.vue'
 import PackageListItem from '../components/Packages/PackageListItem/PackageListItem.vue'
 import ListCtrls from '../components/ListCtrls/ListCtrls.vue'
 import PaginationNav from '../components/PaginationNav/PaginationNav.vue'
+import PackageTeaserCard from '@/components/Packages/PackageTeaserCard/PackageTeaserCard.vue'
 
 
 
 // PackagesView
-
 
 const AppStore = useAppStore()
 
@@ -25,7 +25,7 @@ const list = ref<Package[] | null>(null)
 const is_loading = ref<boolean>(true)
 
 // toggle card / list view
-const card_view = ref<boolean>(AppStore.card_view)
+const list_view_type = ref<ListViewType>(AppStore.list_view_type)
 
 watchEffect(() => {
    is_loading.value = PackageListStore.loading.value
@@ -36,7 +36,7 @@ watchEffect(() => {
 })
 
 watchEffect(() => {
-   card_view.value = AppStore.card_view
+   list_view_type.value = AppStore.list_view_type
 })
 
 const set_page = (page: number) => {
@@ -55,7 +55,7 @@ const navigate_to_page = (target_page: number) => {
 }
 
 const toggle_view = () => {
-   AppStore.toggle_card_view()
+   AppStore.switch_list_view_type()
 }
 
 </script>
@@ -71,7 +71,7 @@ const toggle_view = () => {
       -->
 
       <ListCtrls
-         :card_view="card_view"
+         :list_view_type="list_view_type"
          @toggle-view="toggle_view"
       >
          <PaginationNav
@@ -87,15 +87,18 @@ const toggle_view = () => {
       <div v-if="PackageListStore.loading" class="loading_spin"></div>
 
       <!-- card / list view -->
-      <section v-if="card_view" class="grid grid_cards_layout">
+      <section v-if="list_view_type === 'card'" class="grid grid_cards_layout mt_2">
          <PackageCard v-for="item in list" :key="item.id"  :item="item as unknown as Package" />
       </section>
-      <section v-else="!card_view" class="flex flex_list_layout">
+      <section v-if="list_view_type === 'teaser_card'" class="grid grid_cards_layout teaser_cards mt_2">
+         <PackageTeaserCard v-for="item in list" :key="item.id"  :item="item as unknown as Package" />
+      </section>
+      <section v-if="list_view_type === 'list'" class="flex flex_list_layout mt_2">
          <PackageListItem v-for="item in list" :key="item.id"  :item="item as unknown as Package" />
       </section>
 
       <ListCtrls
-         :card_view="card_view"
+         :list_view_type="list_view_type"
          @toggle-view="toggle_view"
       >
          <PaginationNav
