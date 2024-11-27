@@ -22,7 +22,7 @@ const root_folder = '/collection'
 const router = useRouter()
 
 // we push rather than RouterLink to allow close app_nav etc
-const open_nav_link = (route:string) => {
+const open_nav_link = (route: string) => {
    router.push(route)
 }
 
@@ -36,7 +36,7 @@ const open_nav_link = (route:string) => {
             <img :src="root_folder + props.item.folder_path + props.item.file_name"/>
         
             <h3>
-                <a @click.stop="open_nav_link(`/browse/collections-item/${props.item.id}`)" >{{ props.item.title }}</a>
+                <a @click.stop="open_nav_link(`/packages/${props.item.id}`)" >{{ props.item.title }}</a>
             </h3>
             <p>{{ props.item.file_type }}</p>
             <p class="italic sm_text">{{ props.item.folder_path }}</p>

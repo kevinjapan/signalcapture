@@ -36,7 +36,7 @@ const open_nav_link = (route: string) => {
 
 <!-- to do : rename all 'collection' references -->
 
-    <section v-if="props.item" class="collection_item_card">
+    <section v-if="props.item" class="package_teaser_card">
 
         <section class="img_container">
             <img :src="root_folder + props.item.folder_path + props.item.file_name"/>
@@ -46,9 +46,6 @@ const open_nav_link = (route: string) => {
             <h3>
                 <a @click.stop="open_nav_link(`/packages/${props.item.id}`)" >{{ props.item.title }}</a>
             </h3>
-            <p>{{ props.item.file_type }}</p>
-            <p>{{ props.item.file_name }}</p>
-            <p>{{ props.item.folder_path }}</p>
         </section>
 
     </section>
@@ -56,13 +53,21 @@ const open_nav_link = (route: string) => {
 </template>
 
 <style scoped>
+.package_teaser_card {
+    border:solid 1px lightgrey;
+    border-radius:.5rem;
+    overflow:hidden;
+    background:white;
+}
 .img_container {
     width:100%;
-    max-height:200px;
+    height:100px;
+    order:solid 1px blue;
     overflow-y:hidden;
 }
 img {
     width:100%;
+    height:fit-content;
     object-fit:fill;
 }
 .text_container {

@@ -27,9 +27,9 @@ const props = defineProps<{
         </section>
 
         <div></div>
-        <PackageRecordCtrls />
+        <PackageRecordCtrls :package_id="item?.id"/>
 
-        <div class="v_center text_flex_end">title</div><div class="lg_text">{{ item?.title }}</div>
+        <div class="v_center text_flex_end">title</div><div class="xlg_text">{{ item?.title }}</div>
         <div>description</div><div>{{ item?.content_desc }}</div>
         <div>keywords</div><div>{{ item?.keywords }}</div>
 
