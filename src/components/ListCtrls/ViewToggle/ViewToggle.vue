@@ -1,13 +1,28 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue'
 
 
 const props = defineProps<{
-   card_view: boolean
+   list_view_type: ListViewType
 }>()
+
 
 const emit = defineEmits([
    'toggle-view'
 ])
+
+const list_view_type = ref<ListViewType>(props.list_view_type)
+
+
+onMounted(() => {
+    // to do : set initial index of list_view_types - then we can rotate around them..
+})
+
+const three_way_toggle = () => {
+
+    emit('toggle-view',list_view_type.value)
+
+}
 
 
 
@@ -17,10 +32,12 @@ const emit = defineEmits([
 
 <template>
     <section class="m_.5">
-        <button @click="$emit('toggle-view')">
-            <img v-if="props.card_view"
+        <button @click="three_way_toggle">
+            <img v-if="props.list_view_type === 'card'"
                 src="../../../assets/icons/grid.svg" />
-            <img v-else="!props.card_view"
+            <img v-if="props.list_view_type === 'teaser_card'"
+                src="../../../assets/icons/grid-sm.svg" />
+            <img v-if="props.list_view_type === 'list'"
                 src="../../../assets/icons/list-columns-reverse.svg" />
         </button>
     </section>

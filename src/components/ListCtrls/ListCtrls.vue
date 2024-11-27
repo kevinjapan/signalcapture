@@ -2,7 +2,7 @@
 import ViewToggle from './ViewToggle/ViewToggle.vue'
 
 const props = defineProps<{
-   card_view: boolean
+   list_view_type: ListViewType
 }>()
 
 
@@ -21,7 +21,7 @@ const emit = defineEmits([
       <slot></slot>
 
       <ViewToggle 
-         :card_view="props.card_view"
+         :list_view_type="props.list_view_type"
          @toggle-view="$emit('toggle-view')" />
 
    </section>
@@ -42,6 +42,7 @@ const emit = defineEmits([
    align-items:center;
    margin:0;
    margin-top:2rem;
+   margin-bottom:1rem;
    padding:0;
    background:white;
 }

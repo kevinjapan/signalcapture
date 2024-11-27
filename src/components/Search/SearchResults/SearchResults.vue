@@ -7,12 +7,14 @@ import CollectionsItemListItem from '../../../components/CollectionsItems/Collec
 import { storeToRefs } from 'pinia'
 import ListCtrls from '../../../components/ListCtrls/ListCtrls.vue'
 import PaginationNav from '../../../components/PaginationNav/PaginationNav.vue'
+import CollectionsItemTeaserCard from '@/components/CollectionsItems/CollectionsItemTeaserCard/CollectionsItemTeaserCard.vue'
 
 
 
 // SearchResults
 
-
+// to do : 'no matches found' notification is showing before results display
+// to do : currently duplicates  eg 'Girl Jean' returns duplicates for each search token
 const props = defineProps({
    search_term:String
 })
@@ -30,7 +32,7 @@ const local_search_term = ref('')
 const list = ref<CollectionsItem[] | null>(null)
 
 // toggle card / list view
-const card_view = ref<boolean>(AppStore.card_view)
+const list_view_type = ref<ListViewType>(AppStore.list_view_type)
 
 onBeforeMount(() => {
    // pre-load the store if required (eg on page refresh)
@@ -50,7 +52,7 @@ watchEffect(() => {
 })
 
 watchEffect(() => {
-   card_view.value = AppStore.card_view
+   list_view_type.value = AppStore.list_view_type
 })
 
 const get_search_results = () => {
@@ -88,7 +90,7 @@ const navigate_to_page = (target_page: number) => {
 }
 
 const toggle_view = () => {
-   AppStore.toggle_card_view()
+   AppStore.switch_list_view_type()
 }
 
 </script>
@@ -96,7 +98,7 @@ const toggle_view = () => {
 
 <template>
    <ListCtrls
-      :card_view="card_view"
+      :list_view_type="list_view_type"
       @toggle-view="toggle_view"
    >
       <PaginationNav
@@ -110,10 +112,13 @@ const toggle_view = () => {
    </ListCtrls>
 
    <!-- card / list view -->
-   <section v-if="card_view && search_results" class="grid grid_cards_layout" style="margin-top:1rem;">
+   <section v-if="list_view_type === 'card'" class="grid grid_cards_layout" style="margin-top:1rem;">
       <CollectionsItemCard v-for="item in list" :key="item?.id"  :item="item as unknown as CollectionsItem" />
    </section>
-   <section v-else="!card_view && search_results" class="flex flex_list_layout" style="margin-top:1rem;">
+   <section v-if="list_view_type === 'teaser_card'" class="grid grid_cards_layout teaser_cards">
+      <CollectionsItemTeaserCard v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
+   </section>
+   <section v-if="list_view_type === 'list'" class="flex flex_list_layout">
       <CollectionsItemListItem v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
    </section>
 
@@ -122,7 +127,7 @@ const toggle_view = () => {
 
    <ListCtrls
       v-if="!loading && search_results && !no_matches"
-      :card_view="card_view"
+      :list_view_type="list_view_type"
       @toggle-view="toggle_view"
    >
       <PaginationNav         

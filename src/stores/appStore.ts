@@ -1,4 +1,4 @@
-import { ref, computed, watch } from 'vue'
+import { ref, computed } from 'vue'
 import { defineStore, acceptHMRUpdate } from 'pinia'
 // import { useRoute } from 'vue-router'
 
@@ -29,8 +29,9 @@ export const useAppStore = defineStore('app_store', () => {
    // to tell TypeScript we intend to store Strings in this array, we pass a type parameter to the ref function
    const notify_msg_list = ref<String[]>([])
 
-   // card_view
-   const card_view = ref<boolean>(true)
+   // list_view_types
+   const list_view_types = ['card','teaser_card','list']
+   const list_view_type = ref<ListViewType>('card')
 
    // getters
    const get_api = computed(() => app_api.value)
@@ -45,24 +46,8 @@ export const useAppStore = defineStore('app_store', () => {
    // set_notify_msg_list
    // accepts string or array of strings
    const set_notify_msg_list = (msg: string) => {
-
-      // ts : Array<string> is equivalent to string[]
       let arr: Array<string> = Array.isArray(msg) ? [...msg] : [msg]
       notify_msg_list.value = arr
-   }
-
-   const user = ref({
-      name:"kev",
-      email:"kev@weesongsvuebuild.com"
-   })
-   watch(user,
-      (user_value) => {
-         localStorage.setItem("user",JSON.stringify(user_value))
-      },
-      {deep:true}
-   )
-   if(localStorage.getItem("user")) {
-      // user.value = JSON.parse(localStorage.getItem("user"))
    }
 
    // actions
@@ -70,8 +55,10 @@ export const useAppStore = defineStore('app_store', () => {
       app_api.value = new_api
    }
 
-   function toggle_card_view() {
-      card_view.value = !card_view.value
+   function switch_list_view_type() {
+      const curr_index = list_view_types.indexOf(list_view_type.value)
+      const new_index = curr_index < list_view_types.length - 1   ?  curr_index + 1  :  0
+      list_view_type.value = <ListViewType>list_view_types[new_index]
    }
 
    const is_logged_in = () => {
@@ -88,8 +75,8 @@ export const useAppStore = defineStore('app_store', () => {
       notify_msg_list,
       set_notify_msg_list,
       is_logged_in,
-      card_view,
-      toggle_card_view
+      list_view_type,
+      switch_list_view_type
    }
  })
 

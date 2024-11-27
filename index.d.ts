@@ -27,6 +27,8 @@ interface QueryParams {
 
 type QueryOutcome = 'success' | 'fail'
 
+type ListViewType = 'card' | 'teaser_card' | 'list'
+
 type UseFetchOptions = {
    immediate: boolean
 }

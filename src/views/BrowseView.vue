@@ -6,6 +6,7 @@ import CollectionsItemCard from '../components/CollectionsItems/CollectionsItemC
 import CollectionsItemListItem from '../components/CollectionsItems/CollectionsItemListItem/CollectionsItemListItem.vue'
 import ListCtrls from '../components/ListCtrls/ListCtrls.vue'
 import PaginationNav from '../components/PaginationNav/PaginationNav.vue'
+import CollectionsItemTeaserCard from '@/components/CollectionsItems/CollectionsItemTeaserCard/CollectionsItemTeaserCard.vue'
 
 
 
@@ -25,7 +26,7 @@ const list = ref<CollectionsItem[] | null>(null)
 const is_loading = ref<boolean>(true)
 
 // toggle card / list view
-const card_view = ref<boolean>(AppStore.card_view)
+const list_view_type = ref<ListViewType>(AppStore.list_view_type)
 
 watchEffect(() => {
    is_loading.value = CollectionsItemsListStore.loading.value
@@ -36,7 +37,7 @@ watchEffect(() => {
 })
 
 watchEffect(() => {
-   card_view.value = AppStore.card_view
+   list_view_type.value = AppStore.list_view_type
 })
 
 const set_page = (page: number) => {
@@ -54,8 +55,9 @@ const navigate_to_page = (target_page: number) => {
    set_page(target_page)
 }
 
+// to do : rename
 const toggle_view = () => {
-   AppStore.toggle_card_view()
+   AppStore.switch_list_view_type()
 }
 
 </script>
@@ -71,7 +73,7 @@ const toggle_view = () => {
       -->
 
       <ListCtrls
-         :card_view="card_view"
+         :list_view_type="list_view_type"
          @toggle-view="toggle_view"
       >
          <PaginationNav
@@ -85,21 +87,20 @@ const toggle_view = () => {
       </ListCtrls>
 
 
-
-   <img scr="../assets/imgs/list.svg"/>
-
       <div v-if="CollectionsItemsListStore.loading" class="loading_spin"></div>
 
-      <!-- card / list view -->
-      <section v-if="card_view" class="grid grid_cards_layout">
+      <section v-if="list_view_type === 'card'" class="grid grid_cards_layout">
          <CollectionsItemCard v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
       </section>
-      <section v-else="!card_view" class="flex flex_list_layout">
+      <section v-if="list_view_type === 'teaser_card'" class="grid grid_cards_layout teaser_cards">
+         <CollectionsItemTeaserCard v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
+      </section>
+      <section v-if="list_view_type === 'list'" class="flex flex_list_layout">
          <CollectionsItemListItem v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
       </section>
 
       <ListCtrls
-         :card_view="card_view"
+         :list_view_type="list_view_type"
          @toggle-view="toggle_view"
       >
          <PaginationNav
