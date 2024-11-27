@@ -37,6 +37,11 @@ const router = createRouter({
          component: () => import('../views/PackageView.vue') 
       },
       {
+         name: 'package_print',
+         path: '/packages/:id/print',
+         component: () => import('../views/PackagePrintView.vue')
+      },
+      {
          name: 'collection-item',
          path: `/browse/collections-item/:id`,
          component: () => import('../views/CollectionsItemView.vue')
