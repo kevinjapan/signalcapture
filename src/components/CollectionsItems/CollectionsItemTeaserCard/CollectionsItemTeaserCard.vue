@@ -53,6 +53,7 @@ const open_nav_link = (route:string) => {
     border:solid 1px lightgrey;
     border-radius:.5rem;
     overflow:hidden;
+    background:white;
 }
 .img_container {
     width:100%;
