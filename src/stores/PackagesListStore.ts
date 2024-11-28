@@ -47,10 +47,6 @@ export const usePackagesListStore = defineStore('packages_store', () => {
       else {
          console.log('no payload')
       }
-      return {
-         outcome:"success",
-         error:'to do : assign error here'
-      }
    }
 
    const build_paginated_list = () => {
