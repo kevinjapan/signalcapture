@@ -59,9 +59,6 @@ h3 {
     text-align:left;
     margin:0;
 }
-.collection_item_list_item > *  {
-    margin:0;
-}
 .collection_item_list_item {
     display:-ms-grid;
     display:grid;
@@ -72,6 +69,11 @@ h3 {
     align-items:center;
     gap:0;
     background:white;
+    border-radius:.5rem;
+    overflow:hidden;
+}
+.collection_item_list_item > *  {
+    margin:0;
 }
 @media screen and (min-width: 660px) {    
     img {

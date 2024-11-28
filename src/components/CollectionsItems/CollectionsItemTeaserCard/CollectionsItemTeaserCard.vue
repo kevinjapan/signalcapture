@@ -5,7 +5,6 @@ import { useRouter } from 'vue-router'
 
 // CollectionItemTeaserCard
 // smaller Card for PackageCollectionsItems UI
-// to do : review - can we use in browse/search for smaller card option also (toggle view card/list/small-card)
 
 const props = defineProps<{
    item: CollectionsItem

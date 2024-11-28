@@ -1,21 +1,16 @@
 <script setup lang="ts">
 
 
-
 // CollectionsItemRecordContainer
 // container for CollectionsItemRecord component
 // the container will retrieve the record and pass it to child component
-// to do : review : analogous to CollectionsItemView - so we can use same child  CollectionsItemRecord component therein?
 
 // Component Interface - props and emits
 const props = defineProps<{
     item: CollectionsItem
 }>()
 
-// to do : ensure if a record doesn't have a field it isn't populated w/ last records field value
-
-
-// to do : review - split to header and footer needed for print - but needed for other pages?
+// to do : ensure if a record doesn't have a field it isn't populated w/ last records field value - rollout
 
 </script>
 
@@ -35,7 +30,6 @@ const props = defineProps<{
         <div>folder</div><div>{{ item?.folder_path }}</div>
         <div>keywords</div><div>{{ item?.keywords }}</div>
         <div>img desc</div><div>{{ item?.imgDesc }}</div>
-        
 
     </section>
 
@@ -62,36 +56,39 @@ const props = defineProps<{
 
 <style scoped>
 section.record_card_header{
-    /* to do : webkit */
-   display:grid;
-   grid-template-columns:1fr 2fr;
-   gap:.75rem;
-   margin:1rem 2rem;
-   margin-bottom:0;
-   max-width:600px;
-   background:white;
-   padding:1rem;
-   border-radius:.5rem .5rem 0 0;
+    display:-ms-grid;
+    display:grid;
+    -ms-grid-columns:1fr 2fr;
+    grid-template-columns:1fr 2fr;
+    gap:.75rem;
+    margin:1rem 2rem;
+    margin-bottom:0;
+    max-width:600px;
+    background:white;
+    padding:1rem;
+    border-radius:.5rem .5rem 0 0;
 }
-
 section.record_card_header > *:nth-child(2n + 1),
 section.record_card_footer > *:nth-child(2n + 1) {
     text-align:right;
     color:hsl(0, 0%, 40%);
     padding-right:.5rem;
     font-size:.95rem;
+    /* we retain user select on field contents, but remove awkward highlights where we can */
+    user-select: none;
 }
 section.record_card_footer {
-   display:grid;
-   grid-template-columns:1fr 1fr 1fr 1fr;
-   /* to do : review */
-   gap:.75rem;
-   margin:1rem 2rem;
-   margin-top:0;
-   max-width:600px;
-   background:white;
-   padding:1rem;
-   border-radius:0 0 .5rem .5rem;
+    display:-ms-grid;
+    display:grid;
+    -ms-grid-columns:1fr 1fr 1fr 1fr;
+    grid-template-columns:1fr 1fr 1fr 1fr;
+    gap:.75rem;
+    margin:1rem 2rem;
+    margin-top:0;
+    max-width:600px;
+    background:white;
+    padding:1rem;
+    border-radius:0 0 .5rem .5rem;
 }
 .img_container {
     width:100%;
