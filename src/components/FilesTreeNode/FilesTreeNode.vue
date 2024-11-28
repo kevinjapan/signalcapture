@@ -1,14 +1,10 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watchEffect } from 'vue'
 import { useFilesStore } from '@/stores/FilesStore'
 
 
 // FilesTreeNode
 // modified from https://vuejs.org/examples/#tree
-
-// to do : open file
-// - in md/lg - opens to right side of tree
-// - in sm/mobile - opens in pos:abs div overlaying the tree
 
 // Component interface - props and emits
 const props = defineProps<{
@@ -21,7 +17,7 @@ const emit = defineEmits([
    'child-opened'
 ])
 
-
+const my_id = ref<number>(props.file_teaser.id)
 
 const FilesStore = useFilesStore()
 
@@ -29,22 +25,22 @@ const isOpen = ref(false)
 
 
 // some issue since parent_level is coming through attributes, we need to ensure it is a number here
+// used for blanket peer closing (on-going)
 const my_level = ref<number>(props.level ? props.level + 1 : 0)
 
+const is_selected = ref<boolean>(false)
 
 const isFolder = computed(() => {
   return props.model.children && props.model.children.length
 })
 
-
 onMounted(() => {
    if(my_level.value < FilesStore.closed_at_level) isOpen.value = true
 })
 
-// peer-to-peer may work but is getting expensive (calls every node on closing a folder)
-// watch(() => FilesStore.closed_at_level,() => {
-//    if(FilesStore.closed_at_level < my_level.value) isOpen.value = false
-// })
+watchEffect(() => {
+   is_selected.value = my_id.value === FilesStore.curr_file_id ? true : false
+})
 
 const open_record = (id: number) => {
    FilesStore.curr_file_id = id
@@ -56,6 +52,9 @@ const toggle = () => {
 
    if(isOpen.value) emit('child-opened')
    FilesStore.set_closed_level(!isOpen.value ?  my_level.value - 1 : my_level.value)
+
+   // we set selected folder id in FilesStore
+   FilesStore.curr_file_id = my_id.value
 }
 
 const has_children = (children: FilesTree[]): boolean => {
@@ -63,15 +62,9 @@ const has_children = (children: FilesTree[]): boolean => {
 }
 
 const child_opened = () => {
-   // to do : we now know if a child of the curr node has opened, so we can close our other children?
-   console.log('my child opened',props.model.teaser.title)
+   // future : we now know if a child of the curr node has opened, so we can close our other children?
+   // console.log('my child opened',props.model.teaser.id)
 }
-
-// to do : on opening file lower down on the tree, do we scroll up?
-
-// to do : highlight selected file in tree
-
-// to do : open in sm/mobile overlay tree
 
 </script>
 
@@ -79,7 +72,7 @@ const child_opened = () => {
 
    <li>
 
-      <div :class="{ bold: isFolder }" class="cursor_pointer"
+      <div :class="{ bold: isFolder, bg_selected: is_selected, font_weight_900: is_selected }" class="cursor_pointer no_user_select"
          @click="toggle">
          <div class="flex align_items_center gap_.25">
             <span v-if="model.children && has_children(model?.children)">
@@ -110,15 +103,11 @@ const child_opened = () => {
 
 
 <style scoped>
-
 ul {
    margin:0;
    padding-left:1rem;
    text-align:left;
    list-style:none;
-}
-.bold {
-   font-weight:500;
 }
 a {
    width:fit-content;
