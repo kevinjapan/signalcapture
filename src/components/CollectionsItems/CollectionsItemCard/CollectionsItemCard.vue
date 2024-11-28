@@ -6,6 +6,10 @@ import { useRouter } from 'vue-router'
 // CollectionItemCard
 // we use id as url param since 'slug' is not ideal, duplicates in dffrnt locations are valid
 
+// future : 
+// - img resolution is currently case-sensitive (from json dataset)
+// - folder path currently must end with '\\' or fails (not flexible)
+
 // Component Interface - props and emits
 const props = defineProps<{
    item: CollectionsItem
@@ -30,7 +34,7 @@ const open_nav_link = (route:string) => {
 
 <template>
 
-    <section v-if="props.item" class="collection_item_card">
+    <section v-if="props.item" class="default_item_card">
 
         <section class="img_container">
             <img :src="root_folder + props.item.folder_path + props.item.file_name"/>
