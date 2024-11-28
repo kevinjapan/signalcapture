@@ -6,6 +6,7 @@ import { useAppStore } from '@/stores/AppStore'
 
 
 // AppNav
+// future : enable sm/mobile
 
 const router = useRouter()
 const route = useRoute()
@@ -15,6 +16,7 @@ const app_store = useAppStore()
 
 const display = ref(false)
 
+// sync AppNav on refresh page
 onMounted(async() => {
    await router.isReady()
    app_store.curr_view_route = route.fullPath
@@ -31,11 +33,10 @@ const clicked_bg = () => {
    display.value = false
 }
 
+// highlight nav item for domain and all sub-views
 const is_curr_view_route = (route) => {
-   return route === app_store.curr_view_route
+   return route === '/' ? app_store.curr_view_route === route : app_store.curr_view_route.startsWith(route)
 }
-
-
 
 </script>
 
@@ -47,7 +48,6 @@ const is_curr_view_route = (route) => {
          <img src="../../../assets/icons/list.svg" alt="open nav menu"/>
       </button>
    </div>
-
 
    <nav class="app_nav" :class="{opened : display === true}" @click="clicked_bg">
 
@@ -89,7 +89,6 @@ const is_curr_view_route = (route) => {
 
    </nav>
 
-
 </template>
 
 
@@ -127,6 +126,9 @@ nav.app_nav {
 
    font-size:1.1rem;
    background:white;
+
+   
+   user-select: none;
 
    /* 
    transitions
@@ -323,7 +325,8 @@ a {
 }
 a.sel_view {
    font-weight:700;
-   cursor:unset;
+   background:hsl(0, 0%, 96%);
+   border-radius:0;
 }
 a:not(.sel_view):hover {
    font-weight:400;
