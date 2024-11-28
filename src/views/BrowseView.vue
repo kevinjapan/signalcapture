@@ -55,7 +55,6 @@ const navigate_to_page = (target_page: number) => {
    set_page(target_page)
 }
 
-// to do : rename
 const toggle_view = () => {
    AppStore.switch_list_view_type()
 }
@@ -66,11 +65,9 @@ const toggle_view = () => {
 
    <section class="mt_3">
 
-      <!-- to do : error comes from useFetch - how to pass to client here? 
-         <div v-if="error">
-         <p>Oops! Error encountered: {{ error }}</p>
+      <div v-if="CollectionsItemsListStore?.error">
+         <p>Oops! Error encountered: {{ CollectionsItemsListStore?.error }}</p>
       </div>
-      -->
 
       <ListCtrls
          :list_view_type="list_view_type"
