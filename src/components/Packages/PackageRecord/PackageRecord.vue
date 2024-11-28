@@ -10,7 +10,6 @@ const props = defineProps<{
     item: Package
 }>()
 
-// to do : ensure if a record doesn't have a field it isn't populated w/ last records field value
 
 // to do :
 // - produce an html / pdf of all items in the package
@@ -74,7 +73,6 @@ section.package_record_card {
    padding:1rem;
    border-radius:.5rem;
 }
-
 section.package_record_card > *:nth-child(2n + 1) {
     text-align:right;
     color:hsl(0, 0%, 40%);

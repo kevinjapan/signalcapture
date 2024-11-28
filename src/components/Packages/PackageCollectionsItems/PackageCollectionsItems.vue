@@ -22,8 +22,6 @@ watchEffect(() => {
 })
 </script>
 
-<!-- to do : card/list layout? -->
-
 <template>
     <section v-if="list" class="grid grid_cards_layout" style="margin-top:1rem;">
         <CollectionsItemTeaserCard v-for="item in list" :key="item?.id"  :item="item as unknown as CollectionsItem" />

@@ -24,12 +24,6 @@ watchEffect(() => {
    item.value = PackageStore.single_package
 })
 
-
-// to do : ensure if a record doesn't have a field it isn't populated w/ last records field value
-
-// to do : on opening a record in search/browse, do we want to show some context - eg on left-side like in files?
-//          -  or just open in FilesView ? 
-
 </script>
 
 

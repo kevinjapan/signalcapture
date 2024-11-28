@@ -17,12 +17,6 @@ const props = defineProps<{
 
 const root_folder = '/collection'
 
-// future : some examples using this please
-// const emit = defineEmits<{
-//   change: [id: number]
-//   updade: [value: string]
-// }>()
-
 const router = useRouter()
 
 // we push rather than RouterLink to allow close app_nav etc
@@ -33,8 +27,6 @@ const open_nav_link = (route: string) => {
 </script>
 
 <template>
-
-<!-- to do : rename all 'collection' references -->
 
     <section v-if="props.item" class="package_teaser_card">
 

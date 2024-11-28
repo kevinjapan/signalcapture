@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
+import { onMounted, ref, watchEffect } from 'vue'
 import { useAppStore } from '@/stores/AppStore'
 import { usePackagesListStore } from '@/stores/PackagesListStore'
 import PackageCard from '../components/Packages/PackageCard/PackageCard.vue'
@@ -27,6 +27,9 @@ const is_loading = ref<boolean>(true)
 // toggle card / list view
 const list_view_type = ref<ListViewType>(AppStore.list_view_type)
 
+onMounted(() => {
+   window.scroll(0,0)
+})
 watchEffect(() => {
    is_loading.value = PackageListStore.loading.value
 })
@@ -62,13 +65,11 @@ const toggle_view = () => {
 
 <template>
 
-   <section class="mt_3">
+   <div class="error_notification" v-if="PackageListStore?.error">
+      <p>Oops! Error encountered: {{ PackageListStore?.error }}</p>
+   </div>
 
-      <!-- to do : error comes from useFetch - how to pass to client here? 
-         <div v-if="error">
-         <p>Oops! Error encountered: {{ error }}</p>
-      </div>
-      -->
+   <section v-else class="mt_3">
 
       <ListCtrls
          :list_view_type="list_view_type"

@@ -30,17 +30,16 @@ const open_nav_link = (route: string) => {
 
 <template>
 
-<!-- to do : rename all 'collection' references -->
-    <section class="collection_item_list_item">
+    <section class="package_list_item">
 
-            <img :src="root_folder + props.item.folder_path + props.item.file_name"/>
-        
-            <h3>
-                <a @click.stop="open_nav_link(`/packages/${props.item.id}`)" >{{ props.item.title }}</a>
-            </h3>
-            <p>{{ props.item.file_type }}</p>
-            <p class="italic sm_text">{{ props.item.folder_path }}</p>
-            <p class="sm_text">{{ props.item.file_name }}</p>
+        <img :src="root_folder + props.item.folder_path + props.item.file_name"/>
+    
+        <h3>
+            <a @click.stop="open_nav_link(`/packages/${props.item.id}`)" >{{ props.item.title }}</a>
+        </h3>
+        <p>{{ props.item.file_type }}</p>
+        <p class="italic sm_text">{{ props.item.folder_path }}</p>
+        <p class="sm_text">{{ props.item.file_name }}</p>
 
     </section>
 
@@ -59,10 +58,10 @@ h3 {
     text-align:left;
     margin:0;
 }
-.collection_item_list_item > *  {
+.package_list_item > *  {
     margin:0;
 }
-.collection_item_list_item {
+.package_list_item {
     display:-ms-grid;
     display:grid;
     -ms-grid-columns:1fr;
@@ -79,14 +78,14 @@ h3 {
         -ms-grid-row-span: 5;
         grid-row: 1 / 6;
     }
-    .collection_item_list_item {
+    .package_list_item {
         -ms-grid-columns:100px 3fr;
         grid-template-columns:100px 3fr;
         gap:0;
     }
 }
 @media screen and (min-width: 910px) {
-    .collection_item_list_item {
+    .package_list_item {
         -ms-grid-columns:100px 3fr 2fr;
         grid-template-columns:100px 3fr 2fr;
         gap:.2rem;

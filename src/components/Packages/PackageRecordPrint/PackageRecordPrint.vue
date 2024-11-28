@@ -22,16 +22,10 @@ onMounted(() => {
 watchEffect(() => {
     list.value = <CollectionsItem[]>CollectionsItemsListStore.get_collection_items_by_id(props.item.collection_items.flat())
 })
-
-
-//  to do : display all items in this package in vertical layout for printing...  use CollectionsItemRecord ok, but 100% width please 
-
 </script>
 
 
-
 <template>
-    
     <section v-if="list" class="flex flex_column " style="margin-top:5rem;">
         <CollectionsItemRecord v-for="item in list" :key="item?.id"  :item="item as unknown as CollectionsItem" />
     </section>

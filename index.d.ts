@@ -125,9 +125,8 @@ interface CollectionsItem {
    deleted_at:string
 }
 
-
-// to do : list of CollectionItems in the Package? (ie the package's content)
-
+// Package
+// inc. array of collection_items ids
 interface Package {
    id:number
    title:string
