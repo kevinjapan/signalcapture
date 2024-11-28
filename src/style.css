@@ -30,7 +30,6 @@ songs and albms list views
   gap:2rem;
 }
 .grid_list li.grid_list_row {
-
   display:-ms-grid;
   display:grid;
   -ms-grid-columns:       1fr;
@@ -81,20 +80,32 @@ a:hover {
   width:100%;
   align-items:start;
 }
+.grid_cards_layout.teaser_cards {
+  grid-template-columns:repeat(6,1fr);
+}
 @media screen and (max-width: 1200px) {
   .grid_cards_layout {
      grid-template-columns:repeat(3,1fr);
+  }
+  .grid_cards_layout.teaser_cards {
+    grid-template-columns:repeat(4,1fr);
   }
 }
 @media screen and (max-width: 910px) {
   .grid_cards_layout {
      grid-template-columns:repeat(2,1fr);
   }
+  .grid_cards_layout.teaser_cards {
+    grid-template-columns:repeat(3,1fr);
+  }
 }
 @media screen and (max-width: 660px) {
   .grid_cards_layout {
      grid-template-columns:repeat(1,1fr);
      gap:2rem;
+  }
+  .grid_cards_layout.teaser_cards {
+    grid-template-columns:repeat(2,1fr);
   }
 }
 
@@ -113,6 +124,12 @@ a:hover {
   padding:0;
   padding-left:.5rem;
   padding-right:.5rem;
+}
+.flex_column {
+  -webkit-box-orient:vertical; 
+  -webkit-box-direction:normal; 
+  -ms-flex-direction:column;
+  flex-direction:column;
 }
 .align_items_center {
   -webkit-box-align:center;
@@ -135,7 +152,7 @@ a:hover {
 
 
 
-.collection_item_card {
+.default_item_card {
   display:-ms-grid;
   display:grid;
   -ms-grid-rows:      200px max-content max-content max-content max-content max-content 1fr max-content;  
@@ -252,6 +269,8 @@ input::placeholder {
 .m_\.5 {margin:.5rem;}
 .mt_2 {margin-top:2rem;}
 .mt_3 {margin-top:3rem;}
+.mb_1 {margin-bottom:1rem;}
+.mb_2 {margin-bottom:2rem;}
 .ml_2 {margin-left:2rem;}
 .p_1  {padding:1rem;}
 .pr_1 {padding-right:1rem;}
@@ -272,8 +291,15 @@ input::placeholder {
 
 .sm_text {font-size:.9rem;}
 .lg_text {font-size:1.3rem;}
+.xlg_text {font-size:1.75rem;}
 .bg_yellow {background:yellow;}
 
+.bold {
+  font-weight:500;
+}
+.bg_selected {background:hsl(60, 100%, 75%);}
+
+.font_weight_900 {font-weight:900;}
 .grey_text {color:hsl(0, 0%, 30%);}
 
 .v_center {
@@ -290,4 +316,24 @@ input::placeholder {
   -webkit-box-pack:flex-end;
   -ms-flex-pack:flex-end;
   justify-content:flex-end;
+}
+
+/* print separate pages */
+@media print {
+  .page_break  { display:block; page-break-before:always; }
+}
+
+/* 
+prevent text selection awkwardness on mousedrag over 
+ensure we still allow user convenience of select and copy text where appropriate/useful
+*/
+.no_user_select {
+  user-select: none;
+}
+
+.error_notification {
+  margin:5rem;
+  padding:1rem 2rem;
+  border:solid 1px grey;
+  border-radius:.5rem;
 }
