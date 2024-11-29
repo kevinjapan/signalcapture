@@ -31,25 +31,19 @@ export const useFilesStore = defineStore('files_store', () => {
    // load_files_tree
    function load_files_tree() {
 
-      // to do : do we need fet
-
       // ensure the tree has been downloaded
       if(!files_tree.value) fetchData()
       
-         if(payload) {
-            if(payload.value) {
-               if(is_valid_payload(payload.value as Payload<FilesTree>)) {
-                  files_tree.value = payload.value.data
-               }
+      if(payload) {
+         if(payload.value) {
+            if(is_valid_payload(payload.value as Payload<FilesTree>)) {
+               files_tree.value = payload.value.data
             }
          }
-         else {
-            console.log('no payload')
-         }
-         return {
-            outcome:"success",
-            error:'to do : assign error here'
-         }
+      }
+      else {
+         console.log('no payload')
+      }
    }
 
    // we need to update state herein on changes in useFetch composable
@@ -59,7 +53,7 @@ export const useFilesStore = defineStore('files_store', () => {
          files_tree.value = payload.value?.data
       }
       else {
-         console.log('to do : notify user invalid data rcvd') // use error..
+         console.log('Invalid payload received for FilesTree')
       }
    })
 
