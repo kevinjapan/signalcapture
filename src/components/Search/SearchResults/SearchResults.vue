@@ -13,8 +13,10 @@ import CollectionsItemTeaserCard from '@/components/CollectionsItems/Collections
 
 // SearchResults
 
-// to do : 'no matches found' notification is showing before results display
-// to do : currently duplicates  eg 'Girl Jean' returns duplicates for each search token
+// to do : 
+// - 'no matches found' notification is showing before results display
+// - currently duplicates  eg 'Girl Jean' returns duplicates for each search token
+
 const props = defineProps({
    search_term:String
 })
@@ -23,7 +25,8 @@ const props = defineProps({
 const AppStore = useAppStore()
 
 const SearchStore = useSearchStore()
-const { search_results, loading, no_matches } = storeToRefs(SearchStore)
+const { search_results, loading, no_matches, error } = storeToRefs(SearchStore)
+
 
 // The search term
 const local_search_term = ref('')
@@ -31,6 +34,7 @@ const local_search_term = ref('')
 // local ref to store's Collections Items list
 const list = ref<CollectionsItem[] | null>(null)
 
+const my_error = ref<string | null>(null)
 // toggle card / list view
 const list_view_type = ref<ListViewType>(AppStore.list_view_type)
 
@@ -49,6 +53,10 @@ watch(() => props.search_term, async(newValue) => {
 
 watchEffect(() => {
    list.value = <CollectionsItem[]>SearchStore.paginated_search_results
+})
+
+watchEffect(() => {
+   my_error.value = error.value
 })
 
 watchEffect(() => {
@@ -97,49 +105,56 @@ const toggle_view = () => {
 
 
 <template>
-   <ListCtrls
-      :list_view_type="list_view_type"
-      @toggle-view="toggle_view"
-   >
-      <PaginationNav
-         title="top_page_nav"
-         :page=SearchStore.page
-         :total_num_items=SearchStore.total_num_items
-         :items_per_page=SearchStore.items_per_page
-         @step-to-page="step_to_page" 
-         @navigate-to-page="navigate_to_page" 
-      />
-   </ListCtrls>
 
-   <!-- card / list view -->
-   <section v-if="list_view_type === 'card'" class="grid grid_cards_layout" style="margin-top:1rem;">
-      <CollectionsItemCard v-for="item in list" :key="item?.id"  :item="item as unknown as CollectionsItem" />
+   <div class="error_notification" v-if="my_error">
+      <p>Oops! Error encountered: {{ my_error }}</p>
+   </div>
+
+   <section v-else>
+      <ListCtrls
+         :list_view_type="list_view_type"
+         @toggle-view="toggle_view"
+      >
+         <PaginationNav
+            title="top_page_nav"
+            :page=SearchStore.page
+            :total_num_items=SearchStore.total_num_items
+            :items_per_page=SearchStore.items_per_page
+            @step-to-page="step_to_page" 
+            @navigate-to-page="navigate_to_page" 
+         />
+      </ListCtrls>
+
+      <!-- card / list view -->
+      <section v-if="list_view_type === 'card'" class="grid grid_cards_layout" style="margin-top:1rem;">
+         <CollectionsItemCard v-for="item in list" :key="item?.id"  :item="item as unknown as CollectionsItem" />
+      </section>
+      <section v-if="list_view_type === 'teaser_card'" class="grid grid_cards_layout teaser_cards">
+         <CollectionsItemTeaserCard v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
+      </section>
+      <section v-if="list_view_type === 'list'" class="flex flex_list_layout">
+         <CollectionsItemListItem v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
+      </section>
+
+      <div v-if="no_matches && !loading" class="no_results mt_1">no matches were found</div>
+      <div v-if="loading && !search_results" class="loading_spin mt_1"></div>
+
+      <ListCtrls
+         v-if="!loading && search_results && !no_matches"
+         :list_view_type="list_view_type"
+         @toggle-view="toggle_view"
+      >
+         <PaginationNav         
+            title="bottom_page_nav"
+            :page=SearchStore.page
+            :total_num_items=SearchStore.total_num_items
+            :items_per_page=SearchStore.items_per_page
+            @step-to-page="step_to_page" 
+            @navigate-to-page="navigate_to_page" 
+         />
+      </ListCtrls>
+
    </section>
-   <section v-if="list_view_type === 'teaser_card'" class="grid grid_cards_layout teaser_cards">
-      <CollectionsItemTeaserCard v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
-   </section>
-   <section v-if="list_view_type === 'list'" class="flex flex_list_layout">
-      <CollectionsItemListItem v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
-   </section>
-
-   <div v-if="no_matches && !loading" class="no_results mt_1">no matches were found</div>
-   <div v-if="loading && !search_results" class="loading_spin mt_1"></div>
-
-   <ListCtrls
-      v-if="!loading && search_results && !no_matches"
-      :list_view_type="list_view_type"
-      @toggle-view="toggle_view"
-   >
-      <PaginationNav         
-         title="bottom_page_nav"
-         :page=SearchStore.page
-         :total_num_items=SearchStore.total_num_items
-         :items_per_page=SearchStore.items_per_page
-         @step-to-page="step_to_page" 
-         @navigate-to-page="navigate_to_page" 
-      />
-   </ListCtrls>
-
 
 </template>
 
