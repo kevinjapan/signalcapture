@@ -41,7 +41,7 @@ const emit = defineEmits([
    -ms-flex-align:center;
    align-items:center;
    margin:0;
-   margin-top:2rem;
+   margin-top:1rem;
    margin-bottom:1rem;
    padding:0;
    background:white;

@@ -3,11 +3,13 @@ import { ref, onMounted, watchEffect } from 'vue'
 import { useFilesStore } from '@/stores/FilesStore'
 import FilesTreeNode from '@/components/FilesTreeNode/FilesTreeNode.vue'
 import CollectionsItemRecordContainer from '@/components/CollectionsItems/CollectionsItemRecordContainer/CollectionsItemRecordContainer.vue'
-
+import CollectionsItemsList from '@/components/CollectionsItems/CollectionsItemsList/CollectionsItemsList.vue'
 
 // FilesView
 // to do : do we want each sub-domain as a separate folder?
 //         - they can be (by default) sub-folders of collections root - unless specified differently
+
+// to do : pagination on folders files_list
 
 const FilesStore = useFilesStore()
 FilesStore.load_files_tree()
@@ -17,6 +19,7 @@ const tree = ref<FilesTree | null>(null)
 
 const parent_level = ref<number>(1)
 
+const curr_folder_id = ref<number>(0)
 const curr_record_id = ref<number>(0)
 
 onMounted(() => {
@@ -31,6 +34,15 @@ watchEffect(() => {
    curr_record_id.value = FilesStore.curr_file_id
 })
 
+watchEffect(() => {
+   curr_folder_id.value = FilesStore.curr_folder_id
+
+})
+
+const folder_opened = (id: number) => {
+   console.log('you opened a folder',id)
+}
+
 
 </script>
 
@@ -42,23 +54,28 @@ watchEffect(() => {
 
    <section v-else class="file_view mt_5">
 
-         <section class="rounded_container">
+      <section class="rounded_container">
 
-      <section class="tree_view">
+         <section class="tree_view">
             <ul>
                <FilesTreeNode v-if="tree"
                   :level="parent_level"
                   :model="tree"
                   :file_teaser="{id:0,title:'tester',slug:'tester'}"
+                  @folder-opened="folder_opened"
                />
             </ul>
          </section>
       </section>
 
       <section class="record_view">
+         
          <CollectionsItemRecordContainer 
+            v-if="FilesStore.curr_file_id"
             :id="curr_record_id"
          />
+         <!-- future : any list we use here could also be used in Browe? -->
+         <CollectionsItemsList v-if="FilesStore.curr_folder_id"  />
       </section>
 
    </section>
@@ -93,15 +110,17 @@ section.tree_view {
    padding:0;
 }
 section.record_view {
-   background:transparent
+   background:transparent;
+   margin:1rem;
+   margin-top:0;
 }
 
 @media (min-width: 768px) {
    section.file_view {
       display:-ms-grid;
       display:grid;
-      -ms-grid-columns:       1fr 2fr;
-      grid-template-columns:  1fr 2fr;
+      -ms-grid-columns:       1fr 3fr;
+      grid-template-columns:  1fr 3fr;
    }
 }
 

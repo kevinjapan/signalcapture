@@ -21,8 +21,12 @@ export const useFilesStore = defineStore('files_store', () => {
    // the current closed level (peer-to-peer closing)
    const closed_at_level = ref<number>(3)
 
-   // The Tech (current selected/viewed)
-   const curr_file_id = ref(0-1)
+
+   // current selected folder
+   const curr_folder_id = ref(0)
+
+   // current selected file
+   const curr_file_id = ref(0)
 
    const set_closed_level = (level: number) => {
       closed_at_level.value = level
@@ -46,6 +50,35 @@ export const useFilesStore = defineStore('files_store', () => {
       }
    }
 
+
+   // to do : recursively get children for a given folder id :
+
+   function get_folder_files_list(target_folder_id: number) {
+
+      // console.log(target_folder_id,'search in ',files_tree.value)
+
+
+      if(files_tree.value) return recurse(target_folder_id,files_tree.value)
+
+   }
+   
+   const recurse = (target_folder_id: number,branch: FilesTree): FilesTree | null => {
+      
+      if(branch.teaser.id === target_folder_id) {
+         console.log('match',branch.teaser.id,target_folder_id,branch)
+         return branch
+      }
+      let result = null
+      if(branch.children) {
+         for(const sub_branch of branch.children as FilesTree[]) {
+            result = recurse(target_folder_id, sub_branch)
+            if(result !== null) break
+         }
+      }
+      return result
+   }
+
+
    // we need to update state herein on changes in useFetch composable
    watchEffect(() => {
       if(!payload.value) return
@@ -63,9 +96,11 @@ export const useFilesStore = defineStore('files_store', () => {
       error,
       loading,
       curr_file_id,
+      curr_folder_id,
       load_files_tree,
       closed_at_level,
-      set_closed_level
+      set_closed_level,
+      get_folder_files_list
    }
  })
 

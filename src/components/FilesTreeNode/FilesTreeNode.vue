@@ -6,6 +6,8 @@ import { useFilesStore } from '@/stores/FilesStore'
 // FilesTreeNode
 // modified from https://vuejs.org/examples/#tree
 
+// to do : retain state (highlight/open tree) on 'back' from record - currently not consistent
+
 // Component interface - props and emits
 const props = defineProps<{
    level:number,
@@ -42,8 +44,13 @@ watchEffect(() => {
    is_selected.value = my_id.value === FilesStore.curr_file_id ? true : false
 })
 
-const open_record = (id: number) => {
-   FilesStore.curr_file_id = id
+// retain : for displaying files in tree..
+// const open_record = (id: number) => {
+//    FilesStore.curr_file_id = id
+// }
+
+const open_folder = (id: number) => {
+   FilesStore.curr_folder_id = id
 }
 
 // expand/close this node
@@ -66,6 +73,8 @@ const child_opened = () => {
    // console.log('my child opened',props.model.teaser.id)
 }
 
+
+
 </script>
 
 <template>
@@ -75,19 +84,21 @@ const child_opened = () => {
       <div :class="{ bold: isFolder, bg_selected: is_selected, font_weight_900: is_selected }" class="cursor_pointer no_user_select"
          @click="toggle">
          <div class="flex align_items_center gap_.25">
+
             <span v-if="model.children && has_children(model?.children)">
                <img v-if="!isOpen" src="../../assets/icons/folder.svg" alt="folder" />
                <img v-else src="../../assets/icons/folder-open.svg" alt="folder" />
-            </span>
-            <span v-else>
-               <img src="../../assets/icons/file.svg" alt="folder" />
+               <a @click="open_folder(model.teaser.id)">{{ model.teaser?.title }}</a>
             </span>
             
-            <a v-if="!model.children || !has_children(model?.children)" @click.stop="open_record(model.teaser.id)">{{ model.teaser?.title }}</a>
-            <span v-else>{{ model.teaser?.title }}</span>
+            <!-- retain : for displaying files in tree.. <span v-else>
+               <img src="../../assets/icons/file.svg" alt="file" />
+               <a @click.stop="open_record(model.teaser.id)">{{ model.teaser?.title }}</a>
+            </span> -->
 
          </div>
       </div>
+
       <ul v-show="isOpen">
          <FilesTreeNode
             :level="my_level"
@@ -113,5 +124,4 @@ a {
    width:fit-content;
    overflow-wrap:anywhere;
 }
-
 </style>
