@@ -7,36 +7,51 @@ import { remove_stopwords } from '../utilities/utilities/utilities'
 // SearchStore
 
 // mindshift here, I've prev related reactivity between state and template.
-// composables introduce sharing state btwn components and stores/composables/hooks
-// whereby you don't rely on a return value from a func (as I prev would have done
-// w/ search() herein, but rather, update the state and  have the client 'consume' 
-// the reactive state and respond on it's updating
+// Composables introduce sharing state btwn components and stores/composables/hooks
+// whereby you don't rely on a return value from a func - as I prev would have done
+// but rather, update the state and  have the client 'consume' the reactive state changes
 
 export const useSearchStore = defineStore('search_store', () => {
 
-   // we access the CollectionsItemsList
+   // state
+   
+   // access the CollectionsItemsList
    const CollectionsItemsListStore = useCollectionsItemsListStore()
 
+   // the current search
    const curr_search_term = ref<string | null>('')
 
-   // the results dataset - SearchStore will return 'pages' from this dataset
+   // the full results set - we return paginated subsets
    const search_results = ref<CollectionsItem[] | null>(null)
 
-   // the results for current page
+   // the current results page
    const paginated_search_results = ref<CollectionsItem[] | null>(null)
+
+   // recent searches
+   const recent_searches = ref<string[]>([])
+
+   // search worked but no matches (empty arr)
+   const no_matches = ref<boolean>(false)
+
+   // the total num of results
+   const total_num_items = ref<number>(0)
 
    // the current page
    const page = ref<number>(1)
 
+   // paginated items per page - future : in AppStore
+   const items_per_page = ref<number>(20)
+
+   // is loading flag
    const loading = ref<boolean>(false)
 
-   // search worked but no matches were found (empty arr)
-   const no_matches = ref<boolean>(false)
+   // errors encountered
+   const error = ref<string | null>(null)
 
-   const total_num_items = ref<number>(0)
-
-   const items_per_page = ref<number>(20)
    
+
+   // methods
+
    function preload_collection_items() {
       CollectionsItemsListStore.load_collection_items()
    }
@@ -50,11 +65,18 @@ export const useSearchStore = defineStore('search_store', () => {
             filter_search_results(search_term)
          }
 
-         if(search_results.value?.length === 0) no_matches.value = true
+         if(search_results.value?.length === 0) {
+            no_matches.value = true
+         }
+         else {
+            register_as_recent_search(search_term)  
+         }
       }
       catch(error) {
          return false
       }
+   
+
       // perception - show the loading
       setTimeout(() => loading.value = false,1000)
       return true      
@@ -64,6 +86,13 @@ export const useSearchStore = defineStore('search_store', () => {
    // future : we could search for eg [search_term,...search_term.split(' ')] 
    // would allow us to give weight to complete matches, but for now we ignore complete search_term in favor of matching separate tokens 
    // if we duplicate whole search term eg ['Arbroath Harbour','Arbroath','Harbour'] we get duplicates eg on [0] and [1] 
+
+   const register_as_recent_search = (search_term: string) =>  {
+      if(!search_term) return
+      const no_duplicates_set = new Set(recent_searches.value)
+      no_duplicates_set.add(search_term)
+      recent_searches.value = [...no_duplicates_set]
+   }
 
    function filter_search_results(search_term: string) {
 
@@ -81,6 +110,8 @@ export const useSearchStore = defineStore('search_store', () => {
             if(target.toUpperCase().includes(term.toUpperCase())) return elem            
          }))
       }
+      
+      // to do : remove duplicate CollectionsItemRecords from results
       
       let collated = <CollectionsItem[]>[]
       for(const results of my_results) {
@@ -117,18 +148,32 @@ export const useSearchStore = defineStore('search_store', () => {
       page.value = 1
    }
 
+   watchEffect(() => {
+      // workaround - this does get the .value as a string correctly w/ casting:
+      // issue - CollectionsItemsListStore.error.value returns 'undefined' while CollectionsItemsListStore.error 
+      //         returns correct object, from which we can assign string.
+      error.value = CollectionsItemsListStore.error ? CollectionsItemsListStore.error as unknown as string: null
+
+   })
+
    return {
+
+      // state
+      preload_collection_items,
       search,
       search_results,
       paginated_search_results,
-      preload_collection_items,
-      loading,
-      no_matches,
-      set_page,
       page,
+      recent_searches,
       total_num_items,
       items_per_page,
-      flush
+      no_matches,
+
+      // methods
+      set_page,
+      flush,
+      loading,
+      error
    }
  
 })
