@@ -47,10 +47,6 @@ export const useCollectionsItemsListStore = defineStore('collections_items_store
       else {
          console.log('no payload')
       }
-      return {
-         outcome:"success",
-         error:'to do : assign error here'
-      }
    }
 
    const build_paginated_list = () => {
@@ -69,7 +65,7 @@ export const useCollectionsItemsListStore = defineStore('collections_items_store
          build_paginated_list()
       }
       else {
-         console.log('to do : notify user invalid data rcvd') // use error..
+         console.log('Invalid payload received for ColllectionsItemsList')
       }
    })
 

@@ -34,16 +34,15 @@ export default function useFetch<T>(
       payload.value = <Payload<T>> await res.json()
     }
     catch(e) {
-      console.log('error happened')
-         // in TS error type is 'unknown' - we know it will be an Error object
-         const err_obj = e as Error
-         if(err_obj.name === "AbortError") {
-            error.value = null
-            // payload.value = null
-         }
-         else {
-            error.value = err_obj.message
-         }
+    // in TS error type is 'unknown' - we know it will be an Error object
+    const err_obj = e as Error
+    if(err_obj.name === "AbortError") {
+      error.value = null
+      // payload.value = null
+    }
+    else {
+      error.value = err_obj.message
+    }
     }
     
     loading.value = false

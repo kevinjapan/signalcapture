@@ -51,7 +51,7 @@ export default function useData<T>(endPoint: string, url_params: string[], query
    //    query_string3 = Object.keys(query_params).length > 0 ? new URLSearchParams({...query_params}) : {}
    // }
 
-   console.log('loading in useData',loading)
+   // console.log('loading in useData',loading)
 
 
    // return UseDataReturn obj

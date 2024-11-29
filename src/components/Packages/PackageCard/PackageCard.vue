@@ -6,22 +6,16 @@ import { useRouter } from 'vue-router'
 // PackageCard
 // we use id as url param since 'slug' is not ideal, duplicates in dffrnt locations are valid
 
-// to do : 
+// future : rollout
 // - img resolution is currently case-sensitive (from json dataset)
 // - folder path currently must end with '\\' or fails (not flexible)
 
-// Component Interface - props and emits
 const props = defineProps<{
    item: Package
 }>()
 
 const root_folder = '/collection'
 
-// future : some examples using this please
-// const emit = defineEmits<{
-//   change: [id: number]
-//   updade: [value: string]
-// }>()
 
 const router = useRouter()
 

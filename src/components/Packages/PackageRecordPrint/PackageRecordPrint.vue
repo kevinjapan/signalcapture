@@ -16,7 +16,6 @@ const list = ref<CollectionsItem[] | null>(null)
 
 onMounted(() => {
     list.value = <CollectionsItem[]>CollectionsItemsListStore.get_collection_items_by_id(props.item.collection_items.flat())
-    console.log('in',list.value)
 })
 
 watchEffect(() => {

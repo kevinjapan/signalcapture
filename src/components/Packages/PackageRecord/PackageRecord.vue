@@ -11,7 +11,7 @@ const props = defineProps<{
 }>()
 
 
-// to do :
+// future :
 // - produce an html / pdf of all items in the package
 // - user can check which items to include in above
 

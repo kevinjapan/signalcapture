@@ -58,15 +58,11 @@ export const usePackagesListStore = defineStore('packages_store', () => {
 
    // we need to update state herein on changes in useFetch composable
    watchEffect(() => {
-      // to do : verify notification if file not found : rollout
       if(!payload.value) return
       if(is_valid_payload(payload.value as Payload<Package[]>)) {
          packages_list.value = payload.value?.data
          if(packages_list.value) total_num_items.value = packages_list.value?.length
          build_paginated_list()
-      }
-      else {
-         console.log('to do : notify user invalid data rcvd') // use error..
       }
    })
 
