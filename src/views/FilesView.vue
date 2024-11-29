@@ -5,6 +5,9 @@ import FilesTreeNode from '@/components/FilesTreeNode/FilesTreeNode.vue'
 import CollectionsItemRecordContainer from '@/components/CollectionsItems/CollectionsItemRecordContainer/CollectionsItemRecordContainer.vue'
 
 
+// FilesView
+// to do : do we want each sub-domain as a separate folder?
+//         - they can be (by default) sub-folders of collections root - unless specified differently
 
 const FilesStore = useFilesStore()
 FilesStore.load_files_tree()
@@ -32,7 +35,12 @@ watchEffect(() => {
 </script>
 
 <template>
-   <section class="file_view mt_2">
+
+   <div class="error_notification" v-if="FilesStore?.error">
+      <p>Oops! Error encountered: {{ FilesStore?.error }}</p>
+   </div>
+
+   <section v-else class="file_view mt_5">
 
          <section class="rounded_container">
 
@@ -41,7 +49,7 @@ watchEffect(() => {
                <FilesTreeNode v-if="tree"
                   :level="parent_level"
                   :model="tree"
-                  :file_teaser="{id:1,title:'tester',slug:'tester'}"
+                  :file_teaser="{id:0,title:'tester',slug:'tester'}"
                />
             </ul>
          </section>
@@ -57,7 +65,7 @@ watchEffect(() => {
 </template>
 
 <style scoped>
-/* to do : file will overlay tree in sm/mobile */
+/* future : file will overlay tree in sm/mobile */
 
 section.file_view {
   display:-ms-grid;
@@ -87,7 +95,6 @@ section.tree_view {
 section.record_view {
    background:transparent
 }
-/* to do : style scroll bar in FilesView - app/site-wide scroll bar styling */
 
 @media (min-width: 768px) {
    section.file_view {

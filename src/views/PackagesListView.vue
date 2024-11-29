@@ -69,7 +69,7 @@ const toggle_view = () => {
       <p>Oops! Error encountered: {{ PackageListStore?.error }}</p>
    </div>
 
-   <section v-else class="mt_3">
+   <section v-else class="mt_5">
 
       <ListCtrls
          :list_view_type="list_view_type"

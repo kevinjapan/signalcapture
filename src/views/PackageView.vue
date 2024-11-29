@@ -31,11 +31,12 @@ watchEffect(() => {
 <template>
 
    <div v-if="is_loading" class="loading_spin"></div>
-
-    <PackageRecord
-        v-if="item"
-        :item="item"
-    />
+   <section class="mt_5">
+      <PackageRecord
+         v-if="item"
+         :item="item"
+      />
+   </section>
 
 
 </template>

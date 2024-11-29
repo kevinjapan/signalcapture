@@ -63,7 +63,11 @@ const toggle_view = () => {
 
 <template>
 
-   <section class="mt_3">
+   <div class="error_notification" v-if="CollectionsItemsListStore?.error">
+      <p>Oops! Error encountered: {{ CollectionsItemsListStore?.error }}</p>
+   </div>
+
+   <section v-else class="mt_5 mb_2">
 
       <div v-if="CollectionsItemsListStore?.error">
          <p>Oops! Error encountered: {{ CollectionsItemsListStore?.error }}</p>

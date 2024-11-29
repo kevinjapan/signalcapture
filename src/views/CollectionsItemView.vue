@@ -24,12 +24,6 @@ watchEffect(() => {
    item.value = CollectionsItemStore.single_collection_item
 })
 
-
-// to do : ensure if a record doesn't have a field it isn't populated w/ last records field value
-
-// to do : on opening a record in search/browse, do we want to show some context - eg on left-side like in files?
-//          -  or just open in FilesView ? 
-
 </script>
 
 
@@ -37,7 +31,7 @@ watchEffect(() => {
 
    <div v-if="is_loading" class="loading_spin"></div>
 
-   <section v-if="item" class="record_view_container mt_2">
+   <section v-if="item" class="record_view_container mt_5">
       
       <section>
          

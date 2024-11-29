@@ -28,7 +28,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-   <section class="mt_3">
+   <section class="mt_5">
       <SearchForm 
          v-model="search_term" 
          @submit-search-term="submit_search_term" 
