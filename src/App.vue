@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { useAppStore } from '../src/stores/AppStore'
 import AppNav from './components/App/AppNav/AppNav.vue'
 import AppStatus from './components/App/AppStatus/AppStatus.vue'
+import AppFooter from './components/App/AppFooter/AppFooter.vue'
 
 
 // App Root Component
@@ -32,6 +33,8 @@ watch(() => route.fullPath, () => {
    </main>
 
    <AppStatus />
+
+   <AppFooter />
 
 </template>
 
