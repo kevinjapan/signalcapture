@@ -10,8 +10,6 @@ const props = defineProps<{
     item: CollectionsItem
 }>()
 
-// to do : ensure if a record doesn't have a field it isn't populated w/ last records field value - rollout
-
 </script>
 
 <template>
@@ -58,12 +56,12 @@ const props = defineProps<{
 section.record_card_header{
     display:-ms-grid;
     display:grid;
-    -ms-grid-columns:1fr 2fr;
-    grid-template-columns:1fr 2fr;
+    -ms-grid-columns:1fr 4fr;
+    grid-template-columns:1fr 4fr;
     gap:.75rem;
+    /* we let containing grid set width */
     margin:1rem 2rem;
     margin-bottom:0;
-    max-width:600px;
     background:white;
     padding:1rem;
     border-radius:.5rem .5rem 0 0;
@@ -80,12 +78,12 @@ section.record_card_footer > *:nth-child(2n + 1) {
 section.record_card_footer {
     display:-ms-grid;
     display:grid;
-    -ms-grid-columns:1fr 1fr 1fr 1fr;
-    grid-template-columns:1fr 1fr 1fr 1fr;
+    -ms-grid-columns:1fr 2fr 1fr 2fr;
+    grid-template-columns:1fr 2fr 1fr 2fr;
     gap:.75rem;
+    /* we let containing grid set width */
     margin:1rem 2rem;
     margin-top:0;
-    max-width:600px;
     background:white;
     padding:1rem;
     border-radius:0 0 .5rem .5rem;
