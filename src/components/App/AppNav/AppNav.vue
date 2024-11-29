@@ -113,14 +113,14 @@ nav.app_nav {
    -ms-flex-pack:flex-start;
    justify-content:flex-start;
    
-   -webkit-box-align:flex-end;
-   -ms-flex-align:flex-end;
-   align-items:flex-end;
+   -webkit-box-align:center;
+   -ms-flex-align:center;
+   align-items:center;
 
    gap:1rem;
 
    width:100%;
-   height:100%;
+   height:100%;height:120px;
    margin:0;
    overflow:hidden;
 
@@ -200,8 +200,8 @@ nav.app_nav.opened > div.app_nav_dimmer {
    -ms-flex-pack:flex-start;
    justify-content:flex-start;
 
-   -ms-flex-item-align:end;
-   align-self:flex-end;
+   /* -ms-flex-item-align:end; */
+   /* align-self:flex-end; */
 
    width:fit-content;
    margin-right:.5rem;
@@ -264,10 +264,10 @@ nav.app_nav.opened > div.app_nav_dimmer {
       -ms-flex-pack:end;
       justify-content:flex-end;
 
-      text-align:right;
+      align-items:center;
 
       width:100%;
-      height:var(--app_nav_height);
+      height:60px;
       margin:0;
       padding:0;
       font-size:1.2rem;

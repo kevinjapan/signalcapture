@@ -10,7 +10,7 @@ const copyright_date = ref(today.getFullYear())
 <template>
 
    <section>
-      copyright &copy; kev hastie 2021 - {{ copyright_date }}
+      Copyright &copy; Kevin Hastie 2023 - {{ copyright_date }}
    </section>
 
 </template>
@@ -18,11 +18,14 @@ const copyright_date = ref(today.getFullYear())
 <style scoped>
 
 section {
+   display:flex;
+   justify-content:center;
    padding:2rem;
-   padding-top:4rem;
-   background:var(--bg_dark);
+   background:hsl(0, 0%, 25%);
    color:hsl(0, 0%, 70%);
    font-size:.95rem;
+   min-height:200px;
+   max-height:fit-content;
 }
 
 </style>
