@@ -188,3 +188,10 @@ interface Package {
    viewed_at?:string
    deleted_at?:string
 }
+
+// Tags
+
+interface Tag {
+   id:number
+   tag:string
+}
