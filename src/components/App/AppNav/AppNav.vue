@@ -70,6 +70,8 @@ const is_curr_view_route = (route) => {
          <a @click.stop="open_nav_link('/search')" 
             :class="{sel_view:is_curr_view_route('/search')}">Search</a>
             
+         <a @click.stop="open_nav_link('/tags')" 
+            :class="{sel_view:is_curr_view_route('/tags')}">Tags</a>
          
          <!-- <div v-if="app_store.app_api !== ''"> -->
             <a @click.stop="open_nav_link('/browse')" 

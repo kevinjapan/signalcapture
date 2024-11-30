@@ -2,11 +2,11 @@
 import { ref, watchEffect } from 'vue'
 import { useAppStore } from '@/stores/AppStore'
 import { useCollectionsItemsListStore } from '../stores/CollectionsItemsListStore'
-import CollectionsItemCard from '../components/CollectionsItems/CollectionsItemCard/CollectionsItemCard.vue'
-import CollectionsItemListItem from '../components/CollectionsItems/CollectionsItemListItem/CollectionsItemListItem.vue'
 import ListCtrls from '../components/ListCtrls/ListCtrls.vue'
 import PaginationNav from '../components/PaginationNav/PaginationNav.vue'
+import CollectionsItemCard from '../components/CollectionsItems/CollectionsItemCard/CollectionsItemCard.vue'
 import CollectionsItemTeaserCard from '@/components/CollectionsItems/CollectionsItemTeaserCard/CollectionsItemTeaserCard.vue'
+import CollectionsItemListItem from '../components/CollectionsItems/CollectionsItemListItem/CollectionsItemListItem.vue'
 
 
 

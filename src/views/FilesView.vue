@@ -74,7 +74,10 @@ const folder_opened = (id: number) => {
             v-if="FilesStore.curr_file_id"
             :id="curr_record_id"
          />
-         <!-- future : any list we use here could also be used in Browe? -->
+         <!-- future : any list we use here could also be used in Browse? -->
+
+         <!-- to do : this should be FilesList - not CollectionsItemsList
+              it needs to show all files and maybe records for files w/ records? -->
          <CollectionsItemsList v-if="FilesStore.curr_folder_id"  />
       </section>
 

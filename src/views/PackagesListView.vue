@@ -85,7 +85,7 @@ const toggle_view = () => {
          />
       </ListCtrls>
 
-      <div v-if="PackageListStore.loading" class="loading_spin"></div>
+      <div v-if="is_loading" class="loading_spin"></div>
 
       <!-- card / list view -->
       <section v-if="list_view_type === 'card'" class="grid grid_cards_layout mt_2">

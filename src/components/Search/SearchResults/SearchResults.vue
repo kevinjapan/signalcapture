@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, watch, watchEffect, onBeforeMount } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useAppStore } from '@/stores/AppStore'
 import { useSearchStore }  from '../../../stores/SearchStore'
 import CollectionsItemCard from '../../../components/CollectionsItems/CollectionsItemCard/CollectionsItemCard.vue'
 import CollectionsItemListItem from '../../../components/CollectionsItems/CollectionsItemListItem/CollectionsItemListItem.vue'
-import { storeToRefs } from 'pinia'
 import ListCtrls from '../../../components/ListCtrls/ListCtrls.vue'
 import PaginationNav from '../../../components/PaginationNav/PaginationNav.vue'
 import CollectionsItemTeaserCard from '@/components/CollectionsItems/CollectionsItemTeaserCard/CollectionsItemTeaserCard.vue'
@@ -35,6 +35,7 @@ const local_search_term = ref('')
 const list = ref<CollectionsItem[] | null>(null)
 
 const my_error = ref<string | null>(null)
+
 // toggle card / list view
 const list_view_type = ref<ListViewType>(AppStore.list_view_type)
 

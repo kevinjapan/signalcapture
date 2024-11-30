@@ -60,6 +60,16 @@ a:hover {
   color:blue;
 }
 
+ul {
+  list-style:none;
+}
+li {
+  padding:.25rem;
+}
+li:hover {
+  background:hsl(60, 100%, 80%);
+}
+
 
 /* 
   grid and flex
@@ -312,7 +322,14 @@ input::placeholder {
   -webkit-box-align:center;
   -ms-flex-align:center;
   align-items:center;
-  
+}
+.v_end {
+  display:-webkit-box;
+  display:-ms-flexbox;
+  display:flex;
+  -webkit-box-align:flex-end;
+  -ms-flex-align:flex-end;
+  align-items:flex-end;
 }
 
 .text_flex_end {

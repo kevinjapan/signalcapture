@@ -153,7 +153,6 @@ export const useSearchStore = defineStore('search_store', () => {
       // issue - CollectionsItemsListStore.error.value returns 'undefined' while CollectionsItemsListStore.error 
       //         returns correct object, from which we can assign string.
       error.value = CollectionsItemsListStore.error ? CollectionsItemsListStore.error as unknown as string: null
-
    })
 
    return {
