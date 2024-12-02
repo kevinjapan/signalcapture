@@ -7,6 +7,7 @@ import { is_valid_payload } from '../utilities/utilities/validation'
 
 // TagsStore
 // generally, we always extract paginated list
+// to do : rename - this is list of tags - nothing else / no list tagged items etc.
 
 export const useTagsStore = defineStore('tags_store', () => {
 
@@ -17,7 +18,6 @@ export const useTagsStore = defineStore('tags_store', () => {
 
    const { payload, error, loading, fetchData } = useFetch<Tag[]>(url,{}) as UseFetchReturn<Tag[]>
 
-
    // The TagsList
    // in our no-server demo, we load all (limited no.) items into this array and paginate on client.
    const tags_list = ref<Tag[] | null>(null)
@@ -25,7 +25,7 @@ export const useTagsStore = defineStore('tags_store', () => {
    const paginated_tags_list = ref<Tag[] | null>(null)
 
    // The Tag (current selected/viewed)
-   const curr_tag = ref<Tag | null>(null)
+   // const curr_tag = ref<Tag | null>(null)
 
    const page = ref<number>(1)
 
@@ -68,6 +68,14 @@ export const useTagsStore = defineStore('tags_store', () => {
       }
    })
 
+   function get_tags_by_id(ids_list: number[]) {
+      const list = <Tag[]>tags_list?.value?.filter((elem: Tag) => {
+         return ids_list.includes(elem.id)
+      })
+      console.log('hey',list)
+      return list
+   }
+
 
    function load_tags_list() {
       if(!tags_list.value) load_tags()
@@ -79,18 +87,20 @@ export const useTagsStore = defineStore('tags_store', () => {
    }
 
    return { 
-      load_tags,
+      
+      tags_list,
+      paginated_tags_list,
       payload, 
       error, 
       loading,
-      tags_list,
-      paginated_tags_list,
-      curr_tag,
-      load_tags_list,
-      set_page,
       page,
       total_num_items,
-      items_per_page
+      items_per_page,
+
+      load_tags_list,
+      load_tags,
+      set_page,
+      get_tags_by_id
    }
  })
 

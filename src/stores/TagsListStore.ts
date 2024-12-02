@@ -7,10 +7,7 @@ import { useCollectionsItemsListStore } from './CollectionsItemsListStore'
 
 // TagsListStore to do : better name?
 
-
 export const useTagsListStore = defineStore('tags_results_list_store', () => {
-
-   // state
    
    // access the CollectionsItemsList
    const CollectionsItemsListStore = useCollectionsItemsListStore()
@@ -42,9 +39,6 @@ export const useTagsListStore = defineStore('tags_results_list_store', () => {
    // errors encountered
    const error = ref<string | null>(null)
 
-   
-
-   // methods
 
    function preload_collection_items() {
       CollectionsItemsListStore.load_collection_items()
@@ -66,20 +60,14 @@ export const useTagsListStore = defineStore('tags_results_list_store', () => {
       catch(error) {
          return false
       }
-   
-
       // perception - show the loading
       setTimeout(() => loading.value = false,1000)
       return true      
    }
 
-   
-
-
    function filter_search_results(curr_tag_id: string) {
 
       if(!curr_tag_id || parseInt(curr_tag_id) < 1) return false
-
       search_results.value =  <CollectionsItem[]>CollectionsItemsListStore.collections_items_list?.filter((elem: CollectionsItem) => {
             // // to do : review - too many iterations here - performance // console.log(typeof elem)
             // const target = elem.title + elem.content_desc + elem.file_name + elem.author_creator + elem.people
@@ -133,6 +121,7 @@ export const useTagsListStore = defineStore('tags_results_list_store', () => {
       total_num_items,
       items_per_page,
       no_matches,
+      curr_search_tag,
 
       set_page,
       flush,

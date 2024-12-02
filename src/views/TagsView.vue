@@ -14,7 +14,6 @@ import CollectionsItemTeaserCard from '@/components/CollectionsItems/Collections
 
 // TagsView
 
-
 const AppStore = useAppStore()
 const TagsListStore = useTagsListStore()
 
@@ -27,6 +26,7 @@ const local_tag_search_id = ref<number>(0)
 // local ref to store's Collections Items list
 const list = ref<CollectionsItem[] | null>(null)
 
+//
 const my_error = ref<string | null>(null)
 
 // toggle card / list view
@@ -36,7 +36,6 @@ onBeforeMount(() => {
    // pre-load the store if required (eg on page refresh)
    TagsListStore.preload_collection_items()
 })
-
 
 watch(local_tag_search_id,() => {
    TagsListStore.search(local_tag_search_id.value.toString())
@@ -75,17 +74,13 @@ const toggle_view = () => {
 
 const tag_selected = (tag: number) => {
    local_tag_search_id.value = tag
-   console.log(local_tag_search_id.value)
 }
-
 </script>
 
 
 <template>
 
-<TagsSelector @tag-selected="tag_selected"/>
-
-   <TagsSelector @tag-selected="tag_selected"/>
+   <TagsSelector @tag-selected="tag_selected" />
 
    <div class="error_notification" v-if="my_error">
       <p>Oops! Error encountered: {{ my_error }}</p>
