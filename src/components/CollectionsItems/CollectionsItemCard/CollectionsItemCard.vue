@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue';
 import { useRouter } from 'vue-router'
 import { useAppStore } from '@/stores/AppStore'
 
@@ -19,33 +18,26 @@ const router = useRouter()
 
 const AppStore = useAppStore()
 
-// 
-const item = ref<CollectionsItem | null>(null)  // to do : return to props.item and remove watchEffect if not required
-
 const open_nav_link = (route:string) => {
    router.push(route)
 }
-
-watchEffect(() => {
-    item.value = props.item
-})
 </script>
 
 <template>
-    <section v-if="item" class="default_item_card">
+    <section v-if="props.item" class="default_item_card">
         <section class="img_container">
-            <a @click.stop="open_nav_link(`/browse/collections-item/${item.id}`)" >
-                <img :src="AppStore.root_folder + item.folder_path + item.file_name"/>
+            <a @click.stop="open_nav_link(`/browse/collections-item/${props.item.id}`)" >
+                <img :src="AppStore.root_folder + props.item.folder_path + props.item.file_name"/>
             </a>
         </section>
         <section class="text_container">
             <h3>
-                <a @click.stop="open_nav_link(`/browse/collections-item/${item.id}`)" >{{ item.title }}</a>
+                <a @click.stop="open_nav_link(`/browse/collections-item/${props.item.id}`)" >{{ props.item.title }}</a>
             </h3>
-            <p>{{ item.file_type }}</p>
-            <p>{{ item.file_name }}</p>
-            <p>{{ item.item_Date }}</p>
-            <p>{{ item.folder_path }}</p>
+            <p>{{ props.item.file_type }}</p>
+            <p>{{ props.item.file_name }}</p>
+            <p>{{ props.item.item_Date }}</p>
+            <p>{{ props.item.folder_path }}</p>
         </section>
     </section>
 </template>
