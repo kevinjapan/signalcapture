@@ -6,11 +6,16 @@ import { useTagsStore } from '@/stores/TagsStore'
 // TagsSelector
 // display all tags for selecting
 
+const props = defineProps<{
+   selected_tag_id: number
+}>()
+
+
 const emit = defineEmits([
    'tag-selected'
 ])
 
-const TagsStore = useTagsStore() // to do : better name - this is list of tags store only...
+const TagsStore = useTagsStore()
 TagsStore.load_tags()
 
 
@@ -20,9 +25,8 @@ const list = ref<Tag[] | null>(null)
 // display loading spinner
 const is_loading = ref<boolean>(true)
 
+// 
 const selected_id = ref<number>(0)
-
-// to do : highlight on clicking 'back' from a record
 
 onMounted(() => {
    window.scroll(0,0)
@@ -32,6 +36,9 @@ watchEffect(() => {
 })
 watchEffect(() => {
    list.value = <Tag[]>TagsStore.paginated_tags_list
+})
+watchEffect(() => {
+   selected_id.value = props.selected_tag_id
 })
 
 const tag_selected = (tag_id: number) => {
