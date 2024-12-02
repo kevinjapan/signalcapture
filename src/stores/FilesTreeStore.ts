@@ -5,9 +5,9 @@ import { is_valid_payload } from '@/utilities/utilities/validation'
 
 
 
-// FilesStore
+// FilesTreeStore
 
-export const useFilesStore = defineStore('files_store', () => {
+export const useFilesTreeStore = defineStore('files_tree_store', () => {
 
    // the Files Tree dataset url
    const url = '/data/files_tree.json'
@@ -50,28 +50,19 @@ export const useFilesStore = defineStore('files_store', () => {
       }
    }
 
-
-   // to do : recursively get children for a given folder id :
-
    function get_folder_files_list(target_folder_id: number) {
-
-      // console.log(target_folder_id,'search in ',files_tree.value)
-
-
-      if(files_tree.value) return recurse(target_folder_id,files_tree.value)
-
+      if(files_tree.value) return get_branch_files_list(target_folder_id,files_tree.value)
    }
    
-   const recurse = (target_folder_id: number,branch: FilesTree): FilesTree | null => {
+   const get_branch_files_list = (target_folder_id: number,branch: FilesTree): FilesTree | null => {
       
       if(branch.teaser.id === target_folder_id) {
-         console.log('match',branch.teaser.id,target_folder_id,branch)
          return branch
       }
       let result = null
       if(branch.children) {
          for(const sub_branch of branch.children as FilesTree[]) {
-            result = recurse(target_folder_id, sub_branch)
+            result = get_branch_files_list(target_folder_id, sub_branch)
             if(result !== null) break
          }
       }
@@ -90,15 +81,17 @@ export const useFilesStore = defineStore('files_store', () => {
       }
    })
 
-   return { 
+   return {
+
       files_tree,
       payload,
       error,
       loading,
       curr_file_id,
       curr_folder_id,
-      load_files_tree,
       closed_at_level,
+
+      load_files_tree,
       set_closed_level,
       get_folder_files_list
    }
@@ -107,5 +100,5 @@ export const useFilesStore = defineStore('files_store', () => {
 
 // hot module replacement for pinia
 if (import.meta.hot) {
-   import.meta.hot.accept(acceptHMRUpdate(useFilesStore, import.meta.hot))
+   import.meta.hot.accept(acceptHMRUpdate(useFilesTreeStore, import.meta.hot))
 }

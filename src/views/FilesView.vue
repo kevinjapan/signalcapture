@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watchEffect } from 'vue'
-import { useFilesStore } from '@/stores/FilesStore'
+import { useFilesTreeStore } from '@/stores/FilesTreeStore'
 import FilesTreeNode from '@/components/Files/FilesTreeNode/FilesTreeNode.vue'
-import CollectionsItemRecordContainer from '@/components/CollectionsItems/CollectionsItemRecordContainer/CollectionsItemRecordContainer.vue'
 import FolderItemsList from '@/components/Files/FolderItemsList/FolderItemsList.vue'
 
 
@@ -10,8 +9,8 @@ import FolderItemsList from '@/components/Files/FolderItemsList/FolderItemsList.
 // FilesView
 // future : do we want each sub-domain as a separate folder? - they can be (by default) sub-folders of collections root - unless specified differently
 
-const FilesStore = useFilesStore()
-FilesStore.load_files_tree()
+const FilesTreeStore = useFilesTreeStore()
+FilesTreeStore.load_files_tree()
 
 // FilesTreeView
 const tree = ref<FilesTree | null>(null)
@@ -30,15 +29,15 @@ onMounted(() => {
 })
 
 watchEffect(() => {
-   tree.value = FilesStore.files_tree
+   tree.value = FilesTreeStore.files_tree
 })
 
 watchEffect(() => {
-   curr_record_id.value = FilesStore.curr_file_id
+   curr_record_id.value = FilesTreeStore.curr_file_id
 })
 
 watchEffect(() => {
-   curr_folder_id.value = FilesStore.curr_folder_id
+   curr_folder_id.value = FilesTreeStore.curr_folder_id
 
 })
 
@@ -51,8 +50,8 @@ const folder_opened = (id: number) => {
 
 <template>
 
-   <div class="error_notification" v-if="FilesStore?.error">
-      <p>Oops! Error encountered: {{ FilesStore?.error }}</p>
+   <div class="error_notification" v-if="FilesTreeStore?.error">
+      <p>Oops! Error encountered: {{ FilesTreeStore?.error }}</p>
    </div>
 
    <section v-else class="file_view mt_5">
@@ -71,12 +70,8 @@ const folder_opened = (id: number) => {
          </section>
       </section>
 
-      <section class="record_view">         
-         <CollectionsItemRecordContainer 
-            v-if="FilesStore.curr_file_id"
-            :id="curr_record_id"
-         />
-         <FolderItemsList v-if="FilesStore.curr_folder_id"  />
+      <section class="record_view">
+         <FolderItemsList v-if="FilesTreeStore.curr_folder_id"  />
       </section>
 
    </section>

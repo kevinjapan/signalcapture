@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, watchEffect } from 'vue'
 import { useAppStore } from '@/stores/AppStore'
-import { useFilesStore } from '@/stores/FilesStore'
+import { useFilesTreeStore } from '@/stores/FilesTreeStore'
 import { useCollectionsItemsListStore } from '@/stores/CollectionsItemsListStore'
 import CollectionsItemCard from '@/components/CollectionsItems/CollectionsItemCard/CollectionsItemCard.vue'
 import CollectionsItemTeaserCard from '@/components/CollectionsItems/CollectionsItemTeaserCard/CollectionsItemTeaserCard.vue'
@@ -13,11 +13,10 @@ import PaginationNav from '@/components/PaginationNav/PaginationNav.vue'
 
 // FolderItemsList
 
-// to do : how do we handle files w/ no record (CollectionItem) in this UI ? (we need files w/ no record displayed too)
-
 const AppStore = useAppStore()
-const FilesStore = useFilesStore()
+const FilesTreeStore = useFilesTreeStore()
 const CollectionsItemListStore = useCollectionsItemsListStore()
+CollectionsItemListStore.load_collection_items()
 
 const branch = ref<FilesTree | null>(null)
 
@@ -39,7 +38,7 @@ const list_view_type = ref<ListViewType>(AppStore.list_view_type)
 
 watchEffect(() => {
 
-    branch.value = FilesStore.get_folder_files_list(FilesStore.curr_folder_id) as FilesTree
+    branch.value = FilesTreeStore.get_folder_files_list(FilesTreeStore.curr_folder_id) as FilesTree
     files_list.value = branch?.value?.children
     ids_list.value = branch?.value?.children.map((child) => child.teaser.id)
     items_list.value = CollectionsItemListStore.get_collection_items_by_id(ids_list.value.flat())
@@ -56,7 +55,7 @@ watchEffect(() => {
 })
 
 watchEffect(() => {
-    console.log('files_list',files_list.value)
+    // console.log('files_list',files_list.value)
 })
 
 const toggle_view = () => {
@@ -85,8 +84,6 @@ const navigate_to_page = () => {}
         />
     </ListCtrls>   
 
-    <!-- to do : we have non-record matching 'new' files in the folder - how to identify and display here? -->
- 
     <!-- card / list view -->
     <section v-if="list_view_type === 'card'"  class="grid grid_cards_layout" style="margin-top:1rem;">
         <CollectionsItemCard v-for="item in items_list" :key="item?.id"  :item="item as unknown as CollectionsItem" />
