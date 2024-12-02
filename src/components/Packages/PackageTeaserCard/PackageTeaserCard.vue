@@ -1,43 +1,38 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import { useAppStore } from '@/stores/AppStore'
 
 
 
 // PackageCard
 // we use id as url param since 'slug' is not ideal, duplicates in dffrnt locations are valid
 
-
 const props = defineProps<{
    item: Package
 }>()
 
-const root_folder = '/collection'
-
 const router = useRouter()
 
-// we push rather than RouterLink to allow close app_nav etc
+const AppStore = useAppStore()
+
 const open_nav_link = (route: string) => {
    router.push(route)
 }
-
 </script>
 
 <template>
-
     <section v-if="props.item" class="package_teaser_card">
-
         <section class="img_container">
-            <img :src="root_folder + props.item.folder_path + props.item.file_name"/>
+            <a @click.stop="open_nav_link(`/packages/${props.item.id}`)" >
+                <img :src="AppStore.root_folder + props.item.folder_path + props.item.file_name"/>
+            </a>
         </section>
-
         <section class="text_container">
             <h3>
                 <a @click.stop="open_nav_link(`/packages/${props.item.id}`)" >{{ props.item.title }}</a>
             </h3>
         </section>
-
     </section>
-
 </template>
 
 <style scoped>
