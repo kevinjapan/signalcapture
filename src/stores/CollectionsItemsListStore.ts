@@ -4,8 +4,8 @@ import useFetch from '../composables/useFetch/useFetch'
 import { is_valid_payload } from '../utilities/utilities/validation'
 
 
+
 // CollectionsItemsListStore
-// generally, we always extract paginated list
 
 export const useCollectionsItemsListStore = defineStore('collections_items_store', () => {
 

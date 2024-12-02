@@ -4,7 +4,8 @@ import useFetch from '../composables/useFetch/useFetch'
 import { is_valid_payload } from '../utilities/utilities/validation'
 
 
-// PackageStore
+
+// PackagesListStore
 // generally, we always extract paginated list
 
 export const usePackagesListStore = defineStore('packages_store', () => {
@@ -21,19 +22,22 @@ export const usePackagesListStore = defineStore('packages_store', () => {
    // in our no-server demo, we load all (limited no.) items into this array and paginate on client.
    const packages_list = ref<Package[] | null>(null)
 
+   //
    const paginated_packages_list = ref<Package[] | null>(null)
 
    // The Package (current selected/viewed)
    const curr_package = ref<Package | null>(null)
 
+   //
    const page = ref<number>(1)
 
+   //
    const total_num_items = ref<number>(0)
 
+   //
    const items_per_page = ref<number>(20)
 
 
-   // load_packages
    function load_packages() {
 
       // ensure the list has been downloaded
@@ -65,7 +69,6 @@ export const usePackagesListStore = defineStore('packages_store', () => {
          build_paginated_list()
       }
    })
-
 
    function load_packages_list() {
       if(!packages_list.value) load_packages()

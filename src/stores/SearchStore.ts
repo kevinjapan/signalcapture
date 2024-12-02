@@ -4,17 +4,11 @@ import { useCollectionsItemsListStore } from '../stores/CollectionsItemsListStor
 import { remove_stopwords } from '../utilities/utilities/utilities'
 
 
-// SearchStore
 
-// mindshift here, I've prev related reactivity between state and template.
-// Composables introduce sharing state btwn components and stores/composables/hooks
-// whereby you don't rely on a return value from a func - as I prev would have done
-// but rather, update the state and  have the client 'consume' the reactive state changes
+// SearchStore
 
 export const useSearchStore = defineStore('search_store', () => {
 
-   // state
-   
    // access the CollectionsItemsList
    const CollectionsItemsListStore = useCollectionsItemsListStore()
 
@@ -48,9 +42,6 @@ export const useSearchStore = defineStore('search_store', () => {
    // errors encountered
    const error = ref<string | null>(null)
 
-   
-
-   // methods
 
    function preload_collection_items() {
       CollectionsItemsListStore.load_collection_items()
@@ -157,7 +148,6 @@ export const useSearchStore = defineStore('search_store', () => {
 
    return {
 
-      // state
       preload_collection_items,
       search,
       search_results,
@@ -168,7 +158,6 @@ export const useSearchStore = defineStore('search_store', () => {
       items_per_page,
       no_matches,
 
-      // methods
       set_page,
       flush,
       loading,
