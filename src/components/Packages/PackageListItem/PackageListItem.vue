@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-
+import { useAppStore } from '@/stores/AppStore'
 
 
 // CollectionItemCard
@@ -11,8 +11,6 @@ const props = defineProps<{
    item: Package
 }>()
 
-const root_folder = '/collection'
-
 // future : some examples using this please
 // const emit = defineEmits<{
 //   change: [id: number]
@@ -20,6 +18,8 @@ const root_folder = '/collection'
 // }>()
 
 const router = useRouter()
+
+const AppStore = useAppStore()
 
 // we push rather than RouterLink to allow close app_nav etc
 const open_nav_link = (route: string) => {
@@ -32,7 +32,7 @@ const open_nav_link = (route: string) => {
 
     <section class="package_list_item">
 
-        <img :src="root_folder + props.item.folder_path + props.item.file_name"/>
+        <img :src="AppStore.root_folder + props.item.folder_path + props.item.file_name"/>
     
         <h3>
             <a @click.stop="open_nav_link(`/packages/${props.item.id}`)" >{{ props.item.title }}</a>

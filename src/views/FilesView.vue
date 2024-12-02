@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import { ref, onMounted, watchEffect } from 'vue'
 import { useFilesStore } from '@/stores/FilesStore'
-import FilesTreeNode from '@/components/FilesTreeNode/FilesTreeNode.vue'
+import FilesTreeNode from '@/components/Files/FilesTreeNode/FilesTreeNode.vue'
 import CollectionsItemRecordContainer from '@/components/CollectionsItems/CollectionsItemRecordContainer/CollectionsItemRecordContainer.vue'
-import CollectionsItemsList from '@/components/CollectionsItems/CollectionsItemsList/CollectionsItemsList.vue'
+import FolderItemsList from '@/components/Files/FolderItemsList/FolderItemsList.vue'
+
+
 
 // FilesView
-// to do : do we want each sub-domain as a separate folder?
-//         - they can be (by default) sub-folders of collections root - unless specified differently
-
-// to do : pagination on folders files_list
+// future : do we want each sub-domain as a separate folder? - they can be (by default) sub-folders of collections root - unless specified differently
 
 const FilesStore = useFilesStore()
 FilesStore.load_files_tree()
@@ -17,9 +16,13 @@ FilesStore.load_files_tree()
 // FilesTreeView
 const tree = ref<FilesTree | null>(null)
 
+// parent's tree level
 const parent_level = ref<number>(1)
 
+// the current selected folder
 const curr_folder_id = ref<number>(0)
+
+// the current selected record
 const curr_record_id = ref<number>(0)
 
 onMounted(() => {
@@ -68,30 +71,34 @@ const folder_opened = (id: number) => {
          </section>
       </section>
 
-      <section class="record_view">
-         
+      <section class="record_view">         
          <CollectionsItemRecordContainer 
             v-if="FilesStore.curr_file_id"
             :id="curr_record_id"
          />
-         <!-- future : any list we use here could also be used in Browse? -->
-
-         <!-- to do : this should be FilesList - not CollectionsItemsList
-              it needs to show all files and maybe records for files w/ records? -->
-         <CollectionsItemsList v-if="FilesStore.curr_folder_id"  />
+         <FolderItemsList v-if="FilesStore.curr_folder_id"  />
       </section>
 
    </section>
 </template>
 
 <style scoped>
+
 /* future : file will overlay tree in sm/mobile */
 
 section.file_view {
   display:-ms-grid;
   display:grid;
-  -ms-grid-columns:       1fr;
-  grid-template-columns:  1fr;
+  -ms-grid-columns:1fr;
+  grid-template-columns:1fr;
+}
+@media (min-width: 768px) {
+   section.file_view {
+      display:-ms-grid;
+      display:grid;
+      -ms-grid-columns:1fr 3fr;
+      grid-template-columns:1fr 3fr;
+   }
 }
 section.tree_view {
    max-height:88vh;
@@ -117,16 +124,6 @@ section.record_view {
    margin:1rem;
    margin-top:0;
 }
-
-@media (min-width: 768px) {
-   section.file_view {
-      display:-ms-grid;
-      display:grid;
-      -ms-grid-columns:       1fr 3fr;
-      grid-template-columns:  1fr 3fr;
-   }
-}
-
 ul {
    width:100%;
    margin:0;

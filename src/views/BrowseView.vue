@@ -12,10 +12,7 @@ import CollectionsItemListItem from '../components/CollectionsItems/CollectionsI
 
 // BrowseView
 
-
 const AppStore = useAppStore()
-
-// CollectionsItemsStore
 const CollectionsItemsListStore = useCollectionsItemsListStore()
 CollectionsItemsListStore.load_collection_items()
 
@@ -58,7 +55,6 @@ const navigate_to_page = (target_page: number) => {
 const toggle_view = () => {
    AppStore.switch_list_view_type()
 }
-
 </script>
 
 <template>
@@ -86,7 +82,6 @@ const toggle_view = () => {
             @navigate-to-page="navigate_to_page" 
          />
       </ListCtrls>
-
 
       <div v-if="CollectionsItemsListStore.loading" class="loading_spin"></div>
 

@@ -21,9 +21,7 @@ const props = defineProps({
    search_term:String
 })
 
-
 const AppStore = useAppStore()
-
 const SearchStore = useSearchStore()
 const { search_results, loading, no_matches, error } = storeToRefs(SearchStore)
 
@@ -101,7 +99,6 @@ const navigate_to_page = (target_page: number) => {
 const toggle_view = () => {
    AppStore.switch_list_view_type()
 }
-
 </script>
 
 

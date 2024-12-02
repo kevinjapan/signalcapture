@@ -10,11 +10,10 @@ import PackageTeaserCard from '@/components/Packages/PackageTeaserCard/PackageTe
 
 
 
-// PackagesView
+// PackagesListView
+
 
 const AppStore = useAppStore()
-
-// PackageStore
 const PackageListStore = usePackagesListStore()
 PackageListStore.load_packages()
 
@@ -60,7 +59,6 @@ const navigate_to_page = (target_page: number) => {
 const toggle_view = () => {
    AppStore.switch_list_view_type()
 }
-
 </script>
 
 <template>
