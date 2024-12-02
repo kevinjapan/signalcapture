@@ -1,11 +1,10 @@
 <script setup lang="ts">
-
+import RecordCardTags from '@/components/Tags/RecordCardTags/RecordCardTags.vue'
 
 // CollectionsItemRecordContainer
 // container for CollectionsItemRecord component
 // the container will retrieve the record and pass it to child component
 
-// Component Interface - props and emits
 const props = defineProps<{
     item: CollectionsItem
 }>()
@@ -14,7 +13,7 @@ const props = defineProps<{
 
 <template>
 <section class="page_break">
-    <section v-if="props.item.id" class="record_card_header">
+    <section v-if="props.item.id" class="card_part record_card_header">
         
         <div></div>
         <section class="img_container">
@@ -31,7 +30,7 @@ const props = defineProps<{
 
     </section>
 
-    <section v-if="props.item.id" class="record_card_footer">
+    <section v-if="props.item.id" class="card_part record_card_footer">
         <div>item ref</div><div>{{ item?.item_ref }}</div>
         <div>item date</div><div>{{ item?.item_Date }}</div>
         <div>item type</div><div>{{ item?.item_Type }}</div>
@@ -42,32 +41,39 @@ const props = defineProps<{
         <div>donor</div><div>{{ item?.donor }}</div>
         <div>owner</div><div>{{ item?.owner }}</div>
         <div>copyright</div><div>{{ item?.copyright }}</div>
-        <div>tags</div><div>{{ item?.tags }}</div>
         <div>id</div><div>{{ item?.id }}</div>
         <div>created</div><div>{{ item?.created_at }}</div>
         <div>last updated</div><div>{{ item?.updated_at }}</div>
         <div>last viewed</div><div>{{ item?.viewed_at }}</div>
         <div>deleted</div><div>{{ item?.deleted_at }}</div>
     </section>
+
+    <section v-if="props.item.id" class="card_part record_card_tags">
+        <RecordCardTags v-if="item.tags" :tags="item?.tags"/>
+    </section>
+
 </section>
 </template>
 
 <style scoped>
-section.record_card_header{
+section.card_part {    
     display:-ms-grid;
     display:grid;
     -ms-grid-columns:1fr 4fr;
     grid-template-columns:1fr 4fr;
     gap:.75rem;
     /* we let containing grid set width */
+    padding:1rem;
+}
+section.record_card_header{
     margin:1rem 2rem;
     margin-bottom:0;
     background:white;
-    padding:1rem;
     border-radius:.5rem .5rem 0 0;
 }
 section.record_card_header > *:nth-child(2n + 1),
-section.record_card_footer > *:nth-child(2n + 1) {
+section.record_card_footer > *:nth-child(2n + 1),
+section.record_card_tags > *:nth-child(2n + 1) {
     text-align:right;
     color:hsl(0, 0%, 40%);
     padding-right:.5rem;
@@ -76,16 +82,17 @@ section.record_card_footer > *:nth-child(2n + 1) {
     user-select: none;
 }
 section.record_card_footer {
-    display:-ms-grid;
-    display:grid;
     -ms-grid-columns:1fr 2fr 1fr 2fr;
     grid-template-columns:1fr 2fr 1fr 2fr;
-    gap:.75rem;
-    /* we let containing grid set width */
+    margin:0 2rem;
+    background:white;
+}
+section.record_card_tags {
+    -ms-grid-columns:1fr 5fr;
+    grid-template-columns:1fr 5fr;
     margin:1rem 2rem;
     margin-top:0;
     background:white;
-    padding:1rem;
     border-radius:0 0 .5rem .5rem;
 }
 .img_container {
