@@ -33,6 +33,10 @@ export const useAppStore = defineStore('app_store', () => {
    const list_view_types = ['card','teaser_card','list']
    const list_view_type = ref<ListViewType>('card')
 
+   // the Collections root folder
+   // future : have sub-roots / sub-domains - generally sub-folders but can be separate locations (up to say seven?)
+   const root_folder = ref('/collection')
+
    // getters
    const get_api = computed(() => app_api.value)
 
@@ -67,6 +71,7 @@ export const useAppStore = defineStore('app_store', () => {
 
    return { 
       app_api, 
+      root_folder,
       curr_view_route,
       get_api, 
       set_api,
