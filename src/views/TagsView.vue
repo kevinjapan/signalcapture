@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref, watch, watchEffect, onBeforeMount } from 'vue'
+import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useAppStore } from '@/stores/AppStore'
-import { useTagsListStore }  from '@/stores/TagsListStore'
+import { useTagsResultsListStore }  from '@/stores/TagsResultsListStore'
 import TagsSelector from '@/components/Tags/TagsSelector/TagsSelector.vue'
 import CollectionsItemCard from '@/components/CollectionsItems/CollectionsItemCard/CollectionsItemCard.vue'
 import CollectionsItemListItem from '@/components/CollectionsItems/CollectionsItemListItem/CollectionsItemListItem.vue'
@@ -15,9 +16,10 @@ import CollectionsItemTeaserCard from '@/components/CollectionsItems/Collections
 // TagsView
 
 const AppStore = useAppStore()
-const TagsListStore = useTagsListStore()
+const route = useRoute()
+const TagsResultsListStore = useTagsResultsListStore()
 
-const { search_results, loading, no_matches, error } = storeToRefs(TagsListStore)
+const { search_results, loading, no_matches, error } = storeToRefs(TagsResultsListStore)
 
 
 // The search term
@@ -34,15 +36,22 @@ const list_view_type = ref<ListViewType>(AppStore.list_view_type)
 
 onBeforeMount(() => {
    // pre-load the store if required (eg on page refresh)
-   TagsListStore.preload_collection_items()
+   TagsResultsListStore.preload_collection_items()
+
+   // if tag id is given in url route
+   TagsResultsListStore.search(route.params.id as string)
+
+   // highlight in tag selector
+   local_tag_search_id.value = parseInt(route.params.id as string)
 })
 
 watch(local_tag_search_id,() => {
-   TagsListStore.search(local_tag_search_id.value.toString())
+   TagsResultsListStore.search(local_tag_search_id.value.toString())
 })
 
+
 watchEffect(() => {
-   list.value = <CollectionsItem[]>TagsListStore.paginated_search_results
+   list.value = <CollectionsItem[]>TagsResultsListStore.paginated_search_results
 })
 
 watchEffect(() => {
@@ -54,13 +63,13 @@ watchEffect(() => {
 })
 
 const set_page = (page: number) => {
-   TagsListStore.set_page(page)
+   TagsResultsListStore.set_page(page)
 }
 
 const step_to_page = (step: number) => {
-   const new_page = TagsListStore.page + step
-   if(new_page < 1 || new_page > Math.ceil(TagsListStore.total_num_items / TagsListStore.items_per_page)) return
-   TagsListStore.set_page(new_page)
+   const new_page = TagsResultsListStore.page + step
+   if(new_page < 1 || new_page > Math.ceil(TagsResultsListStore.total_num_items / TagsResultsListStore.items_per_page)) return
+   TagsResultsListStore.set_page(new_page)
    window.scroll(0,0)
 }
 
@@ -80,7 +89,9 @@ const tag_selected = (tag: number) => {
 
 <template>
 
-   <TagsSelector @tag-selected="tag_selected" />
+   <TagsSelector 
+      :selected_tag_id="local_tag_search_id"
+      @tag-selected="tag_selected" />
 
    <div class="error_notification" v-if="my_error">
       <p>Oops! Error encountered: {{ my_error }}</p>
@@ -93,9 +104,9 @@ const tag_selected = (tag: number) => {
       >
          <PaginationNav
             title="top_page_nav"
-            :page=TagsListStore.page
-            :total_num_items=TagsListStore.total_num_items
-            :items_per_page=TagsListStore.items_per_page
+            :page=TagsResultsListStore.page
+            :total_num_items=TagsResultsListStore.total_num_items
+            :items_per_page=TagsResultsListStore.items_per_page
             @step-to-page="step_to_page" 
             @navigate-to-page="navigate_to_page" 
          />
@@ -122,9 +133,9 @@ const tag_selected = (tag: number) => {
       >
          <PaginationNav         
             title="bottom_page_nav"
-            :page=TagsListStore.page
-            :total_num_items=TagsListStore.total_num_items
-            :items_per_page=TagsListStore.items_per_page
+            :page=TagsResultsListStore.page
+            :total_num_items=TagsResultsListStore.total_num_items
+            :items_per_page=TagsResultsListStore.items_per_page
             @step-to-page="step_to_page" 
             @navigate-to-page="navigate_to_page" 
          />

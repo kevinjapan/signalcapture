@@ -5,9 +5,9 @@ import { useCollectionsItemsListStore } from './CollectionsItemsListStore'
 
 
 
-// TagsListStore to do : better name?
+// TagsResultsListStore
 
-export const useTagsListStore = defineStore('tags_results_list_store', () => {
+export const useTagsResultsListStore = defineStore('tags_results_list_store', () => {
    
    // access the CollectionsItemsList
    const CollectionsItemsListStore = useCollectionsItemsListStore()
@@ -134,5 +134,5 @@ export const useTagsListStore = defineStore('tags_results_list_store', () => {
 
 // hot module replacement for pinia
 if (import.meta.hot) {
-   import.meta.hot.accept(acceptHMRUpdate(useTagsListStore, import.meta.hot))
+   import.meta.hot.accept(acceptHMRUpdate(useTagsResultsListStore, import.meta.hot))
 }
