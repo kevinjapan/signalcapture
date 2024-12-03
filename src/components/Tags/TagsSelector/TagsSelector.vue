@@ -3,13 +3,15 @@ import { ref, onMounted, watchEffect } from 'vue'
 import { useTagsStore } from '@/stores/TagsStore'
 
 
+
 // TagsSelector
 // display all tags for selecting
+
+// future : large no. of tags - UI display?
 
 const props = defineProps<{
    selected_tag_id: number
 }>()
-
 
 const emit = defineEmits([
    'tag-selected'
@@ -17,7 +19,6 @@ const emit = defineEmits([
 
 const TagsStore = useTagsStore()
 TagsStore.load_tags()
-
 
 // local ref to store's Tags list
 const list = ref<Tag[] | null>(null)
@@ -31,12 +32,15 @@ const selected_id = ref<number>(0)
 onMounted(() => {
    window.scroll(0,0)
 })
+
 watchEffect(() => {
    is_loading.value = TagsStore.loading.value
 })
+
 watchEffect(() => {
-   list.value = <Tag[]>TagsStore.paginated_tags_list
+   list.value = <Tag[]>TagsStore.tags_list
 })
+
 watchEffect(() => {
    selected_id.value = props.selected_tag_id
 })
@@ -45,9 +49,6 @@ const tag_selected = (tag_id: number) => {
    emit('tag-selected',tag_id)
    selected_id.value = tag_id
 }
-
-
-
 </script>
 
 <template>
@@ -56,7 +57,8 @@ const tag_selected = (tag_id: number) => {
             :key="item.id"  
             :item="item as unknown as Tag" 
             @click="tag_selected(item.id)"
-            :class="{bg_selected: selected_id === item.id}">
+            :class="{bg_selected: selected_id === item.id}"
+            class="no_user_select">
          {{ item.tag }}
       </li>
    </ul>

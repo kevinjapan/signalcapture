@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, watchEffect, onBeforeMount } from 'vue'
+import { ref, watch, watchEffect, onBeforeMount, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useAppStore } from '@/stores/AppStore'
@@ -19,11 +19,10 @@ const AppStore = useAppStore()
 const route = useRoute()
 const TagsResultsListStore = useTagsResultsListStore()
 
-const { search_results, loading, no_matches, error } = storeToRefs(TagsResultsListStore)
-
+const { curr_search_tag, search_results, loading, no_matches, error } = storeToRefs(TagsResultsListStore)
 
 // The search term
-const local_tag_search_id = ref<number>(0)
+const local_tag_search_id = ref<number>(curr_search_tag.value)
 
 // local ref to store's Collections Items list
 const list = ref<CollectionsItem[] | null>(null)
@@ -38,17 +37,19 @@ onBeforeMount(() => {
    // pre-load the store if required (eg on page refresh)
    TagsResultsListStore.preload_collection_items()
 
-   // if tag id is given in url route
-   TagsResultsListStore.search(route.params.id as string)
+   if(route.params.id)  {
+      TagsResultsListStore.search(parseInt(route.params.id as string))
+      local_tag_search_id.value = parseInt(route.params.id as string)
+   }
+})
 
-   // highlight in tag selector
-   local_tag_search_id.value = parseInt(route.params.id as string)
+onMounted(() => {
+   window.scroll(0,0)
 })
 
 watch(local_tag_search_id,() => {
-   TagsResultsListStore.search(local_tag_search_id.value.toString())
+   if(local_tag_search_id.value) TagsResultsListStore.search(local_tag_search_id.value)
 })
-
 
 watchEffect(() => {
    list.value = <CollectionsItem[]>TagsResultsListStore.paginated_search_results
@@ -124,6 +125,7 @@ const tag_selected = (tag: number) => {
       </section>
 
       <div v-if="no_matches && !loading" class="no_results mt_1">no matches were found</div>
+
       <div v-if="loading && !search_results" class="loading_spin mt_1"></div>
 
       <ListCtrls

@@ -16,7 +16,7 @@ export const useTagsResultsListStore = defineStore('tags_results_list_store', ()
    const CollectionsItemsListStore = useCollectionsItemsListStore()
 
    // the current search
-   const curr_search_tag = ref<string | null>('')
+   const curr_search_tag = ref<number>(0)
 
    // the full results set - we return paginated subsets
    const search_results = ref<CollectionsItem[] | null>(null)
@@ -47,7 +47,9 @@ export const useTagsResultsListStore = defineStore('tags_results_list_store', ()
       CollectionsItemsListStore.load_collection_items()
    }
 
-   function search(selected_tag: string) {
+   function search(selected_tag: number) {
+
+      no_matches.value = false
 
       loading.value = true
       curr_search_tag.value = selected_tag
@@ -68,17 +70,19 @@ export const useTagsResultsListStore = defineStore('tags_results_list_store', ()
       return true      
    }
 
-   function filter_search_results(curr_tag_id: string) {
+   function filter_search_results(curr_tag_id: number) {
 
-      if(!curr_tag_id || parseInt(curr_tag_id) < 1) return false
+      if(!curr_tag_id || curr_tag_id < 1) return false
       search_results.value =  <CollectionsItem[]>CollectionsItemsListStore.collections_items_list?.filter((elem: CollectionsItem) => {
-            // to do : review - too many iterations here - performance // console.log(typeof elem)
+            // future : review - too many iterations here - performance // console.log(typeof elem)
             // const target = elem.title + elem.content_desc + elem.file_name + elem.author_creator + elem.people
             // if(target.toUpperCase().includes(term.toUpperCase())) return elem            
             const temp_set = new Set(elem.tags)
             return temp_set.has(curr_tag_id.toString())
          })   
-      if(search_results.value) total_num_items.value = search_results.value?.length  
+      if(search_results.value) {
+         total_num_items.value = search_results.value?.length
+      }
    }
    
    const build_paginated_list = () => {
@@ -88,18 +92,17 @@ export const useTagsResultsListStore = defineStore('tags_results_list_store', ()
       }
    }
 
-   // watch store.collections_items_list
    watchEffect(() => {
-      if(curr_search_tag.value !== null && curr_search_tag.value !== '') {
+      if(curr_search_tag.value !== null && curr_search_tag.value !== 0) {
          filter_search_results(curr_search_tag.value)
       }
-      no_matches.value = search_results.value?.length === 0 ? true : false
+      // no_matches.value = search_results.value?.length === 0 ? true : false
       build_paginated_list()
    })
    
    
    watchEffect(() => {
-      if(curr_search_tag.value !== '') page.value = 1
+      if(curr_search_tag.value !== 0) page.value = 1
    })
 
    function set_page(new_page: number) {
