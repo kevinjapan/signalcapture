@@ -100,20 +100,16 @@ export const useSearchStore = defineStore('search_store', () => {
          }))
       }
       
-
-
-      // -----------------------------------------------------------------
-      // to do : remove duplicate CollectionsItemRecords from results eg search "streets buildings"
-      // -----------------------------------------------------------------
-      
-
-      
       // collate into single results array
       let collated = <CollectionsItem[]>[]
       for(const results of my_results) {
          collated = collated.concat(results)
       }
-      search_results.value = collated      
+
+      // remove duplicate CollectionsItemRecords from results eg search "streets buildings" - only include first occurence
+      const no_duplicates_array = collated.filter((obj, index, arr) => index === arr.findIndex((t) => t.id === obj.id))
+
+      search_results.value = no_duplicates_array      
       if(search_results.value) total_num_items.value = search_results.value?.length  
    }
    
