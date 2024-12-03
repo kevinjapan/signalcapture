@@ -37,6 +37,8 @@ export const useAppStore = defineStore('app_store', () => {
    // future : have sub-roots / sub-domains - generally sub-folders but can be separate locations (up to say seven?)
    const root_folder = ref('/collection')
 
+   const items_per_page = ref<number>(20)
+
    // getters
    const get_api = computed(() => app_api.value)
 
@@ -69,18 +71,21 @@ export const useAppStore = defineStore('app_store', () => {
       return bearer_token.value !== '' ? true : false
    }
 
-   return { 
+   return {
+
       app_api, 
       root_folder,
+      items_per_page,
       curr_view_route,
-      get_api, 
-      set_api,
       bearer_token,
       username,
       notify_msg_list,
+      get_api,
+      list_view_type,
+
+      set_api,
       set_notify_msg_list,
       is_logged_in,
-      list_view_type,
       switch_list_view_type
    }
  })

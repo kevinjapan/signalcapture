@@ -1,5 +1,6 @@
 import { ref, watchEffect } from 'vue'
 import { defineStore, acceptHMRUpdate } from 'pinia'
+import { useAppStore } from '@/stores/AppStore'
 import useFetch from '../composables/useFetch/useFetch'
 import { is_valid_payload } from '../utilities/utilities/validation'
 
@@ -9,6 +10,8 @@ import { is_valid_payload } from '../utilities/utilities/validation'
 // generally, we always extract paginated list
 
 export const usePackagesListStore = defineStore('packages_store', () => {
+
+   const AppStore = useAppStore()
 
    // future : for demo, we use json dataset named here
    // full server-supported app will useData and useEndPoints to resolve queries
@@ -35,7 +38,7 @@ export const usePackagesListStore = defineStore('packages_store', () => {
    const total_num_items = ref<number>(0)
 
    //
-   const items_per_page = ref<number>(20)
+   const items_per_page = ref<number>(AppStore.items_per_page)
 
 
    function load_packages() {
@@ -80,18 +83,19 @@ export const usePackagesListStore = defineStore('packages_store', () => {
    }
 
    return { 
-      load_packages,
       payload, 
       error, 
       loading,
       packages_list,
       paginated_packages_list,
       curr_package,
-      load_packages_list,
-      set_page,
       page,
       total_num_items,
-      items_per_page
+      items_per_page,
+
+      load_packages,
+      load_packages_list,
+      set_page,
    }
  })
 

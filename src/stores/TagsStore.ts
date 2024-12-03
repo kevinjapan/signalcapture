@@ -1,15 +1,16 @@
 import { ref, watchEffect } from 'vue'
 import { defineStore, acceptHMRUpdate } from 'pinia'
+import { useAppStore } from '@/stores/AppStore'
 import useFetch from '../composables/useFetch/useFetch'
 import { is_valid_payload } from '../utilities/utilities/validation'
 
 
 
 // TagsStore
-// generally, we always extract paginated list
-// to do : rename - this is list of tags - nothing else / no list tagged items etc.
 
 export const useTagsStore = defineStore('tags_store', () => {
+
+   const AppStore = useAppStore()
 
    // future : for demo, we use json dataset named here
    // full server-supported app will useData and useEndPoints to resolve queries
@@ -27,14 +28,16 @@ export const useTagsStore = defineStore('tags_store', () => {
    // The Tag (current selected/viewed)
    // const curr_tag = ref<Tag | null>(null)
 
+   //
    const page = ref<number>(1)
 
+   //
    const total_num_items = ref<number>(0)
 
-   const items_per_page = ref<number>(20)
+   //
+   const items_per_page = ref<number>(AppStore.items_per_page)
 
 
-   // load_tags
    function load_tags() {
 
       // ensure the list has been downloaded
@@ -50,7 +53,6 @@ export const useTagsStore = defineStore('tags_store', () => {
       }
    }
 
-   // to do : how to handle too many tags? limit num?
    const build_paginated_list = () => {
       if(tags_list.value) {
          let start_index = ((page.value - 1) * items_per_page.value)
@@ -72,10 +74,8 @@ export const useTagsStore = defineStore('tags_store', () => {
       const list = <Tag[]>tags_list?.value?.filter((elem: Tag) => {
          return ids_list.includes(elem.id)
       })
-      console.log('hey',list)
       return list
    }
-
 
    function load_tags_list() {
       if(!tags_list.value) load_tags()

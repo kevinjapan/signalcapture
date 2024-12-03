@@ -1,5 +1,6 @@
 import { ref, watchEffect } from 'vue'
 import { defineStore, acceptHMRUpdate } from 'pinia'
+import { useAppStore } from '@/stores/AppStore'
 import { useCollectionsItemsListStore } from './CollectionsItemsListStore' 
 
 
@@ -9,6 +10,8 @@ import { useCollectionsItemsListStore } from './CollectionsItemsListStore'
 
 export const useTagsResultsListStore = defineStore('tags_results_list_store', () => {
    
+   const AppStore = useAppStore()
+
    // access the CollectionsItemsList
    const CollectionsItemsListStore = useCollectionsItemsListStore()
 
@@ -31,7 +34,7 @@ export const useTagsResultsListStore = defineStore('tags_results_list_store', ()
    const page = ref<number>(1)
 
    // paginated items per page - future : in AppStore
-   const items_per_page = ref<number>(20)
+   const items_per_page = ref<number>(AppStore.items_per_page)
 
    // is loading flag
    const loading = ref<boolean>(false)
@@ -69,7 +72,7 @@ export const useTagsResultsListStore = defineStore('tags_results_list_store', ()
 
       if(!curr_tag_id || parseInt(curr_tag_id) < 1) return false
       search_results.value =  <CollectionsItem[]>CollectionsItemsListStore.collections_items_list?.filter((elem: CollectionsItem) => {
-            // // to do : review - too many iterations here - performance // console.log(typeof elem)
+            // to do : review - too many iterations here - performance // console.log(typeof elem)
             // const target = elem.title + elem.content_desc + elem.file_name + elem.author_creator + elem.people
             // if(target.toUpperCase().includes(term.toUpperCase())) return elem            
             const temp_set = new Set(elem.tags)
@@ -94,6 +97,11 @@ export const useTagsResultsListStore = defineStore('tags_results_list_store', ()
       build_paginated_list()
    })
    
+   
+   watchEffect(() => {
+      if(curr_search_tag.value !== '') page.value = 1
+   })
+
    function set_page(new_page: number) {
       page.value = new_page
    }
@@ -113,8 +121,6 @@ export const useTagsResultsListStore = defineStore('tags_results_list_store', ()
 
    return {
 
-      preload_collection_items,
-      search,
       search_results,
       paginated_search_results,
       page,
@@ -122,11 +128,13 @@ export const useTagsResultsListStore = defineStore('tags_results_list_store', ()
       items_per_page,
       no_matches,
       curr_search_tag,
+      loading,
+      error,
 
+      preload_collection_items,
+      search,
       set_page,
       flush,
-      loading,
-      error
    }
  
 })

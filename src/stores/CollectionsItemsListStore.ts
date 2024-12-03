@@ -1,5 +1,6 @@
 import { ref, watchEffect } from 'vue'
 import { defineStore, acceptHMRUpdate } from 'pinia'
+import { useAppStore } from '@/stores/AppStore'
 import useFetch from '../composables/useFetch/useFetch'
 import { is_valid_payload } from '../utilities/utilities/validation'
 
@@ -8,6 +9,8 @@ import { is_valid_payload } from '../utilities/utilities/validation'
 // CollectionsItemsListStore
 
 export const useCollectionsItemsListStore = defineStore('collections_items_store', () => {
+
+   const AppStore = useAppStore()
 
    // future : for demo, we use json dataset named here
    // full server-supported app will useData and useEndPoints to resolve queries
@@ -25,11 +28,14 @@ export const useCollectionsItemsListStore = defineStore('collections_items_store
    // The CollectionsItem (current selected/viewed)
    const collections_item = ref<CollectionsItem | null>(null)
 
+   //
    const page = ref<number>(1)
 
+   //
    const total_num_items = ref<number>(0)
 
-   const items_per_page = ref<number>(20)
+   //
+   const items_per_page = ref<number>(AppStore.items_per_page)
 
 
    // load_collection_items
@@ -69,12 +75,10 @@ export const useCollectionsItemsListStore = defineStore('collections_items_store
       }
    })
 
-
    function load_collection_items_list() {
       if(!collections_items_list.value) load_collection_items()
       return collections_items_list
    }
-
 
    function get_collection_items_by_id(ids_list: number[]) {
       const list = <CollectionsItem[]>collections_items_list?.value?.filter((elem: CollectionsItem) => {
@@ -87,20 +91,23 @@ export const useCollectionsItemsListStore = defineStore('collections_items_store
       page.value = new_page
    }
 
-   return { 
-      load_collection_items,
+   return {
+
       payload, 
       error, 
       loading,
       collections_items_list,
       paginated_collections_items_list,
       collections_item,
-      load_collection_items_list,
-      set_page,
       page,
       total_num_items,
       items_per_page,
+
+      load_collection_items,
+      load_collection_items_list,
+      set_page,
       get_collection_items_by_id
+
    }
  })
 
