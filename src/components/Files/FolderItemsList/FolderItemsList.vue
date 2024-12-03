@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { ref, watchEffect } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useAppStore } from '@/stores/AppStore'
-import { useFilesTreeStore } from '@/stores/FilesTreeStore'
-import { useCollectionsItemsListStore } from '@/stores/CollectionsItemsListStore'
+import { useFolderItemsListStore } from '@/stores/FolderItemsListStore'
 import CollectionsItemCard from '@/components/CollectionsItems/CollectionsItemCard/CollectionsItemCard.vue'
 import CollectionsItemTeaserCard from '@/components/CollectionsItems/CollectionsItemTeaserCard/CollectionsItemTeaserCard.vue'
 import CollectionsItemListItem from '@/components/CollectionsItems/CollectionsItemListItem/CollectionsItemListItem.vue'
@@ -14,71 +14,62 @@ import PaginationNav from '@/components/PaginationNav/PaginationNav.vue'
 // FolderItemsList
 
 const AppStore = useAppStore()
-const FilesTreeStore = useFilesTreeStore()
-const CollectionsItemListStore = useCollectionsItemsListStore()
-CollectionsItemListStore.load_collection_items()
+const FolderItemsListStore = useFolderItemsListStore()
 
-const branch = ref<FilesTree | null>(null)
+const { paginated_list, new_files_list, loading, no_matches, error } = storeToRefs(FolderItemsListStore)
 
-
-// the folder's files_list
-const files_list = ref<FilesTree[] | null>(null)
-
-// files with no matching record
-const new_files_list = ref<string[]>([])
-
-// item records matched to files in the files_list
-const items_list = ref<CollectionsItem[] | null>(null)
-
-//
-const ids_list = ref<number[]>([])
+const my_error = ref<string | null>(null)
 
 // toggle card / list view
 const list_view_type = ref<ListViewType>(AppStore.list_view_type)
-
-watchEffect(() => {
-
-    branch.value = FilesTreeStore.get_folder_files_list(FilesTreeStore.curr_folder_id) as FilesTree
-    files_list.value = branch?.value?.children
-    ids_list.value = branch?.value?.children.map((child) => child.teaser.id)
-    items_list.value = CollectionsItemListStore.get_collection_items_by_id(ids_list.value.flat())
-
-   const new_file_teasers = branch?.value?.children.filter((child) => child.teaser.id <= 0 && child.teaser.title)
-
-    new_files_list.value = new_file_teasers.map((file) => {
-        return file.teaser.title
-    })
-})
 
 watchEffect(() => {
    list_view_type.value = AppStore.list_view_type
 })
 
 watchEffect(() => {
-    // console.log('files_list',files_list.value)
+   my_error.value = error.value
 })
 
 const toggle_view = () => {
    AppStore.switch_list_view_type()
 }
 
-const step_to_page = () => {}
+const set_page = (page: number) => {
+    FolderItemsListStore.set_page(page)
+}
 
-const navigate_to_page = () => {}
+const step_to_page = (step: number) => {
+   const new_page = FolderItemsListStore.page + step
+   if(new_page < 1 || new_page > Math.ceil(FolderItemsListStore.total_num_items / FolderItemsListStore.items_per_page)) return
+   FolderItemsListStore.set_page(new_page)
+   window.scroll(0,0)
+}
 
+const navigate_to_page = (target_page: number) => {
+   set_page(target_page)
+}
 </script>
 
 <template>
+
+    <div class="error_notification" v-if="my_error">
+      <p>Oops! Error encountered: {{ my_error }}</p>
+   </div>
+   
+
+   <div v-if="no_matches && !loading" class="no_results mt_1">no matches were found</div>
+   <div v-if="loading && !paginated_list" class="loading_spin mt_1"></div>
+
     <ListCtrls
         :list_view_type="list_view_type"
         @toggle-view="toggle_view"
-    >   
-    <!-- to do : currently configured for Browse ...  doesn't report correct figures.. -->
+    >
         <PaginationNav
             title="top_page_nav"
-            :page=CollectionsItemListStore.page
-            :total_num_items=CollectionsItemListStore.total_num_items
-            :items_per_page=CollectionsItemListStore.items_per_page
+            :page=FolderItemsListStore.page
+            :total_num_items=FolderItemsListStore.total_num_items
+            :items_per_page=FolderItemsListStore.items_per_page
             @step-to-page="step_to_page" 
             @navigate-to-page="navigate_to_page" 
         />
@@ -86,13 +77,13 @@ const navigate_to_page = () => {}
 
     <!-- card / list view -->
     <section v-if="list_view_type === 'card'"  class="grid grid_cards_layout" style="margin-top:1rem;">
-        <CollectionsItemCard v-for="item in items_list" :key="item?.id"  :item="item as unknown as CollectionsItem" />
+        <CollectionsItemCard v-for="item in paginated_list" :key="item?.id"  :item="item as unknown as CollectionsItem" />
     </section>
     <section v-if="list_view_type === 'teaser_card'"  class="grid grid_cards_layout teaser_cards" style="margin-top:1rem;">
-        <CollectionsItemTeaserCard v-for="item in items_list" :key="item?.id"  :item="item as unknown as CollectionsItem" />
+        <CollectionsItemTeaserCard v-for="item in paginated_list" :key="item?.id"  :item="item as unknown as CollectionsItem" />
     </section>
     <section v-if="list_view_type === 'list'"  class="flex flex_list_layout " style="margin-top:1rem;">
-        <CollectionsItemListItem v-for="item in items_list" :key="item?.id"  :item="item as unknown as CollectionsItem" />
+        <CollectionsItemListItem v-for="item in paginated_list" :key="item?.id"  :item="item as unknown as CollectionsItem" />
     </section>
 
     <!-- 
@@ -115,9 +106,9 @@ const navigate_to_page = () => {}
     >
         <PaginationNav
             title="top_page_nav"
-            :page=CollectionsItemListStore.page
-            :total_num_items=CollectionsItemListStore.total_num_items
-            :items_per_page=CollectionsItemListStore.items_per_page
+            :page=FolderItemsListStore.page
+            :total_num_items=FolderItemsListStore.total_num_items
+            :items_per_page=FolderItemsListStore.items_per_page
             @step-to-page="step_to_page" 
             @navigate-to-page="navigate_to_page" 
         />
