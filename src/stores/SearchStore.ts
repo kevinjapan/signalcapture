@@ -27,6 +27,9 @@ export const useSearchStore = defineStore('search_store', () => {
    // recent searches
    const recent_searches = ref<string[]>([])
 
+   // limit num of recent searches
+   const max_recent_searches = ref<number>(5)
+
    // search worked but no matches (empty arr)
    const no_matches = ref<boolean>(false)
 
@@ -78,7 +81,10 @@ export const useSearchStore = defineStore('search_store', () => {
    // would allow us to give weight to complete matches, but for now we ignore complete search_term in favor of matching separate tokens 
    // if we duplicate whole search term eg ['Arbroath Harbour','Arbroath','Harbour'] we get duplicates eg on [0] and [1] 
    const register_as_recent_search = (search_term: string) =>  {
+
       if(!search_term) return
+      if(recent_searches.value.length > max_recent_searches.value) recent_searches.value.shift()
+         
       const no_duplicates_set = new Set(recent_searches.value)
       no_duplicates_set.add(search_term)
       recent_searches.value = [...no_duplicates_set]
