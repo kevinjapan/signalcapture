@@ -42,6 +42,7 @@ const on_last_page = computed(() => {
 })
 
 const items_of = computed(() => {
+   if(props.page < 1) return 0
    let last_item_num = props.page * props.items_per_page
    if(last_item_num > props.total_num_items) last_item_num = props.total_num_items
    return (props.page * props.items_per_page) - (props.items_per_page - 1) + '-' + last_item_num
