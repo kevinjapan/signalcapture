@@ -157,6 +157,7 @@ li:hover {
   justify-content:flex-end;
 }
 .gap_\.25 {gap:.25rem;}
+.gap_\.5 {gap:.5rem;}
 .gap_1 {gap:1rem;}
 
 
@@ -272,6 +273,18 @@ input::placeholder {
 }
 
 
+/* generic components across UI */
+.tag_on_record {
+  width:fit-content;
+  padding:.25rem .75rem;
+  border:solid 1px hsl(0, 0%, 60%);
+  border-radius:.5rem;
+  background:hsl(0, 0%, 92%);
+  cursor:pointer;
+}
+.tag_on_record:hover {
+  background:hsl(0, 0%, 82%);
+}
 
 /* 
   Utility classes
@@ -286,6 +299,8 @@ input::placeholder {
 .mb_2 {margin-bottom:2rem;}
 .ml_2 {margin-left:2rem;}
 .p_1  {padding:1rem;}
+.p_\.2 {padding:.2rem;}
+.pl_1 {padding-left:1rem;}
 .pr_1 {padding-right:1rem;}
 
 .cursor_pointer {
