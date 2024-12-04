@@ -9,6 +9,7 @@ const emit = defineEmits(
    ['submit-search-term']
 )
 
+
 </script>
 
 <template>

@@ -13,16 +13,13 @@ import CollectionsItemTeaserCard from '@/components/CollectionsItems/Collections
 
 // SearchResults
 
-// to do : 
-// - 'no matches found' notification is showing before results display
-// - currently duplicates  eg 'Girl Jean' returns duplicates for each search token
-
 const props = defineProps({
    search_term:String
 })
 
 const AppStore = useAppStore()
 const SearchStore = useSearchStore()
+
 const { search_results, loading, no_matches, error } = storeToRefs(SearchStore)
 
 
@@ -32,6 +29,7 @@ const local_search_term = ref('')
 // local ref to store's Collections Items list
 const list = ref<CollectionsItem[] | null>(null)
 
+//
 const my_error = ref<string | null>(null)
 
 // toggle card / list view
@@ -42,12 +40,10 @@ onBeforeMount(() => {
    SearchStore.preload_collection_items()
 })
 
-watch(() => props.search_term, async(newValue) => {
-   if(!newValue || newValue === '') return
-   local_search_term.value = newValue
+watch(() => props.search_term, () => {
+   if(props.search_term) local_search_term.value = props.search_term
    SearchStore.flush()
-   // perception - show the 'workings'
-   setTimeout(() => {get_search_results()},500)
+   get_search_results()
 })
 
 watchEffect(() => {
@@ -124,7 +120,7 @@ const toggle_view = () => {
       </ListCtrls>
 
       <!-- card / list view -->
-      <section v-if="list_view_type === 'card'" class="grid grid_cards_layout" style="margin-top:1rem;">
+      <section v-if="list_view_type === 'card'" class="grid grid_cards_layout">
          <CollectionsItemCard v-for="item in list" :key="item?.id"  :item="item as unknown as CollectionsItem" />
       </section>
       <section v-if="list_view_type === 'teaser_card'" class="grid grid_cards_layout teaser_cards">
@@ -135,7 +131,8 @@ const toggle_view = () => {
       </section>
 
       <div v-if="no_matches && !loading" class="no_results mt_1">no matches were found</div>
-      <div v-if="loading && !search_results" class="loading_spin mt_1"></div>
+      
+      <div v-if="loading" class="loading_spin mt_1"></div>
 
       <ListCtrls
          v-if="!loading && search_results && !no_matches"
