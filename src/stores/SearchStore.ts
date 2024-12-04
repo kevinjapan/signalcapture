@@ -70,7 +70,7 @@ export const useSearchStore = defineStore('search_store', () => {
          return false
       }
    
-      setTimeout(() => loading.value = false,1000) // perception - show the loading
+      setTimeout(() => loading.value = false,500) // perception - show the loading
       return true      
    }
 
@@ -124,7 +124,7 @@ export const useSearchStore = defineStore('search_store', () => {
       if(curr_search_term.value !== null && curr_search_term.value !== '') {
          filter_search_results(curr_search_term.value)
       }
-      no_matches.value = search_results.value?.length === 0 ? true : false
+      // no_matches.value = search_results.value?.length === 0 ? true : false
       build_paginated_list()
    })
    
@@ -147,6 +147,7 @@ export const useSearchStore = defineStore('search_store', () => {
 
    return {
 
+      curr_search_term,
       search_results,
       paginated_search_results,
       page,
