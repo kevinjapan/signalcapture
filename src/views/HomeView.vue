@@ -1,15 +1,6 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
-import { useSearchStore } from '@/stores/SearchStore'
+import RecentSearches from '@/components/Search/RecentSearches/RecentSearches.vue'
 
-
-const SearchStore = useSearchStore()
-
-const recent_searches_list = ref<string[] | null>(null)
-
-watchEffect(() => {
-   recent_searches_list.value = SearchStore.recent_searches
-})
 </script>
 
 
@@ -31,12 +22,7 @@ watchEffect(() => {
          </p>
       </section>
 
-      <section>
-         <p>Recent Searches</p>
-         <ul>
-            <li class="recent_search" v-for="search_term in recent_searches_list">{{ search_term }}</li>
-         </ul>
-      </section>
+      <RecentSearches />
    
    </section>
 
@@ -66,11 +52,5 @@ ul {
 section.site_status_notification {
    border:solid 1px white;
    border-radius:.5rem;
-}
-.recent_search {
-   width:fit-content;
-   padding:.15rem .5rem;
-   border-radius:.5rem;
-   cursor:pointer;
 }
 </style>
