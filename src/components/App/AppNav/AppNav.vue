@@ -1,5 +1,5 @@
-<script setup>
-import { onMounted, ref } from 'vue'
+<script lang="ts" setup>
+import { onMounted, ref, watchEffect } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAppStore } from '@/stores/AppStore'
 
@@ -10,22 +10,34 @@ import { useAppStore } from '@/stores/AppStore'
 
 const router = useRouter()
 const route = useRoute()
-const app_store = useAppStore()
+const AppStore = useAppStore()
 
-
-
+//
 const display = ref(false)
+
+// 
+const local_curr_view_route = ref<string>('')
+   
+// resynch nav on 'back' btn - future : improve and remove event listener onUnmounted
+window.onpopstate = async function() {
+   await router.isReady()
+   AppStore.curr_view_route = route.fullPath
+}
 
 // sync AppNav on refresh page
 onMounted(async() => {
    await router.isReady()
-   app_store.curr_view_route = route.fullPath
+   AppStore.curr_view_route = route.fullPath
+})
+
+watchEffect(() => {
+   local_curr_view_route.value = AppStore.curr_view_route
 })
 
 // we push rather than RouterLink to allow close app_nav
-const open_nav_link = route => {
+const open_nav_link = (route: string) => {
    display.value = false
-   app_store.curr_view_route = route
+   AppStore.curr_view_route = route
    router.push(route)
 }
 
@@ -34,10 +46,10 @@ const clicked_bg = () => {
 }
 
 // highlight nav item for domain and all sub-views
-const is_curr_view_route = (route) => {
-   return route === '/' ? app_store.curr_view_route === route : app_store.curr_view_route.startsWith(route)
+const is_curr_view_route = (route: string) => {
+   // return route === '/' ? AppStore.curr_view_route === route : AppStore.curr_view_route.startsWith(route)
+   return route === '/' ? local_curr_view_route.value === route : local_curr_view_route.value.startsWith(route)
 }
-
 </script>
 
 
@@ -56,9 +68,9 @@ const is_curr_view_route = (route) => {
          <a @click.stop="open_nav_link('/')" 
             :class="{sel_view:is_curr_view_route('/')}">Home</a>
 
-         <!-- <div v-if="app_store.app_api !== ''"> -->
+         <!-- <div v-if="AppStore.app_api !== ''"> -->
             <a @click.stop="open_nav_link('/files')" 
-               :class="{sel_view:is_curr_view_route('/files')}">Files</a>
+               :class="{sel_view:is_curr_view_route('/files')}">Collections</a>
          <!-- </div> -->
          <!-- <div v-else class="text_lightgrey">
             <a class="no_cursor_pointer">Files</a>
@@ -73,7 +85,7 @@ const is_curr_view_route = (route) => {
          <a @click.stop="open_nav_link('/tags')" 
             :class="{sel_view:is_curr_view_route('/tags')}">Tags</a>
          
-         <!-- <div v-if="app_store.app_api !== ''"> -->
+         <!-- <div v-if="AppStore.app_api !== ''"> -->
             <a @click.stop="open_nav_link('/browse')" 
                :class="{sel_view:is_curr_view_route('/browse')}">Browse</a>
          <!-- </div> -->
@@ -81,9 +93,9 @@ const is_curr_view_route = (route) => {
             <a class="no_cursor_pointer">Browse</a>
          </div> -->
 
-         <!-- <div v-if="app_store.app_api !== ''">
-            <a v-if="!app_store.bearer_token" @click.stop="open_nav_link('/login')" :class="{sel_view:is_curr_view_route('/login')}">Login</a>
-            <a v-else @click.stop="open_nav_link('/account')" :class="{sel_view:is_curr_view_route('/account')}">{{ app_store.username }}</a>
+         <!-- <div v-if="AppStore.app_api !== ''">
+            <a v-if="!AppStore.bearer_token" @click.stop="open_nav_link('/login')" :class="{sel_view:is_curr_view_route('/login')}">Login</a>
+            <a v-else @click.stop="open_nav_link('/account')" :class="{sel_view:is_curr_view_route('/account')}">{{ AppStore.username }}</a>
          </div> -->
 
       </div>
@@ -95,7 +107,6 @@ const is_curr_view_route = (route) => {
 
 
 <style scoped>
-
 nav.app_nav {
    position:fixed;
    top:var(--app_nav_dropdown_top);
@@ -122,14 +133,13 @@ nav.app_nav {
    gap:1rem;
 
    width:100%;
-   height:100%;height:120px;
+   height:120px;
    margin:0;
    overflow:hidden;
 
    font-size:1.1rem;
    background:white;
-
-   
+      
    user-select: none;
 
    /* 
@@ -146,7 +156,6 @@ nav.app_nav {
    transition:opacity 2.35s ease-in-out .25s,transform .5s ease-in-out .25s;
    transition:opacity 2.35s ease-in-out .25s,transform .5s ease-in-out,-webkit-transform .5s ease-in-out .25s;
 }
-
 nav.app_nav > div.app_nav_dimmer {
    content:'';
 
@@ -166,7 +175,6 @@ nav.app_nav > div.app_nav_dimmer {
    transition:opacity .35s ease-in-out;
    transition:opacity .35s ease-in-out;
 }
-
 nav.app_nav.opened {
    /* transitions */
    -webkit-transform: translateY(0);
@@ -187,7 +195,6 @@ nav.app_nav.opened > div.app_nav_dimmer {
    transition:opacity 1s ease-in-out .35s;
    transition:opacity 1s ease-in-out .35s;
 }
-
 .app_nav_links {   
    display:-webkit-box;
    display:-ms-flexbox;
@@ -315,7 +322,6 @@ nav.app_nav.opened > div.app_nav_dimmer {
       display:none;
    }
 }
-
 a {
    width:fit-content;
    margin:0;
@@ -336,5 +342,4 @@ a:not(.sel_view):hover {
 a:not(.no_cursor_pointer):not(.sel_view):hover {
    background:hsl(0, 0%, 98%);
 }
-
 </style>
