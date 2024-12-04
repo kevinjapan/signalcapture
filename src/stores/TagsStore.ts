@@ -29,7 +29,7 @@ export const useTagsStore = defineStore('tags_store', () => {
    // const curr_tag = ref<Tag | null>(null)
 
    //
-   const page = ref<number>(1)
+   const page = ref<number>(0)
 
    //
    const total_num_items = ref<number>(0)
@@ -67,6 +67,13 @@ export const useTagsStore = defineStore('tags_store', () => {
          tags_list.value = payload.value?.data
          if(tags_list.value) total_num_items.value = tags_list.value?.length
          build_paginated_list()
+      }
+   })
+   
+   // set page to 0 if no results
+   watchEffect(() => {
+      if(paginated_tags_list.value) {
+         if(paginated_tags_list.value.length < 1) page.value = 0
       }
    })
 

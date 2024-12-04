@@ -29,7 +29,7 @@ export const useFolderItemsListStore = defineStore('folder_items_list_store', ()
     const total_num_items = ref<number>(0)
 
     // the current page
-    const page = ref<number>(1)
+    const page = ref<number>(0)
 
     // paginated items per page
     const items_per_page = ref<number>(AppStore.items_per_page)
@@ -60,7 +60,12 @@ export const useFolderItemsListStore = defineStore('folder_items_list_store', ()
     }
 
     watchEffect(() => {
-        if(FilesTreeStore.curr_folder_id > 0) page.value = 1
+        if(FilesTreeStore.curr_folder_id > 0 && total_num_items.value > 0) {
+            page.value = 1
+        }
+        else {
+            page.value = 0
+        }
     })
 
    watchEffect(() => {

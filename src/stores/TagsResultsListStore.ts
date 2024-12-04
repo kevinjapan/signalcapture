@@ -31,7 +31,7 @@ export const useTagsResultsListStore = defineStore('tags_results_list_store', ()
    const total_num_items = ref<number>(0)
 
    // the current page
-   const page = ref<number>(1)
+   const page = ref<number>(0)
 
    // paginated items per page - future : in AppStore
    const items_per_page = ref<number>(AppStore.items_per_page)
@@ -99,7 +99,13 @@ export const useTagsResultsListStore = defineStore('tags_results_list_store', ()
       // no_matches.value = search_results.value?.length === 0 ? true : false
       build_paginated_list()
    })
-   
+      
+   // set page to 0 if no results
+   // watchEffect(() => {
+   //    if(paginated_search_results.value) {
+   //       if(paginated_search_results.value.length < 1) page.value = 0
+   //    }
+   // })
    
    watchEffect(() => {
       if(curr_search_tag.value !== 0) page.value = 1

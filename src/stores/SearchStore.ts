@@ -37,7 +37,7 @@ export const useSearchStore = defineStore('search_store', () => {
    const total_num_items = ref<number>(0)
 
    // the current page
-   const page = ref<number>(1)
+   const page = ref<number>(0)
 
    // paginated items per page - future : in AppStore
    const items_per_page = ref<number>(AppStore.items_per_page)
@@ -84,7 +84,7 @@ export const useSearchStore = defineStore('search_store', () => {
 
       if(!search_term) return
       if(recent_searches.value.length > max_recent_searches.value) recent_searches.value.shift()
-         
+
       const no_duplicates_set = new Set(recent_searches.value)
       no_duplicates_set.add(search_term)
       recent_searches.value = [...no_duplicates_set]
@@ -130,8 +130,15 @@ export const useSearchStore = defineStore('search_store', () => {
       if(curr_search_term.value !== null && curr_search_term.value !== '') {
          filter_search_results(curr_search_term.value)
       }
-      // no_matches.value = search_results.value?.length === 0 ? true : false
+      no_matches.value = search_results.value?.length === 0 ? true : false
       build_paginated_list()
+   })
+
+   // set page to 0 if no results
+   watchEffect(() => {
+      if(paginated_search_results.value) {
+         if(paginated_search_results.value.length < 1) page.value = 0
+      }
    })
    
    function set_page(new_page: number) {
