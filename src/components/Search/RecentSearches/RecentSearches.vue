@@ -21,14 +21,15 @@ const search_for = (search_term: string) => {
 
 <template>
     <section>
-         <p>Recent Searches 2.0</p>
-         <ul>
+         <p>Recent Searches</p>
+         <ul v-if="recent_searches_list && recent_searches_list.length > 0">
             <li class="recent_search" 
                v-for="search_term in recent_searches_list"
                @click="search_for(search_term)">
                {{ search_term }}
             </li>
          </ul>
+         <div v-else class="italic sm_text ml_2 grey_text">there are no searches in the current session</div>
       </section>
 </template>
 
