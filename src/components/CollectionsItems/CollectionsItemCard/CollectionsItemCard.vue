@@ -9,6 +9,7 @@ import { useAppStore } from '@/stores/AppStore'
 // future : 
 // - img resolution is currently case-sensitive (from json dataset)
 // - folder path currently must end with '\\' or fails (not flexible)
+// - bring in imgs blurred (fixed height) then load w/ intersection obs.
 
 const props = defineProps<{
    item: CollectionsItem
@@ -24,7 +25,7 @@ const open_nav_link = (route:string) => {
 </script>
 
 <template>
-    <section v-if="props.item" class="default_item_card">
+    <section v-if="props.item" class="default_item_card no_user_select">
         <section class="img_container">
             <a @click.stop="open_nav_link(`/browse/collections-item/${props.item.id}`)" >
                 <img :src="AppStore.root_folder + props.item.folder_path + props.item.file_name"/>
