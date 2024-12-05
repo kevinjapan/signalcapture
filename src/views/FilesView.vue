@@ -38,13 +38,11 @@ watchEffect(() => {
 
 watchEffect(() => {
    curr_folder_id.value = FilesTreeStore.curr_folder_id
-
 })
 
 const folder_opened = (id: number) => {
-   console.log('you opened a folder',id)
+   console.log('retain: you opened a folder',id)
 }
-
 
 </script>
 
@@ -54,7 +52,7 @@ const folder_opened = (id: number) => {
       <p>Oops! Error encountered: {{ FilesTreeStore?.error }}</p>
    </div>
 
-   <section v-else class="file_view mt_5">
+   <section v-else class="file_view">
 
       <section class="rounded_container">
 

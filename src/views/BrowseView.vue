@@ -59,7 +59,7 @@ const toggle_view = () => {
       <p>Oops! Error encountered: {{ CollectionsItemsListStore?.error }}</p>
    </div>
 
-   <section v-else class="mt_5 mb_2">
+   <section v-else class="mb_2">
 
       <div v-if="CollectionsItemsListStore?.error">
          <p>Oops! Error encountered: {{ CollectionsItemsListStore?.error }}</p>
@@ -68,7 +68,6 @@ const toggle_view = () => {
       <CollectionsItemListContainer 
          :list_view_type="list_view_type"
          @toggle-view="toggle_view"
-         title="top_page_nav"
          :page=CollectionsItemsListStore.page
          :total_num_items=CollectionsItemsListStore.total_num_items
          :items_per_page=CollectionsItemsListStore.items_per_page

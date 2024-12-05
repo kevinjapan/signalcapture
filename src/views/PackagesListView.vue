@@ -61,18 +61,17 @@ const toggle_view = () => {
       <p>Oops! Error encountered: {{ PackageListStore?.error }}</p>
    </div>
 
-   <section v-else class="mt_5">
+   <section v-else>
 
-      <PackageListContainer 
+      <PackageListContainer
+         :list="list"
          :list_view_type="list_view_type"
-         @toggle-view="toggle_view"
-         title="top_page_nav"
          :page=PackageListStore.page
          :total_num_items=PackageListStore.total_num_items
          :items_per_page=PackageListStore.items_per_page
+         @toggle-view="toggle_view"
          @step-to-page="step_to_page" 
          @navigate-to-page="navigate_to_page"
-         :list="list"
       />
 
       <div v-if="is_loading" class="loading_spin"></div>

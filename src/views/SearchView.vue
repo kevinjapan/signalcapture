@@ -37,7 +37,7 @@ const submit_search_term = () => {
 </script>
 
 <template>
-   <section class="mt_5">
+   <section>
       <SearchForm 
          v-model="search_term" 
          @submit-search-term="submit_search_term" 

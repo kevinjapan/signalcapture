@@ -11,7 +11,7 @@ import CollectionsItemListContainer from '@/components/CollectionsItems/Collecti
 
 
 // TagsView
-// d if no_matches - notifies correctly but doesn't reset page to 0 (if page set to 1 prev.)
+// to do : if no_matches - notifies correctly but doesn't reset page to 0 (if page set to 1 prev.)
 
 const AppStore = useAppStore()
 const route = useRoute()
@@ -102,7 +102,6 @@ const tag_selected = (tag: number) => {
       <CollectionsItemListContainer 
          :list_view_type="list_view_type"
          @toggle-view="toggle_view"
-         title="top_page_nav"
          :page=TagsResultsListStore.page
          :total_num_items=TagsResultsListStore.total_num_items
          :items_per_page=TagsResultsListStore.items_per_page
