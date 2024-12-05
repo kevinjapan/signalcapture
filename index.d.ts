@@ -195,3 +195,18 @@ interface Tag {
    id:number
    tag:string
 }
+
+
+// AppHelp
+
+interface HelpTopic {
+   id:number
+   title:string
+   tagline:string
+   sections:HelpTopicSection[]
+}
+
+interface HelpTopicSection {
+   title:string
+   lines:string[]
+}
