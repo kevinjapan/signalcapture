@@ -99,6 +99,7 @@ const is_curr_view_route = (route: string) => {
          </div> -->
 
       </div>
+      
       <div class="app_nav_dimmer"></div>
 
    </nav>
@@ -133,8 +134,9 @@ nav.app_nav {
    gap:1rem;
 
    width:100%;
-   height:120px;
+   height:120px;height:100vh;
    margin:0;
+   padding:60px 0;
    overflow:hidden;
 
    font-size:1.1rem;
@@ -218,6 +220,10 @@ nav.app_nav.opened > div.app_nav_dimmer {
    /* background:white; */
    border-radius:0 0 .5rem .5rem;
 }
+
+.app_nav_links {
+   font-size:2rem;
+}
 .app_nav_hamburger {
 
    position:fixed;
@@ -240,7 +246,7 @@ nav.app_nav.opened > div.app_nav_dimmer {
    margin:0;
    padding:0;
    color:white;
-   /* background:hsl(0, 0%, 86%); */
+   background:white;
 }
 .app_nav_hamburger button {
    background:hsl(0, 0%, 86%);
@@ -248,6 +254,10 @@ nav.app_nav.opened > div.app_nav_dimmer {
    outline:none;
    margin:0;
    padding:0;
+   cursor:pointer;
+}
+button img {
+   background: white !important;
 }
 /* grey-out opened dropdown ctrl */
 .app_nav_hamburger button.opened {
@@ -317,7 +327,10 @@ nav.app_nav.opened > div.app_nav_dimmer {
 
       width:100%;
       padding:0 1rem 0 1rem;
+      font-size:unset;
    }
+   
+   
    .app_nav_hamburger {
       display:none;
    }
