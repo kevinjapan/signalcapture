@@ -11,7 +11,6 @@ import PackageTeaserCard from '@/components/Packages/PackageTeaserCard/PackageTe
 
 const props = defineProps<{
    list_view_type: ListViewType,
-   title: string,
    page: number,
    total_num_items: number,
    items_per_page: number,

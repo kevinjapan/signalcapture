@@ -11,7 +11,6 @@ import CollectionsItemTeaserCard from '../CollectionsItemTeaserCard/CollectionsI
 
 const props = defineProps<{
    list_view_type: ListViewType,
-   title: string,
    page: number,
    total_num_items: number,
    items_per_page: number,
