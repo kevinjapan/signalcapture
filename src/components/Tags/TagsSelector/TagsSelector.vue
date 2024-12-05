@@ -52,7 +52,7 @@ const tag_selected = (tag_id: number) => {
 </script>
 
 <template>
-   <ul class="flex gap_1 cursor_pointer mt_5">
+   <ul class="flex gap_1 cursor_pointer">
       <li v-for="item in list" 
             :key="item.id"  
             :item="item as unknown as Tag" 
