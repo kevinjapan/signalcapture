@@ -9,6 +9,8 @@ import CollectionsItemListContainer from '@/components/CollectionsItems/Collecti
 
 // FolderItemsList
 
+// to do : sort order of lists / toggle ctrls : rollout -> Browse/Search etc
+
 const AppStore = useAppStore()
 const FolderItemsListStore = useFolderItemsListStore()
 
@@ -56,7 +58,6 @@ const navigate_to_page = (target_page: number) => {
    <CollectionsItemListContainer 
          :list_view_type="list_view_type"
          @toggle-view="toggle_view"
-         title="top_page_nav"
          :page=FolderItemsListStore.page
          :total_num_items=FolderItemsListStore.total_num_items
          :items_per_page=FolderItemsListStore.items_per_page

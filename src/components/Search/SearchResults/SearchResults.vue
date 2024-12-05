@@ -105,7 +105,6 @@ const toggle_view = () => {
       <CollectionsItemListContainer 
          :list_view_type="list_view_type"
          @toggle-view="toggle_view"
-         title="top_page_nav"
          :page=SearchStore.page
          :total_num_items=SearchStore.total_num_items
          :items_per_page=SearchStore.items_per_page
