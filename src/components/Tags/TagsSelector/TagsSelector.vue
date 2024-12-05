@@ -65,3 +65,13 @@ const tag_selected = (tag_id: number) => {
 </template>
 
 
+<style scoped>
+ul {
+   display:flex;
+   flex-wrap:wrap;
+}
+li {
+   max-height:fit-content;
+}
+</style>
+
