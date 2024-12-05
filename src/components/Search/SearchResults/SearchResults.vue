@@ -3,11 +3,7 @@ import { ref, watch, watchEffect, onBeforeMount } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useAppStore } from '@/stores/AppStore'
 import { useSearchStore }  from '../../../stores/SearchStore'
-import CollectionsItemCard from '../../../components/CollectionsItems/CollectionsItemCard/CollectionsItemCard.vue'
-import CollectionsItemListItem from '../../../components/CollectionsItems/CollectionsItemListItem/CollectionsItemListItem.vue'
-import ListCtrls from '../../../components/ListCtrls/ListCtrls.vue'
-import PaginationNav from '../../../components/PaginationNav/PaginationNav.vue'
-import CollectionsItemTeaserCard from '@/components/CollectionsItems/CollectionsItemTeaserCard/CollectionsItemTeaserCard.vue'
+import CollectionsItemListContainer from '@/components/CollectionsItems/CollectionsItemListContainer/CollectionsItemListContainer.vue'
 
 
 
@@ -20,7 +16,7 @@ const props = defineProps({
 const AppStore = useAppStore()
 const SearchStore = useSearchStore()
 
-const { search_results, loading, no_matches, error } = storeToRefs(SearchStore)
+const { loading, no_matches, error } = storeToRefs(SearchStore)
 
 
 // The search term
@@ -105,49 +101,24 @@ const toggle_view = () => {
    </div>
 
    <section v-else>
-      <ListCtrls
+
+      <CollectionsItemListContainer 
          :list_view_type="list_view_type"
          @toggle-view="toggle_view"
-      >
-         <PaginationNav
-            title="top_page_nav"
-            :page=SearchStore.page
-            :total_num_items=SearchStore.total_num_items
-            :items_per_page=SearchStore.items_per_page
-            @step-to-page="step_to_page" 
-            @navigate-to-page="navigate_to_page" 
-         />
-      </ListCtrls>
-
-      <!-- card / list view -->
-      <section v-if="list_view_type === 'card'" class="grid grid_cards_layout">
-         <CollectionsItemCard v-for="item in list" :key="item?.id"  :item="item as unknown as CollectionsItem" />
-      </section>
-      <section v-if="list_view_type === 'teaser_card'" class="grid grid_cards_layout teaser_cards">
-         <CollectionsItemTeaserCard v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
-      </section>
-      <section v-if="list_view_type === 'list'" class="flex flex_list_layout">
-         <CollectionsItemListItem v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
-      </section>
+         title="top_page_nav"
+         :page=SearchStore.page
+         :total_num_items=SearchStore.total_num_items
+         :items_per_page=SearchStore.items_per_page
+         @step-to-page="step_to_page" 
+         @navigate-to-page="navigate_to_page"
+         :list="list"
+      />
+   
 
       <div v-if="no_matches && !loading" class="no_results mt_1">no matches were found</div>
       
       <div v-if="loading" class="loading_spin mt_1"></div>
 
-      <ListCtrls
-         v-if="!loading && search_results && !no_matches"
-         :list_view_type="list_view_type"
-         @toggle-view="toggle_view"
-      >
-         <PaginationNav         
-            title="bottom_page_nav"
-            :page=SearchStore.page
-            :total_num_items=SearchStore.total_num_items
-            :items_per_page=SearchStore.items_per_page
-            @step-to-page="step_to_page" 
-            @navigate-to-page="navigate_to_page" 
-         />
-      </ListCtrls>
 
    </section>
 
