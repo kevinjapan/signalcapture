@@ -3,11 +3,7 @@ import { ref, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useAppStore } from '@/stores/AppStore'
 import { useFolderItemsListStore } from '@/stores/FolderItemsListStore'
-import CollectionsItemCard from '@/components/CollectionsItems/CollectionsItemCard/CollectionsItemCard.vue'
-import CollectionsItemTeaserCard from '@/components/CollectionsItems/CollectionsItemTeaserCard/CollectionsItemTeaserCard.vue'
-import CollectionsItemListItem from '@/components/CollectionsItems/CollectionsItemListItem/CollectionsItemListItem.vue'
-import ListCtrls from '@/components/ListCtrls/ListCtrls.vue'
-import PaginationNav from '@/components/PaginationNav/PaginationNav.vue'
+import CollectionsItemListContainer from '@/components/CollectionsItems/CollectionsItemListContainer/CollectionsItemListContainer.vue'
 
 
 
@@ -57,34 +53,22 @@ const navigate_to_page = (target_page: number) => {
       <p>Oops! Error encountered: {{ my_error }}</p>
    </div>
    
+   <CollectionsItemListContainer 
+         :list_view_type="list_view_type"
+         @toggle-view="toggle_view"
+         title="top_page_nav"
+         :page=FolderItemsListStore.page
+         :total_num_items=FolderItemsListStore.total_num_items
+         :items_per_page=FolderItemsListStore.items_per_page
+         @step-to-page="step_to_page" 
+         @navigate-to-page="navigate_to_page"
+         :list="paginated_list"
+      />
 
    <div v-if="no_matches && !loading" class="no_results mt_1">no matches were found</div>
+
    <div v-if="loading && !paginated_list" class="loading_spin mt_1"></div>
 
-    <ListCtrls
-        :list_view_type="list_view_type"
-        @toggle-view="toggle_view"
-    >
-        <PaginationNav
-            title="top_page_nav"
-            :page=FolderItemsListStore.page
-            :total_num_items=FolderItemsListStore.total_num_items
-            :items_per_page=FolderItemsListStore.items_per_page
-            @step-to-page="step_to_page" 
-            @navigate-to-page="navigate_to_page" 
-        />
-    </ListCtrls>   
-
-    <!-- card / list view -->
-    <section v-if="list_view_type === 'card'"  class="grid grid_cards_layout" style="margin-top:1rem;">
-        <CollectionsItemCard v-for="item in paginated_list" :key="item?.id"  :item="item as unknown as CollectionsItem" />
-    </section>
-    <section v-if="list_view_type === 'teaser_card'"  class="grid grid_cards_layout teaser_cards" style="margin-top:1rem;">
-        <CollectionsItemTeaserCard v-for="item in paginated_list" :key="item?.id"  :item="item as unknown as CollectionsItem" />
-    </section>
-    <section v-if="list_view_type === 'list'"  class="flex flex_list_layout " style="margin-top:1rem;">
-        <CollectionsItemListItem v-for="item in paginated_list" :key="item?.id"  :item="item as unknown as CollectionsItem" />
-    </section>
 
     <!-- 
         new files display :
@@ -100,19 +84,7 @@ const navigate_to_page = (target_page: number) => {
         </ul>
     </section>
 
-    <ListCtrls
-        :list_view_type="list_view_type"
-        @toggle-view="toggle_view"
-    >
-        <PaginationNav
-            title="top_page_nav"
-            :page=FolderItemsListStore.page
-            :total_num_items=FolderItemsListStore.total_num_items
-            :items_per_page=FolderItemsListStore.items_per_page
-            @step-to-page="step_to_page" 
-            @navigate-to-page="navigate_to_page" 
-        />
-    </ListCtrls>
+
 
 </template>
 

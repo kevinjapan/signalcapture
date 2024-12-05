@@ -2,11 +2,7 @@
 import { ref, watchEffect } from 'vue'
 import { useAppStore } from '@/stores/AppStore'
 import { useCollectionsItemsListStore } from '../stores/CollectionsItemsListStore'
-import ListCtrls from '../components/ListCtrls/ListCtrls.vue'
-import PaginationNav from '../components/PaginationNav/PaginationNav.vue'
-import CollectionsItemCard from '../components/CollectionsItems/CollectionsItemCard/CollectionsItemCard.vue'
-import CollectionsItemTeaserCard from '@/components/CollectionsItems/CollectionsItemTeaserCard/CollectionsItemTeaserCard.vue'
-import CollectionsItemListItem from '../components/CollectionsItems/CollectionsItemListItem/CollectionsItemListItem.vue'
+import CollectionsItemListContainer from '@/components/CollectionsItems/CollectionsItemListContainer/CollectionsItemListContainer.vue'
 
 
 
@@ -69,46 +65,20 @@ const toggle_view = () => {
          <p>Oops! Error encountered: {{ CollectionsItemsListStore?.error }}</p>
       </div>
 
-      <ListCtrls
+      <CollectionsItemListContainer 
          :list_view_type="list_view_type"
          @toggle-view="toggle_view"
-      >
-         <PaginationNav
-            title="top_page_nav"
-            :page=CollectionsItemsListStore.page
-            :total_num_items=CollectionsItemsListStore.total_num_items
-            :items_per_page=CollectionsItemsListStore.items_per_page
-            @step-to-page="step_to_page" 
-            @navigate-to-page="navigate_to_page" 
-         />
-      </ListCtrls>
-
+         title="top_page_nav"
+         :page=CollectionsItemsListStore.page
+         :total_num_items=CollectionsItemsListStore.total_num_items
+         :items_per_page=CollectionsItemsListStore.items_per_page
+         @step-to-page="step_to_page" 
+         @navigate-to-page="navigate_to_page"
+         :list="list"
+      />
+   
       <div v-if="CollectionsItemsListStore.loading" class="loading_spin"></div>
 
-      <section v-if="list_view_type === 'card'" class="grid grid_cards_layout">
-         <CollectionsItemCard v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
-      </section>
-      <section v-if="list_view_type === 'teaser_card'" class="grid grid_cards_layout teaser_cards">
-         <CollectionsItemTeaserCard v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
-      </section>
-      <section v-if="list_view_type === 'list'" class="flex flex_list_layout">
-         <CollectionsItemListItem v-for="item in list" :key="item.id"  :item="item as unknown as CollectionsItem" />
-      </section>
-
-      <ListCtrls
-         :list_view_type="list_view_type"
-         @toggle-view="toggle_view"
-      >
-         <PaginationNav
-            title="bottom_page_nav"
-            :page=CollectionsItemsListStore.page
-            :total_num_items=CollectionsItemsListStore.total_num_items
-            :items_per_page=CollectionsItemsListStore.items_per_page
-            @step-to-page="step_to_page" 
-            @navigate-to-page="navigate_to_page" 
-         />
-      </ListCtrls>
-      
    </section>
       
 </template>

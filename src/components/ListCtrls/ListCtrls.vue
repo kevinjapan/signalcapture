@@ -15,7 +15,7 @@ const emit = defineEmits([
 
 <template>
 
-   <section class="list_ctrls">
+   <section class="list_ctrls no_user_select">
 
       <!-- PaginationNav slot -->
       <slot></slot>

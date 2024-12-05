@@ -34,7 +34,7 @@ const step = (step: number) => {
 }
 
 const on_first_page = computed(() => {
-   return props.page === 1
+   return props.page === 1 || props.page === 0
 })
 
 const on_last_page = computed(() => {
@@ -50,14 +50,14 @@ const items_of = computed(() => {
 </script>
 
 <template>
-   <section class="nav_bar"> 
+   <section class="nav_bar no_user_select"> 
       <div>Page 
          <input :value="page" class="curr_page_input" :name="title"/></div>
          <div style="padding-left:.15rem;"> of {{ num_pages }}</div>
-      <div class="ml_2">Items <span class="items_of">{{ items_of }}</span> of {{ total_num_items }}</div>
+      <div><span class="items_of">{{ items_of }}</span> of {{ total_num_items }} Records</div>
       <div class="flex ml_2">
-         <button v-on:click="step(-1)" class="page_nav_btn start_btn" :class="{greyed_out: on_first_page}"></button>
-         <button v-on:click="step(1)" class="page_nav_btn end_btn" :class="{greyed_out: on_last_page}"></button>
+         <button v-on:click="step(-1)" class="page_nav_btn start_btn" :class="{greyed_out: on_first_page}"><</button>
+         <button v-on:click="step(1)" class="page_nav_btn end_btn" :class="{greyed_out: on_last_page}">></button>
       </div>
    </section>
 </template>
@@ -129,15 +129,8 @@ input.curr_page_input {
 .page_nav_btn.start_btn {
    border-radius:.15rem 0 0 .15rem;
 }
-.page_nav_btn.start_btn::before {
-   /* use content to prevent ugly text hightlight on mousedrags */
-   content:'<'
-}
 .page_nav_btn.end_btn {
    border-radius:0 .15rem .15rem 0;
-}
-.page_nav_btn.end_btn::before {
-   content:'>'
 }
 .page_nav_btn:hover {
    border:solid 1px hsl(0, 0%, 75%);
@@ -146,7 +139,15 @@ input.curr_page_input {
    display:inline-block;
    width:5rem;
    padding-left:.15rem;
-   border:solid 1px hsl(0, 0%, 88%);
-   text-align:center;
+   /*border:solid 1px hsl(0, 0%, 88%);*/
+   text-align:right;
+}
+button {
+   background:hsl(0, 0%, 95%);
+   color:grey; 
+}
+button.greyed_out{
+   color:hsl(0, 0%, 89%);
+   cursor:none;
 }
 </style>
