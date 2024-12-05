@@ -2,16 +2,10 @@
 import { onMounted, ref, watchEffect } from 'vue'
 import { useAppStore } from '@/stores/AppStore'
 import { usePackagesListStore } from '@/stores/PackagesListStore'
-import PackageCard from '../components/Packages/PackageCard/PackageCard.vue'
-import PackageListItem from '../components/Packages/PackageListItem/PackageListItem.vue'
-import ListCtrls from '../components/ListCtrls/ListCtrls.vue'
-import PaginationNav from '../components/PaginationNav/PaginationNav.vue'
-import PackageTeaserCard from '@/components/Packages/PackageTeaserCard/PackageTeaserCard.vue'
-
+import PackageListContainer from '@/components/Packages/PackageListContainer/PackageListContainer.vue'
 
 
 // PackagesListView
-
 
 const AppStore = useAppStore()
 const PackageListStore = usePackagesListStore()
@@ -69,47 +63,20 @@ const toggle_view = () => {
 
    <section v-else class="mt_5">
 
-      <ListCtrls
+      <PackageListContainer 
          :list_view_type="list_view_type"
          @toggle-view="toggle_view"
-      >
-         <PaginationNav
-            title="top_page_nav"
-            :page=PackageListStore.page
-            :total_num_items=PackageListStore.total_num_items
-            :items_per_page=PackageListStore.items_per_page
-            @step-to-page="step_to_page" 
-            @navigate-to-page="navigate_to_page" 
-         />
-      </ListCtrls>
+         title="top_page_nav"
+         :page=PackageListStore.page
+         :total_num_items=PackageListStore.total_num_items
+         :items_per_page=PackageListStore.items_per_page
+         @step-to-page="step_to_page" 
+         @navigate-to-page="navigate_to_page"
+         :list="list"
+      />
 
       <div v-if="is_loading" class="loading_spin"></div>
 
-      <!-- card / list view -->
-      <section v-if="list_view_type === 'card'" class="grid grid_cards_layout mt_2">
-         <PackageCard v-for="item in list" :key="item.id"  :item="item as unknown as Package" />
-      </section>
-      <section v-if="list_view_type === 'teaser_card'" class="grid grid_cards_layout teaser_cards mt_2">
-         <PackageTeaserCard v-for="item in list" :key="item.id"  :item="item as unknown as Package" />
-      </section>
-      <section v-if="list_view_type === 'list'" class="flex flex_list_layout mt_2">
-         <PackageListItem v-for="item in list" :key="item.id"  :item="item as unknown as Package" />
-      </section>
-
-      <ListCtrls
-         :list_view_type="list_view_type"
-         @toggle-view="toggle_view"
-      >
-         <PaginationNav
-            title="bottom_page_nav"
-            :page=PackageListStore.page
-            :total_num_items=PackageListStore.total_num_items
-            :items_per_page=PackageListStore.items_per_page
-            @step-to-page="step_to_page" 
-            @navigate-to-page="navigate_to_page" 
-         />
-      </ListCtrls>
-      
    </section>
       
 </template>
