@@ -68,6 +68,13 @@ export const useFolderItemsListStore = defineStore('folder_items_list_store', ()
         }
     })
 
+   const build_paginated_list = () => {
+      if(list.value) {
+      let start_index = ((page.value - 1) * items_per_page.value)
+      paginated_list.value = list.value.slice(start_index,start_index + items_per_page.value)
+      }
+   }
+  
    watchEffect(() => {
 
         if(FilesTreeStore.curr_folder_id !== null && FilesTreeStore.curr_folder_id > 0) {
@@ -84,17 +91,10 @@ export const useFolderItemsListStore = defineStore('folder_items_list_store', ()
             })
         }
 
-        if(list.value) build_paginated_list()
+        if(list.value && build_paginated_list) build_paginated_list()
         if(list.value) total_num_items.value = list.value ? list.value.length : 0
     })
 
-    const build_paginated_list = () => {
-        if(list.value) {
-        let start_index = ((page.value - 1) * items_per_page.value)
-        paginated_list.value = list.value.slice(start_index,start_index + items_per_page.value)
-        }
-    }
-    
     watchEffect(() => {
         // workaround - this does get the .value as a string correctly w/ casting:
         // issue - CollectionsItemsListStore.error.value returns 'undefined' while CollectionsItemsListStore.error 
