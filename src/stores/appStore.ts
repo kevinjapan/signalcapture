@@ -18,7 +18,7 @@ export const useAppStore = defineStore('app_store', () => {
    const app_api = is_static ? ref('http://songs-api-laravel/api') : ref('')
 
    // we track view to highlight nav links on page refreshes
-   const curr_view_route = ref('/')
+   const curr_view_route = ref<string>('/')
 
    // we use presence/absence as logged-in flag
    const bearer_token = ref('')

@@ -2,7 +2,7 @@
 import { onMounted, ref, watchEffect } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAppStore } from '@/stores/AppStore'
-
+import { useAppHelpStore } from '@/stores/AppHelpStore'
 
 
 // AppNav
@@ -11,6 +11,7 @@ import { useAppStore } from '@/stores/AppStore'
 const router = useRouter()
 const route = useRoute()
 const AppStore = useAppStore()
+const AppHelpStore = useAppHelpStore()
 
 //
 const display = ref(false)
@@ -37,6 +38,7 @@ watchEffect(() => {
 // we push rather than RouterLink to allow close app_nav
 const open_nav_link = (route: string) => {
    display.value = false
+   AppHelpStore.clear()
    AppStore.curr_view_route = route
    router.push(route)
 }
@@ -69,8 +71,8 @@ const is_curr_view_route = (route: string) => {
             :class="{sel_view:is_curr_view_route('/')}">Home</a>
 
          <!-- <div v-if="AppStore.app_api !== ''"> -->
-            <a @click.stop="open_nav_link('/files')" 
-               :class="{sel_view:is_curr_view_route('/files')}">Collections</a>
+            <a @click.stop="open_nav_link('/collections')" 
+               :class="{sel_view:is_curr_view_route('/collections')}">Collections</a>
          <!-- </div> -->
          <!-- <div v-else class="text_lightgrey">
             <a class="no_cursor_pointer">Files</a>

@@ -1,21 +1,26 @@
 <script lang="ts" setup>
+// import { useRouter, useRoute } from 'vue-router'
 import { useAppHelpStore } from '@/stores/AppHelpStore'
 
 
-const AppHelpSore = useAppHelpStore()
+// const router = useRouter()
+// const route = useRoute()
+const AppHelpStore = useAppHelpStore()
 
-const toggle_help = () => {
-   AppHelpSore.is_open ? AppHelpSore.close() : AppHelpSore.open()
+const toggle_help = async() => {
 
-   // to do : resolve help from current url
+   // await router.isReady()
+   // AppHelpStore.set_curr_topic(route.fullPath)
+   AppHelpStore.is_open ? AppHelpStore.close() : AppHelpStore.open()
 }
+
 </script>
 
 
 <template>
 
    <ul class="options_bar mt_4 no_user_select">
-      <li @click="toggle_help" :class="{bg_selected: AppHelpSore.is_open}">Help</li>
+      <li @click="toggle_help" :class="{bg_selected: AppHelpStore.is_open}">Help</li>
       <li class="v_center"><img src="@/assets/icons/ellipsis .svg" class="pt_.15"/></li>
    </ul>
 
