@@ -12,6 +12,12 @@ const router = createRouter({
          component: () => import('../views/HomeView.vue')
       },
       {
+         name: 'collections',
+         path: '/collections',
+         component: () => import('../views/FilesView.vue') 
+      },
+      // legace : files -> collections
+      {
          name: 'files',
          path: '/files',
          component: () => import('../views/FilesView.vue') 
