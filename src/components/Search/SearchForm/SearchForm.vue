@@ -13,8 +13,7 @@ const emit = defineEmits(
 </script>
 
 <template>
-   <form class="flex " @submit.prevent>
-      <label for="title">Search</label>
+   <form class="flex" @submit.prevent>
       <input id="title" name="title" v-model="search_term" placeholder="enter your search term here"/>      
       <div class="btn_row">
          <button v-if="search_term?.length > 2" @click="$emit('submit-search-term')">Search</button>
@@ -34,12 +33,14 @@ form {
    align-items:center;
    gap:1rem;
    padding:0;
+   margin-bottom:2rem;
 }
 
 input {
    font-weight:100;
    color:hsl(0, 0%, 40%);
    margin-top:.2rem;
+   margin-bottom:.2rem;
 }
 </style>
 

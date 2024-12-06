@@ -6,14 +6,17 @@ import PackageRecord from '@/components/Packages/PackageRecord/PackageRecord.vue
 
 
 
-// PackageView - view a single package
-
-const item = ref<Package | null>(null)
-const is_loading = ref<boolean>(true)
+// PackageView
 
 const route = useRoute()
 const PackageStore = usePackageStore()
 PackageStore.load_single_package(parseInt(route.params.id as string))
+
+//
+const item = ref<Package | null>(null)
+
+//
+const is_loading = ref<boolean>(true)
 
 onMounted(() => {
    window.scroll(0,0)
@@ -23,13 +26,10 @@ watchEffect(() => {
    if(PackageStore.single_package) is_loading.value = false
    item.value = PackageStore.single_package
 })
-
-
 </script>
 
 
 <template>
-
    <div v-if="is_loading" class="loading_spin"></div>
    <section class="mt_5">
       <PackageRecord
@@ -37,8 +37,6 @@ watchEffect(() => {
          :item="item"
       />
    </section>
-
-
 </template>
 
 
@@ -53,5 +51,4 @@ section.record_card{
    padding:1rem;
    border-radius:.5rem;
 }
-
 </style>
