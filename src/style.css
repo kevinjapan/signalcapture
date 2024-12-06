@@ -18,6 +18,8 @@
 
    --app_nav_dropdown_top:0px;
 
+   --app_help_top:80px;
+
    /* space songs content below top nav */
    --song_top_margin_sm:12rem;
    --song_top_margin_lg:8rem;
@@ -37,7 +39,7 @@ html {
 main {
    width:100%;
    min-height:100vh;
-   margin-top:var(--app_nav_height);
+   /* margin-top:var(--app_nav_height); */
  }
 /*
 songs and albms list views
@@ -330,6 +332,7 @@ input::placeholder {
 .mt_1 {margin-top:1;}
 .mt_2 {margin-top:2rem;}
 .mt_3 {margin-top:3rem;}
+.mt_4 {margin-top:4rem;}
 .mt_5 {margin-top:5rem;}
 .mb_2 {margin-bottom:2rem;}
 .mb_1 {margin-bottom:1rem;}
@@ -340,6 +343,7 @@ input::placeholder {
 .p_\.2 {padding:.2rem;}
 .pl_1 {padding-left:1rem;}
 .pr_1 {padding-right:1rem;}
+.pt_\.15 {padding-top:.15rem;}
 
 .cursor_pointer {
    cursor:pointer;
@@ -362,7 +366,7 @@ input::placeholder {
 .bg_yellow {background:yellow;}
 
 .bold {
-   font-weight:500;
+   font-weight:700;
 }
 .bg_selected {background:hsl(60, 100%, 75%);}
 
@@ -390,6 +394,12 @@ input::placeholder {
    -webkit-box-pack:flex-end;
    -ms-flex-pack:flex-end;
    justify-content:flex-end;
+}
+.text_right {
+   text-align:right;
+}
+.text_left {
+   text-align:left;
 }
 
 /* print separate pages */
