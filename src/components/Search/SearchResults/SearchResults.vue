@@ -91,6 +91,10 @@ const navigate_to_page = (target_page: number) => {
 const toggle_view = () => {
    AppStore.switch_list_view_type()
 }
+
+const sort_list_by = (order_by: string) => {
+   console.log('to do : sort list in store',order_by)
+}
 </script>
 
 
@@ -110,6 +114,7 @@ const toggle_view = () => {
          :items_per_page=SearchStore.items_per_page
          @step-to-page="step_to_page" 
          @navigate-to-page="navigate_to_page"
+         @sort-list-by="sort_list_by"
          :list="list"
       />
    

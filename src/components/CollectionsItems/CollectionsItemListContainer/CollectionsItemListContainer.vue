@@ -20,7 +20,8 @@ const props = defineProps<{
 const emit = defineEmits([
    'toggle-view',
    'step-to-page',
-   'navigate-to-page'
+   'navigate-to-page',
+   'sort-list-by'
 ])
 
 const step_to_page = (step: number) => {
@@ -31,7 +32,9 @@ const navigate_to_page = (target_page: number) => {
    emit('navigate-to-page',target_page)
 }
 
-// future : split off ListCtrls 
+const sort_list_by = (order_by: string) => {
+   emit('sort-list-by',order_by)
+}
 </script>
 
 <template>
@@ -41,6 +44,7 @@ const navigate_to_page = (target_page: number) => {
       <ListCtrls
          :list_view_type="list_view_type"
          @toggle-view="$emit('toggle-view')"
+         @sort-list-by="sort_list_by"
       >
          <PaginationNav
             title="top_page_nav"
