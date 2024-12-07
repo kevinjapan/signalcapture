@@ -6,7 +6,7 @@ import { useAppHelpStore } from '@/stores/AppHelpStore'
 
 
 // AppNav
-// future : enable sm/mobile
+// future : enhance sm/mobile
 
 const router = useRouter()
 const route = useRoute()

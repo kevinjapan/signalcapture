@@ -35,7 +35,7 @@ watchEffect(async() => {
    }
 })
 
-const test = (topic: string) => {
+const is_curr_topic = (topic: string) => {
    return curr_help_topic?.value?.title.toUpperCase() === topic.toUpperCase()
 }
 </script>
@@ -49,7 +49,7 @@ const test = (topic: string) => {
          <ul>
             <li v-for="topic in AppHelpStore.topics_list" 
                @click="select_topic(topic)"
-               :class="{bold: test(topic)}"
+               :class="{bold: is_curr_topic(topic)}"
             >{{ topic }}</li>
          </ul>
       </section>
@@ -67,12 +67,11 @@ const test = (topic: string) => {
       </section>
 
    </section>
+      
 
 </template>
 
 <style scoped>
-
-
 .app_help {
    position:fixed;
    top:var(--app_help_top);
@@ -110,9 +109,8 @@ const test = (topic: string) => {
    height:60%;
    overflow-y:scroll;
 }
-
 .app_help_bg {
-
+   
    /* transitions */
    -webkit-transform: translateY(0);
    -ms-transform: translateY(0);
@@ -125,6 +123,16 @@ const test = (topic: string) => {
    transition:opacity 1s ease-in-out,transform .75s ease-in-out;
    transition:opacity 1s ease-in-out,transform .75s ease-in-out,-webkit-transform .75s ease-in-out;
 }
+.app_help_bg::after {
+   content:'';
+   position:absolute;
+   top:0;
+   left:0;
+   z-index:-1;
+   background:black;
+   opacity:1;
+}
+
 
 button {
    width:fit-content;
@@ -143,5 +151,4 @@ ul {
 li {
    cursor: pointer;
 }
-
 </style>

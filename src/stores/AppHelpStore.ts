@@ -4,7 +4,9 @@ import { defineStore, acceptHMRUpdate } from 'pinia'
 
 // AppHelpStore
 
-// to do : move hard-coded dataset to json files
+// future : 
+// move hard-coded dataset to json files
+// resolve from sub-pages for each topic..  eg /packages/details -> /packages -> packages
 
 export const useAppHelpStore = defineStore('app_help_store', () => {
 
@@ -23,7 +25,6 @@ export const useAppHelpStore = defineStore('app_help_store', () => {
       is_open.value = false
    }
 
-   // to do : sub-pages for each topic..
    const set_curr_topic = (topic: string) => {
       curr_topic.value = topic
    }
@@ -33,9 +34,7 @@ export const useAppHelpStore = defineStore('app_help_store', () => {
       is_open.value = false
    }
 
-   // stub for demo :
-   // to do : build help functionality
-   //         access dataset help.json
+   // stub for demo
    const get_topic = (topic: string): HelpTopic => {
 
       switch(topic) {
