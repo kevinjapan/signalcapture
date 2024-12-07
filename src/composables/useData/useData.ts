@@ -42,7 +42,7 @@ export default function useData<T>(endPoint: string, url_params: string[], query
       let query_string2 = query_params_str(query_params)
       const { route_url, route_url_params } = get_end_point(endPoint, url_params, query_params) as EndPoint
       const built_url = `${route_url}${route_url_params ? route_url_params : ''}${!is_empty_obj(query_string2) ? '?' : ''}${!is_empty_obj(query_string) ? query_string : ''}`
-      update_the_url(built_url)
+      if(update_the_url) update_the_url(built_url)
    }
 
    // const body_stringified = body && typeof body === 'object' ? body = JSON.stringify(body) : body
@@ -55,5 +55,10 @@ export default function useData<T>(endPoint: string, url_params: string[], query
 
 
    // return UseDataReturn obj
-   return { loading, payload, error, updateDataUrl }
+   return { 
+      loading, 
+      payload, 
+      error, 
+      updateDataUrl 
+   }
 }
