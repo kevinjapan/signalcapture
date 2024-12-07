@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import SortOrderSelect from '../SortOrderSelect/SortOrderSelect.vue'
 import ViewToggle from './ViewToggle/ViewToggle.vue'
 
 const props = defineProps<{
@@ -7,9 +8,13 @@ const props = defineProps<{
 
 
 const emit = defineEmits([
-   'toggle-view'
+   'toggle-view',
+   'sort-list-by'
 ])
 
+const sort_list_by = (order_by: string) => {
+   emit('sort-list-by',order_by)
+}
 </script>
 
 
@@ -19,6 +24,8 @@ const emit = defineEmits([
 
       <!-- PaginationNav slot -->
       <slot></slot>
+
+      <SortOrderSelect @sort-list-by="sort_list_by"/>
 
       <ViewToggle 
          :list_view_type="props.list_view_type"
