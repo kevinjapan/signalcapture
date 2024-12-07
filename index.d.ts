@@ -66,11 +66,11 @@ interface UseFetchReturn<T> {
 // UseDataReturn
 // useData wraps useFetch for in-app endpoint mapping
 interface UseDataReturn<T> {
-   loading:boolean,
-   payload?:Payload<T | null> | null,
-   error?:string | null,
+   loading:Ref<boolean>,
+   payload?:Ref<Payload<T | null> | null>,
+   error?:Ref<string | null>,
    load?: () => Promise<void>,
-   updateUrl?: (string) => void,
+   updateDataUrl?: (endPoint: string, url_params: string[], query_params: QueryParams) => void,
 }
 
 
