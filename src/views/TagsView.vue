@@ -9,9 +9,7 @@ import CollectionsItemListContainer from '@/components/CollectionsItems/Collecti
 
 
 
-
 // TagsView
-// to do : if no_matches - notifies correctly but doesn't reset page to 0 (if page set to 1 prev.)
 
 const AppStore = useAppStore()
 const route = useRoute()
@@ -68,6 +66,7 @@ const set_page = (page: number) => {
 
 const step_to_page = (step: number) => {
    const new_page = TagsResultsListStore.page + step
+   // to do : return something on next line
    if(new_page < 1 || new_page > Math.ceil(TagsResultsListStore.total_num_items / TagsResultsListStore.items_per_page)) return
    TagsResultsListStore.set_page(new_page)
    window.scroll(0,0)
@@ -81,8 +80,12 @@ const toggle_view = () => {
    AppStore.switch_list_view_type()
 }
 
-const tag_selected = (tag: number) => {
-   local_tag_search_id.value = tag
+const tag_selected = (tag_id: number) => {
+   local_tag_search_id.value = tag_id
+}
+
+const sort_list_by = (order_by: string) => {
+   console.log('to do : sort list in store',order_by)
 }
 </script>
 
@@ -107,6 +110,7 @@ const tag_selected = (tag: number) => {
          :items_per_page=TagsResultsListStore.items_per_page
          @step-to-page="step_to_page" 
          @navigate-to-page="navigate_to_page"
+         @sort-list-by="sort_list_by"
          :list="list"
       />
 
