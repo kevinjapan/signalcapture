@@ -25,10 +25,10 @@ const open_nav_link = (route:string) => {
 </script>
 
 <template>
-    <section v-if="props.item" class="default_item_card no_user_select">
+    <section v-if="props.item" class="default_item_card">
         <section class="img_container">
             <a @click.stop="open_nav_link(`/browse/collections-item/${props.item.id}`)" >
-                <img :src="AppStore.root_folder + props.item.folder_path + props.item.file_name"/>
+                <img :src="AppStore.root_folder + props.item.folder_path + props.item.file_name" />
             </a>
         </section>
         <section class="text_container">

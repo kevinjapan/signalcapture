@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import RecentSearches from '@/components/Search/RecentSearches/RecentSearches.vue'
+// import RecentSearches from '@/components/Search/RecentSearches/RecentSearches.vue'
 
 onMounted(() => {
 	window.scroll(0,0)
@@ -38,26 +38,30 @@ onMounted(() => {
 
 <style scoped>
 section.dashboard {
+	display:-ms-grid;
 	display:grid;
+	-ms-grid-columns:1fr;
 	grid-template-columns:1fr;
 }
 section.dashboard section {
 	margin:1rem;
 	padding:1rem 2rem;
-	/* border:solid 1px white; */
 	border-radius:.5rem;
 }
 @media (min-width: 768px) {
 	section.dashboard {
+      -ms-grid-columns:1.5fr 1fr 1fr;
 		grid-template-columns:1.5fr 1fr 1fr;
 	}
 }
 ul {
 	list-style:none;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
 	user-select: none;
 }
 section.site_status_notification {
-	/* border:solid 1px white; */
 	border-radius:.5rem;
 }
 

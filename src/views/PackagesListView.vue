@@ -41,6 +41,7 @@ const set_page = (page: number) => {
 
 const step_to_page = (step: number) => {
    const new_page = PackageListStore.page + step
+   // to do : return something on next line
    if(new_page < 1 || new_page > Math.ceil(PackageListStore.total_num_items / PackageListStore.items_per_page)) return
    PackageListStore.set_page(new_page)
    window.scroll(0,0)

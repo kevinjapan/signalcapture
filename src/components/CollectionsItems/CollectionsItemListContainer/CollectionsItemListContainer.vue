@@ -84,3 +84,8 @@ const sort_list_by = (order_by: string) => {
    </section>
 </template>
 
+<style scoped>
+section {
+   width:100%;
+}
+</style>

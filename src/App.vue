@@ -5,7 +5,7 @@ import { useAppStore } from '../src/stores/AppStore'
 import { useAppHelpStore } from './stores/AppHelpStore'
 import AppNav from './components/App/AppNav/AppNav.vue'
 import Options from '@/components/Options/Options.vue'
-import AppStatus from './components/App/AppStatus/AppStatus.vue'
+// import AppStatus from './components/App/AppStatus/AppStatus.vue'
 import AppHelp from '@/components/App/AppHelp/AppHelp.vue'
 import AppFooter from './components/App/AppFooter/AppFooter.vue'
 
@@ -36,6 +36,15 @@ const close_bg_dimmer = () => {
    is_dimmed_bg.value = false
    AppHelpStore.close()
 }
+
+// to do : something is breaking display w/in <main> for safari..
+// - every view is broken - suggests app level issue ?
+// - checked components in this file - nothing obvious
+// - checked css - nothing obvious
+// - to do : javascript?
+// - note, every view does import a store of some description (?) - may be js therein?
+// -  i might have to do a re-build from the ground up - adding parts as we go...
+
 </script>
 
 <template>
@@ -45,8 +54,8 @@ const close_bg_dimmer = () => {
    <Options />
    
    <main>
-      
-      <AppHelp />
+   
+      <AppHelp/>
 
       <RouterView />
       
@@ -54,8 +63,6 @@ const close_bg_dimmer = () => {
 
    
    <section class="bg_dimmer" :class="{is_active : is_dimmed_bg}" @click="close_bg_dimmer"></section>
-
-   <AppStatus />
 
    <AppFooter />
 
@@ -70,6 +77,8 @@ const close_bg_dimmer = () => {
 */
 .bg_dimmer {
 
+   /* to do : investigating this for ios safari - non-display issues may be related to dimmer? 
+     - checked this w/out dimmer - this was *not* the problem - re-instated */
    visibility:hidden;
    position:fixed;
    top:0;
@@ -78,14 +87,11 @@ const close_bg_dimmer = () => {
    width:100%;
    height:100%;
    background:black;
-   opacity:0;
    
    /* transitions */
    opacity:0;
    -webkit-transition:opacity .5s ease-in-out;
-   transition:opacity .5s ease-in-out;
    -o-transition:opacity .5s ease-in-out;
-   transition:opacity .5s ease-in-out;
    transition:opacity .5s ease-in-out;
 }
 .bg_dimmer.is_active {
@@ -95,9 +101,7 @@ const close_bg_dimmer = () => {
    /* transitions */
    opacity:.5;
    -webkit-transition:opacity .5s ease-in-out;
-   transition:opacity .5s ease-in-out;
    -o-transition:opacity .5s ease-in-out;
-   transition:opacity .5s ease-in-out;
    transition:opacity .5s ease-in-out;
 }
 </style>

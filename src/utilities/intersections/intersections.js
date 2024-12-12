@@ -17,6 +17,7 @@ const create_observers = (elements,callback,options) => {
    const loadOnScroll = new IntersectionObserver(
       function(entries,loadOnScroll){
          entries.forEach(entry => {
+            // to do : return something on next line
             if(!entry.isIntersecting) return
 
             // we rely on 'last_page' in AllTracksSelector to remove 'infinite_scroll_trigger',

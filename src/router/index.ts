@@ -7,8 +7,8 @@ const router = createRouter({
    history: createWebHistory(import.meta.env.BASE_URL),
    routes: [
       {
-         path: '/',
          name: 'home',
+         path: '/',
          component: () => import('../views/HomeView.vue')
       },
       {
@@ -16,7 +16,7 @@ const router = createRouter({
          path: '/collections',
          component: () => import('../views/FilesView.vue') 
       },
-      // legace : files -> collections
+      // legacy : files -> collections
       {
          name: 'files',
          path: '/files',
@@ -61,6 +61,13 @@ const router = createRouter({
          name: 'tags',
          path: '/tags',
          component: () => import('../views/TagsView.vue') 
+      },
+      
+// to do : remove once safari fixed
+      {
+         name: 'safari-test',
+         path: '/safari-test',
+         component: () => import('../views/SafariTestView.vue') 
       }
    ]
 })

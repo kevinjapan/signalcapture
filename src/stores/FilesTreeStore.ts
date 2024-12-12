@@ -72,6 +72,7 @@ export const useFilesTreeStore = defineStore('files_tree_store', () => {
 
    // we need to update state herein on changes in useFetch composable
    watchEffect(() => {
+      // to do : return something on next line
       if(!payload.value) return
       if(is_valid_payload(payload.value as Payload<FilesTree>)) {
          files_tree.value = payload.value?.data

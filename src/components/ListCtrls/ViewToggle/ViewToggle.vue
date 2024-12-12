@@ -6,7 +6,6 @@ const props = defineProps<{
    list_view_type: ListViewType
 }>()
 
-
 const emit = defineEmits([
    'toggle-view'
 ])

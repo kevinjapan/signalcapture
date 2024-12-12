@@ -79,6 +79,10 @@ section.record_card_tags > *:nth-child(2n + 1) {
     padding-right:.5rem;
     font-size:.95rem;
     /* we retain user select on field contents, but remove awkward highlights where we can */
+   
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
     user-select: none;
 }
 section.record_card_footer {

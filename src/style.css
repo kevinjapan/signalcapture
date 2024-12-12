@@ -36,9 +36,6 @@ html {
    box-sizing: border-box;
 }
 
-#app {
-   position:relative;
-}
 main {
    width:100%;
    min-height:100vh;
@@ -222,7 +219,6 @@ button:hover {
    background:white;
    color:black;
    overflow:hidden;
-   user-select:none;
 }
 
 
@@ -315,15 +311,6 @@ input::placeholder {
    color:lightgrey;
 }
 
-select {
-   font-style:italic;
-   font-size:.9rem;
-   font-weight:100;
-   color:grey;
-   padding:.25rem;
-   border:solid 1px lightgrey;
-   border-radius:.2d5rem;
-}
 
 /* generic components across UI */
 .tag_on_record {

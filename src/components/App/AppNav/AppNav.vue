@@ -35,7 +35,7 @@ watchEffect(() => {
    local_curr_view_route.value = AppStore.curr_view_route
 })
 
-// we push rather than RouterLink to allow close app_nav
+// we push rather than li to allow close app_nav
 const open_nav_link = (route: string) => {
    display.value = false
    AppHelpStore.clear()
@@ -64,46 +64,25 @@ const is_curr_view_route = (route: string) => {
    </div>
 
    <nav class="app_nav" :class="{opened : display === true}" @click="clicked_bg">
-
-      <div class="app_nav_links">
-
-         <a @click.stop="open_nav_link('/')" 
-            :class="{sel_view:is_curr_view_route('/')}">Home</a>
-
-         <!-- <div v-if="AppStore.app_api !== ''"> -->
-            <a @click.stop="open_nav_link('/collections')" 
-               :class="{sel_view:is_curr_view_route('/collections')}">Collections</a>
-         <!-- </div> -->
-         <!-- <div v-else class="text_lightgrey">
-            <a class="no_cursor_pointer">Files</a>
-         </div> -->
-
-         <a @click.stop="open_nav_link('/packages')" 
-               :class="{sel_view:is_curr_view_route('/packages')}">Packages</a>
-
-         <a @click.stop="open_nav_link('/search')" 
-            :class="{sel_view:is_curr_view_route('/search')}">Search</a>
-            
-         <a @click.stop="open_nav_link('/tags')" 
-            :class="{sel_view:is_curr_view_route('/tags')}">Tags</a>
-         
-         <!-- <div v-if="AppStore.app_api !== ''"> -->
-            <a @click.stop="open_nav_link('/browse')" 
-               :class="{sel_view:is_curr_view_route('/browse')}">Browse</a>
-         <!-- </div> -->
-         <!-- <div v-else class="text_lightgrey">
-            <a class="no_cursor_pointer">Browse</a>
-         </div> -->
-
-         <!-- <div v-if="AppStore.app_api !== ''">
-            <a v-if="!AppStore.bearer_token" @click.stop="open_nav_link('/login')" :class="{sel_view:is_curr_view_route('/login')}">Login</a>
-            <a v-else @click.stop="open_nav_link('/account')" :class="{sel_view:is_curr_view_route('/account')}">{{ AppStore.username }}</a>
-         </div> -->
-
-      </div>
-      
-      <div class="app_nav_dimmer"></div>
-
+      <ul class="app_nav_links">
+         <li @click="open_nav_link('/')" 
+            :class="{sel_view:is_curr_view_route('/')}">Home</li>
+         <li @click="open_nav_link('/safari-test')" 
+            :class="{sel_view:is_curr_view_route('/safari-test')}">Safari</li>
+         <li @click="open_nav_link('/collections')" 
+            :class="{sel_view:is_curr_view_route('/collections')}">
+            Collections
+         </li>
+         <li @click="open_nav_link('/packages')" 
+               :class="{sel_view:is_curr_view_route('/packages')}">Packages</li>
+         <li @click="open_nav_link('/search')" 
+            :class="{sel_view:is_curr_view_route('/search')}">Search</li>
+         <li @click="open_nav_link('/tags')" 
+            :class="{sel_view:is_curr_view_route('/tags')}">Tags</li>
+         <li @click="open_nav_link('/browse')" 
+            :class="{sel_view:is_curr_view_route('/browse')}">Browse</li>
+      </ul>      
+      <!-- <div class="app_nav_dimmer"></div> -->
    </nav>
 
 </template>
@@ -144,6 +123,9 @@ nav.app_nav {
    font-size:1.1rem;
    background:white;
       
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
    user-select: none;
 
    /* 
@@ -337,7 +319,7 @@ button img {
       display:none;
    }
 }
-a {
+li {
    width:fit-content;
    margin:0;
    padding:0 .5rem;
@@ -346,15 +328,15 @@ a {
    border-radius:.25rem;
    cursor:pointer;
 }
-a.sel_view {
+li.sel_view {
    font-weight:700;
    background:hsl(0, 0%, 96%);
    border-radius:0;
 }
-a:not(.sel_view):hover {
+li:not(.sel_view):hover {
    font-weight:400;
 }
-a:not(.no_cursor_pointer):not(.sel_view):hover {
+li:not(.no_cursor_pointer):not(.sel_view):hover {
    background:hsl(0, 0%, 98%);
 }
 </style>

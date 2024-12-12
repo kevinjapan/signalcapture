@@ -94,6 +94,7 @@ section.file_view {
    }
 }
 section.tree_view {
+   height:80vh;
    max-height:88vh;
    border:solid 1px lightgrey;
    overflow-x:hidden;

@@ -25,9 +25,11 @@ watchEffect(() => {
 
 const step = (step: number) => {
    if(step > 0) {
+      // to do : return something on next line
       if(props.page >= num_pages.value) return
    }
    else {
+      // to do : return something on next line
       if(props.page - 1 <= 0) return
    }
    emit('step-to-page',step)

@@ -99,13 +99,11 @@ export const useTagsResultsListStore = defineStore('tags_results_list_store', ()
       // no_matches.value = search_results.value?.length === 0 ? true : false
       build_paginated_list()
    })
-      
+
    // set page to 0 if no results
-   // watchEffect(() => {
-   //    if(paginated_search_results.value) {
-   //       if(paginated_search_results.value.length < 1) page.value = 0
-   //    }
-   // })
+   watchEffect(() => {
+      if(no_matches.value === true) page.value = 0 
+   })
    
    watchEffect(() => {
       if(curr_search_tag.value !== 0) page.value = 1

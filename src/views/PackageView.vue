@@ -42,7 +42,9 @@ watchEffect(() => {
 
 <style scoped>
 section.record_card{
+   display:-ms-grid;
    display:grid;
+   -ms-grid-columns:1fr 2fr;
    grid-template-columns:1fr 2fr;
    gap:.75rem;
    margin:5rem 3rem;
