@@ -75,7 +75,7 @@ export default function useEndPoints(endPoint: string, url_params: Array<string>
             route_url_params:url_params
          },
          create_song:{
-            request_metho:'POST',
+            request_method:'POST',
             route_url:'/songs'
          },
          delete_song:{
