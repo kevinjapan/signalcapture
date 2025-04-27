@@ -62,14 +62,14 @@ const sort_list_by = (order_by: string) => {
    
    <CollectionsItemListContainer 
          :list_view_type="list_view_type"
-         @toggle-view="toggle_view"
+         :list="paginated_list"
          :page=FolderItemsListStore.page
          :total_num_items=FolderItemsListStore.total_num_items
          :items_per_page=FolderItemsListStore.items_per_page
+         @toggle-view="toggle_view"
          @step-to-page="step_to_page" 
          @navigate-to-page="navigate_to_page"
          @sort-list-by="sort_list_by"
-         :list="paginated_list"
       />
 
    <div v-if="no_matches && !loading" class="no_results mt_1">no matches were found</div>

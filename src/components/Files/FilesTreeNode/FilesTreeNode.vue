@@ -87,7 +87,8 @@ const child_opened = () => {
 
             <img v-if="!isOpen" src="../../../assets/icons/folder.svg" alt="folder" />
             <img v-else src="../../../assets/icons/folder-open.svg" alt="folder" />
-            <a @click="open_folder(model.teaser.id)">{{ model.teaser?.title }}</a>
+            <a @click="open_folder(model.teaser.id)">{{ model.teaser?.title }} 
+                  <span class="text_grey">{{ model.children.length }}</span></a>
            
             <!-- retain : for displaying files in tree.. 
             <span v-else>
@@ -116,7 +117,7 @@ const child_opened = () => {
 ul {
    margin:0;
    padding:0;
-   padding-left:1rem;
+   padding-left:.7rem;
    text-align:left;
    list-style:none;
 }
@@ -133,6 +134,11 @@ li > div {
 a {
    width:100%;
    overflow-wrap:anywhere;
+   font-weight:400;
+}
+.text_grey {
+   font-size:.9rem;
+   color:hsl(0, 0%, 60%);
 }
 a:hover {
    color:unset;

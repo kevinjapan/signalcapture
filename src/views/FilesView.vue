@@ -30,6 +30,7 @@ onMounted(() => {
 
 watchEffect(() => {
    tree.value = FilesTreeStore.files_tree
+   // console.log('tree',FilesTreeStore.files_tree)
 })
 
 watchEffect(() => {
@@ -48,13 +49,14 @@ const folder_opened = (id: number) => {
 
 <template>
 
+<!-- to do : ctrl to close all nodes (as in figma) -->
    <div class="error_notification" v-if="FilesTreeStore?.error">
       <p>Oops! Error encountered: {{ FilesTreeStore?.error }}</p>
    </div>
 
    <section v-else class="file_view">
 
-      <section class="rounded_container">
+      <section class="">
 
          <section class="tree_view">
             <ul>
@@ -76,21 +78,21 @@ const folder_opened = (id: number) => {
 </template>
 
 <style scoped>
-
 /* future : file will overlay tree in sm/mobile */
-
 section.file_view {
   display:-ms-grid;
   display:grid;
   -ms-grid-columns:1fr;
   grid-template-columns:1fr;
+  gap:0;
+  margin:0;
 }
 @media (min-width: 768px) {
    section.file_view {
       display:-ms-grid;
       display:grid;
-      -ms-grid-columns:1fr 3fr;
-      grid-template-columns:1fr 3fr;
+      -ms-grid-columns:1fr 3.5fr;
+      grid-template-columns:1fr 3.5fr;
    }
 }
 section.tree_view {
@@ -99,10 +101,10 @@ section.tree_view {
    border:solid 1px lightgrey;
    overflow-x:hidden;
    overflow-y:scroll;
-   padding:1rem;
    scrollbar-color: hsl(0, 0%, 60%) hsl(0, 0%, 94%); 
    scrollbar-width:thin;
    background:white;
+   margin-top:1rem;
 }
 .rounded_container {
    border-radius:.5rem;
@@ -115,8 +117,9 @@ section.tree_view {
 }
 section.record_view {
    background:transparent;
-   margin:1rem;
+   margin:0;
    margin-top:0;
+   padding:0;
 }
 ul {
    width:100%;

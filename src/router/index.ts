@@ -61,13 +61,6 @@ const router = createRouter({
          name: 'tags',
          path: '/tags',
          component: () => import('../views/TagsView.vue') 
-      },
-      
-// to do : remove once safari fixed
-      {
-         name: 'safari-test',
-         path: '/safari-test',
-         component: () => import('../views/SafariTestView.vue') 
       }
    ]
 })

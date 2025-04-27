@@ -115,6 +115,24 @@ export const useFolderItemsListStore = defineStore('folder_items_list_store', ()
       total_num_items.value = 0
       page.value = 1
    }
+
+   function get_prev_file(item_id: number) {
+      // to do : from given file_id - return id for prev file : resolve from item_id
+
+      // - get index for [item_id]
+      // - if available, return item before it in 'list' - return -1 if unavailable
+
+      return 'get_prev_file' + item_id
+   }
+
+   function get_next_file(item_id: number) {
+      // to do : from given file_id - return id for next file : resolve from item_id
+
+      // - get index for [item_id]
+      // - if available, return item after it in 'list' - return -1 if unavailable
+
+      return 'get_next_file' + item_id
+   }
    return {
 
       list,
@@ -130,8 +148,9 @@ export const useFolderItemsListStore = defineStore('folder_items_list_store', ()
       preload_collection_items,
       set_page,
       flush,
-      get_collection_items_by_id
-
+      get_collection_items_by_id,
+      get_prev_file,
+      get_next_file
    }
 })
 

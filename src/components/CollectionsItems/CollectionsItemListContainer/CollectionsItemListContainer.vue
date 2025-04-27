@@ -45,6 +45,7 @@ const sort_list_by = (order_by: string) => {
          :list_view_type="list_view_type"
          @toggle-view="$emit('toggle-view')"
          @sort-list-by="sort_list_by"
+         style="margin:0;margin-top:1rem;border:solid 1px lightgrey;margin-bottom:.5rem;"
       >
          <PaginationNav
             title="top_page_nav"

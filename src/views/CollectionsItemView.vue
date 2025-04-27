@@ -2,11 +2,18 @@
 import { ref, onMounted, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCollectionsItemStore } from '../stores/CollectionsItemStore'
+import { useFolderItemsListStore } from '../stores/FolderItemsListStore'
 import CollectionsItemRecord from '@/components/CollectionsItems/CollectionsItemRecord/CollectionsItemRecord.vue'
 
 
 
 // CollectionsItemView - view a single record
+
+// to do : currently Friockheim imgs - not all are fetched - we need to handle '.JPG' as well as '.jpg'
+// to do : make UI pretty - psychology - eg masonary tiling - different sizes for some of them -
+//         make it pleasurable to browse etc - not just boring and functional like a spreadsheet/list
+
+// to do : can we use free wordpress.com to save images and somehow retrieve from there? how to add text/meta data?
 
 const item = ref<CollectionsItem | null>(null)
 const is_loading = ref<boolean>(true)
@@ -24,6 +31,16 @@ watchEffect(() => {
    item.value = CollectionsItemStore.single_collection_item
 })
 
+
+const FolderItemsListStore = useFolderItemsListStore()
+
+// ------------------------------------------------------------------------------------------------------------
+// to do : this is the list of peer files in the current folder - so we can navigate prev/next or slideshow ?
+// - we may not even have to access the list - just provide a prev() and next() in store to act on current list
+console.log('in CollectionItemRecord - list:',FolderItemsListStore.list)
+// ------------------------------------------------------------------------------------------------------------
+
+
 </script>
 
 
@@ -31,17 +48,15 @@ watchEffect(() => {
 
    <div v-if="is_loading" class="loading_spin"></div>
 
-   <section v-if="item" class="record_view_container mt_5">
-      
-      <section>
-         
-      </section>
 
-      <section >
-         <CollectionsItemRecord
-            :item="item"
-         />
-      </section>
+   <section v-if="item" >
+
+      <div style="margin:0;padding:0;width:100%;display:flex;justify-content:space-between;">
+         <div>prev {{ FolderItemsListStore.get_prev_file(item.id)}}</div>
+         <div>next {{ FolderItemsListStore.get_next_file(item.id) }}</div>
+      </div>
+
+      <CollectionsItemRecord :item="item" />
 
    </section>
 
@@ -55,13 +70,14 @@ section.record_view_container {
   display:grid;
   -ms-grid-columns:       1fr;
   grid-template-columns:  1fr;
+  /* to do : reverse order in stack - so img on top? */
 }
 @media (min-width: 768px) {
    section.record_view_container {
       display:-ms-grid;
       display:grid;
-      -ms-grid-columns:       1fr 2fr;
-      grid-template-columns:  1fr 2fr;
+      -ms-grid-columns:       1fr 1fr;
+      grid-template-columns:  1fr 1fr;
    }
 }
 </style>

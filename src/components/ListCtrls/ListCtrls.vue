@@ -22,15 +22,15 @@ const sort_list_by = (order_by: string) => {
 
    <section class="list_ctrls no_user_select">
 
-      <!-- PaginationNav slot -->
-      <slot></slot>
-
-      <SortOrderSelect @sort-list-by="sort_list_by"/>
 
       <ViewToggle 
          :list_view_type="props.list_view_type"
          @toggle-view="$emit('toggle-view')" />
+      <SortOrderSelect @sort-list-by="sort_list_by"/>
 
+
+      <!-- PaginationNav slot -->
+      <slot></slot>
    </section>
 
 </template>

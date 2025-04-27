@@ -35,6 +35,7 @@ export const useAppStore = defineStore('app_store', () => {
 
    // the Collections root folder
    // future : have sub-roots / sub-domains - generally sub-folders but can be separate locations (up to say seven?)
+   // to do : add configuration of some kind - even if only a separate json file for static site.
    const root_folder = ref('/collection')
 
    const items_per_page = ref<number>(20)

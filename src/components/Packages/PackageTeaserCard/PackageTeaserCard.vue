@@ -45,7 +45,7 @@ const open_nav_link = (route: string) => {
 .img_container {
     width:100%;
     height:100px;
-    order:solid 1px blue;
+   /* border:solid 1px blue; */
     overflow-y:hidden;
 }
 img {

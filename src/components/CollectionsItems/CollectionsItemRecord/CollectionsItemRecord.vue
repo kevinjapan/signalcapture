@@ -5,32 +5,41 @@ import RecordCardTags from '@/components/Tags/RecordCardTags/RecordCardTags.vue'
 // container for CollectionsItemRecord component
 // the container will retrieve the record and pass it to child component
 
+
+
 const props = defineProps<{
     item: CollectionsItem
 }>()
 
+
+
 </script>
 
 <template>
-<section class="page_break">
-    <section v-if="props.item.id" class="card_part record_card_header">
+   <section class="record_view_container mt_2 page_break">
+
+      <section v-if="props.item.id">
         
-        <div></div>
         <section class="img_container">
             <img :src="'\\collection\\' + item?.folder_path + item?.file_name"/>
         </section>
 
-        <div class="v_center text_flex_end">title</div><div class="lg_text">{{ item?.title }}</div>
+
+    </section>
+
+    <section v-if="props.item.id" >
+
+      <section  class="card_part record_card_header">
+      <div class="v_center text_flex_end">title</div><div class="lg_text">{{ item?.title }}</div>
         <div>desc</div><div>{{ item?.content_desc }}</div>
         <div>file name</div><div>{{ item?.file_name }}</div>
         <div>file type</div><div>{{ item?.file_type }}</div>
         <div>folder</div><div>{{ item?.folder_path }}</div>
         <div>keywords</div><div>{{ item?.keywords }}</div>
         <div>img desc</div><div>{{ item?.imgDesc }}</div>
+      </section>
 
-    </section>
-
-    <section v-if="props.item.id" class="card_part record_card_footer">
+      <section v-if="props.item.id" class="card_part record_card_footer">
         <div>item ref</div><div>{{ item?.item_ref }}</div>
         <div>item date</div><div>{{ item?.item_Date }}</div>
         <div>item type</div><div>{{ item?.item_Type }}</div>
@@ -46,11 +55,12 @@ const props = defineProps<{
         <div>last updated</div><div>{{ item?.updated_at }}</div>
         <div>last viewed</div><div>{{ item?.viewed_at }}</div>
         <div>deleted</div><div>{{ item?.deleted_at }}</div>
-    </section>
-
+      </section>
     <section v-if="props.item.id" class="card_part record_card_tags">
         <RecordCardTags v-if="item.tags" :tags="item?.tags"/>
     </section>
+
+   </section>
 
 </section>
 </template>
@@ -101,7 +111,7 @@ section.record_card_tags {
 }
 .img_container {
     width:100%;
-    max-height:200px;
+    height:100%;
     overflow-y:hidden;
     border-radius:.5rem;
 }

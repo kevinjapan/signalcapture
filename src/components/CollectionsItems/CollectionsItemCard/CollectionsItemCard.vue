@@ -26,28 +26,34 @@ const open_nav_link = (route:string) => {
 
 <template>
     <section v-if="props.item" class="default_item_card">
+      <a @click.stop="open_nav_link(`/browse/collections-item/${props.item.id}`)" >
         <section class="img_container">
-            <a @click.stop="open_nav_link(`/browse/collections-item/${props.item.id}`)" >
-                <img :src="AppStore.root_folder + props.item.folder_path + props.item.file_name" />
-            </a>
+            <img :src="AppStore.root_folder + props.item.folder_path + props.item.file_name" />
         </section>
         <section class="text_container">
-            <h3>
-                <a @click.stop="open_nav_link(`/browse/collections-item/${props.item.id}`)" >{{ props.item.title }}</a>
-            </h3>
-            <p>{{ props.item.file_type }}</p>
-            <p>{{ props.item.file_name }}</p>
-            <p>{{ props.item.item_Date }}</p>
-            <p>{{ props.item.folder_path }}</p>
+
+            <!-- top text-->
+            <div>
+               <h3>{{ props.item.title }}</h3>
+               <!-- <p>{{ props.item.file_type }}</p>d -->
+            </div>
+
+            <!-- bottom text -->
+            <div>
+               <p>{{ props.item.item_Date }}</p>
+               <p>{{ props.item.folder_path }}</p>
+            </div>
+
         </section>
+      </a>
     </section>
 </template>
 
 <style scoped>
 .img_container {
     width:100%;
-    max-height:200px;
-    overflow-y:hidden;
+    /* max-height:200px; */
+    /* overflow-y:hidden; */
 }
 img {
     width:100%;
@@ -57,11 +63,17 @@ img {
     padding:0 .75rem;
 }
 h3 {
-    max-width:90%;
+    max-width:100%;
     overflow-wrap:anywhere;
+    font-size:1.4rem;
+    font-weight:400;
+    line-height:1.65rem;
+    margin:0;
+    padding:.5rem .25rem;
 }
 p {
     max-width:90%;
     overflow-wrap:anywhere;
+    padding:1rem .5rem !important;
 }
 </style>

@@ -169,7 +169,7 @@ interface FilesTree {
 
 
 // Packages
-
+// to do : duplicated above - but some differences (we need item ids array as in above version)
 interface Package {
    id:number
    title:string

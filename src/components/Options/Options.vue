@@ -13,7 +13,8 @@ const toggle_help = async() => {
 
 
 <template>
-   <ul class="options_bar mt_4 no_user_select">
+   <!-- to do : this is hidden - move main nav left a bit -->
+   <ul class="options_bar  no_user_select">
       <li @click="toggle_help" :class="{bg_selected: AppHelpStore.is_open}">Help</li>
       <li class="v_center"><img src="@/assets/icons/ellipsis .svg" class="pt_.15"/></li>
    </ul>

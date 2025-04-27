@@ -52,7 +52,7 @@ const items_of = computed(() => {
 </script>
 
 <template>
-   <section class="nav_bar no_user_select"> 
+   <section class="nav_bar no_user_select" > 
       <div>Page 
          <input :value="page" class="curr_page_input" :name="title"/></div>
          <div style="padding-left:.15rem;"> of {{ num_pages }}</div>

@@ -67,14 +67,12 @@ const is_curr_view_route = (route: string) => {
       <ul class="app_nav_links">
          <li @click="open_nav_link('/')" 
             :class="{sel_view:is_curr_view_route('/')}">Home</li>
-         <li @click="open_nav_link('/safari-test')" 
-            :class="{sel_view:is_curr_view_route('/safari-test')}">Safari</li>
          <li @click="open_nav_link('/collections')" 
             :class="{sel_view:is_curr_view_route('/collections')}">
             Collections
          </li>
-         <li @click="open_nav_link('/packages')" 
-               :class="{sel_view:is_curr_view_route('/packages')}">Packages</li>
+         <!-- <li @click="open_nav_link('/packages')" 
+               :class="{sel_view:is_curr_view_route('/packages')}">Packages</li> -->
          <li @click="open_nav_link('/search')" 
             :class="{sel_view:is_curr_view_route('/search')}">Search</li>
          <li @click="open_nav_link('/tags')" 
