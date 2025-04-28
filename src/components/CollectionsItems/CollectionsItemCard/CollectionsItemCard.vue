@@ -20,6 +20,11 @@ const router = useRouter()
 const AppStore = useAppStore()
 
 const open_nav_link = (route:string) => {
+
+   // ------------------------------------------------------------------
+   // to do : open in modal dlg in-page - not new separate view
+   console.log('to do : here we need to intervene and open in modal frame rather than separate view')
+   
    router.push(route)
 }
 </script>

@@ -9,6 +9,10 @@ import FolderItemsList from '@/components/Files/FolderItemsList/FolderItemsList.
 // FilesView
 // future : do we want each sub-domain as a separate folder? - they can be (by default) sub-folders of collections root - unless specified differently
 
+
+// to do : open item view as in Unsplash - in a 'modal' popup (w/ prev/next) we can then close
+
+
 const FilesTreeStore = useFilesTreeStore()
 FilesTreeStore.load_files_tree()
 
@@ -63,7 +67,7 @@ const folder_opened = (id: number) => {
                <FilesTreeNode v-if="tree"
                   :level="parent_level"
                   :model="tree"
-                  :file_teaser="{id:0,title:'tester',slug:'tester'}"
+                  :file_teaser="{id:0,title:'tester'}"
                   @folder-opened="folder_opened"
                />
             </ul>

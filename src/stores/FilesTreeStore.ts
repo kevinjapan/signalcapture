@@ -4,6 +4,8 @@ import useFetch from '../composables/useFetch/useFetch'
 import { is_valid_payload } from '@/utilities/utilities/validation'
 
 
+// to do : we break on uppercase "xxx.JPG" filenames - can we test, if file "xxx.jpg" not found/error, then try "xxx.JPG" ?
+
 
 // FilesTreeStore
 
@@ -56,7 +58,7 @@ export const useFilesTreeStore = defineStore('files_tree_store', () => {
    
    const get_branch_files_list = (target_folder_id: number,branch: FilesTree): FilesTree | null => {
       
-      if(branch.teaser.id === target_folder_id) {
+      if(branch.id === target_folder_id) {
          return branch
       }
       let result = null

@@ -80,14 +80,14 @@ export const useFolderItemsListStore = defineStore('folder_items_list_store', ()
       if(FilesTreeStore.curr_folder_id !== null && FilesTreeStore.curr_folder_id > 0) {
          branch.value = FilesTreeStore.get_folder_files_list(FilesTreeStore.curr_folder_id) as FilesTree
          files_list.value = branch?.value?.children
-         ids_list.value = branch?.value?.children.map((child) => child.teaser.id)
+         ids_list.value = branch?.value?.children.map((child) => child.id)
          list.value = CollectionsItemsListStore.get_collection_items_by_id(ids_list.value.flat())
       }
       
-      const new_file_teasers = branch?.value?.children.filter((child) => child.teaser.id <= 0 && child.teaser.title)    
+      const new_file_teasers = branch?.value?.children.filter((child) => child.id <= 0 && child.title)    
       if(new_file_teasers) {
          new_files_list.value = new_file_teasers.map((file) => {
-               return file.teaser.title
+               return file.title
          })
       }
 

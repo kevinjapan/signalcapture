@@ -156,13 +156,12 @@ interface PageLink {
 // FilesTree
 
 interface FileTeaser {
-   id:number,
-   title:string,
    slug:string
 }
 
 interface FilesTree {
-   teaser:FileTeaser,
+   id:number,
+   title:string,
    children:FilesTree[]
 }
 

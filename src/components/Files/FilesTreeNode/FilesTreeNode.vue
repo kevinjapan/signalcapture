@@ -10,7 +10,7 @@ import { useFilesTreeStore } from '@/stores/FilesTreeStore'
 const props = defineProps<{
    level:number,
    model: FilesTree,
-   file_teaser: FileTeaser
+   file_teaser: {id:number,title:string}
 }>()
 
 const emit = defineEmits([
@@ -72,7 +72,7 @@ const toggle = () => {
 
 const child_opened = () => {
    // future : we now know if a child of the curr node has opened, so we can close our other children?
-   // console.log('my child opened',props.model.teaser.id)
+   // console.log('my child opened',props.model.id)
 }
 </script>
 
@@ -87,13 +87,13 @@ const child_opened = () => {
 
             <img v-if="!isOpen" src="../../../assets/icons/folder.svg" alt="folder" />
             <img v-else src="../../../assets/icons/folder-open.svg" alt="folder" />
-            <a @click="open_folder(model.teaser.id)">{{ model.teaser?.title }} 
+            <a @click="open_folder(model.id)">{{ model?.title }} 
                   <span class="text_grey">{{ model.children.length }}</span></a>
            
             <!-- retain : for displaying files in tree.. 
             <span v-else>
                <img src="../../assets/icons/file.svg" alt="file" />
-               <a @click.stop="open_record(model.teaser.id)">{{ model.teaser?.title }}</a>
+               <a @click.stop="open_record(model.id)">{{ model?.title }}</a>
             </span> 
             -->
          </div>
@@ -105,7 +105,7 @@ const child_opened = () => {
             :level="my_level" 
             v-for="model in model.children"
             :model="model"
-            :file_teaser="model.teaser"
+            :file_teaser={id:model.id,title:model.title}
             @child-opened="child_opened"
          />
       </ul>
