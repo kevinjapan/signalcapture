@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAppStore } from '@/stores/AppStore'
+import CollectionsItemViewer from '@/components/CollectionsItems/CollectionsItemViewer/CollectionsItemViewer.vue'
 
 
 // CollectionItemCard
@@ -19,19 +21,28 @@ const router = useRouter()
 
 const AppStore = useAppStore()
 
-const open_nav_link = (route:string) => {
+// flag to show CollectionsItemViewer dlg
+const show_viewer = ref<boolean>(false)
 
-   // ------------------------------------------------------------------
-   // to do : open in modal dlg in-page - not new separate view
-   console.log('to do : here we need to intervene and open in modal frame rather than separate view')
-   
+// id of current item in Viewer
+const current_collection_item_id = ref<number>(0)
+
+const open_item_viewer = (item_id: number) => {
+   show_viewer.value = true
+   current_collection_item_id.value = item_id
+}
+const close_item_viewer = () => {
+   show_viewer.value = false
+}
+
+const open_nav_link = (route:string) => {
    router.push(route)
 }
 </script>
 
 <template>
     <section v-if="props.item" class="default_item_card">
-      <a @click.stop="open_nav_link(`/browse/collections-item/${props.item.id}`)" >
+      <a @click.stop="open_item_viewer(props.item.id)" >
         <section class="img_container">
             <img :src="AppStore.root_folder + props.item.folder_path + props.item.file_name" />
         </section>
@@ -50,8 +61,18 @@ const open_nav_link = (route:string) => {
             </div>
 
         </section>
+        <!-- to do : remove old version once completed transition -->
+        <a @click.stop="open_nav_link(`/browse/collections-item/${props.item.id}`)" >old version</a>
       </a>
     </section>
+
+   <section v-if="show_viewer">
+      <CollectionsItemViewer
+         :current_item_id = current_collection_item_id
+         @close-collection-item-viewer="close_item_viewer"
+      />
+   </section>
+
 </template>
 
 <style scoped>

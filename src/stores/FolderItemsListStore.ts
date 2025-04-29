@@ -117,22 +117,25 @@ export const useFolderItemsListStore = defineStore('folder_items_list_store', ()
    }
 
    function get_prev_file(item_id: number) {
-      // to do : from given file_id - return id for prev file : resolve from item_id
 
-      // - get index for [item_id]
-      // - if available, return item before it in 'list' - return -1 if unavailable
-
-      return 'get_prev_file' + item_id
+      if(list.value) {
+         const index_of_current = list.value.findIndex((item) => item.id === item_id)
+         const index_of_prev = index_of_current > 0 ? index_of_current - 1 : 0
+         return list.value[index_of_prev]
+      }
+      return null
    }
 
    function get_next_file(item_id: number) {
-      // to do : from given file_id - return id for next file : resolve from item_id
 
-      // - get index for [item_id]
-      // - if available, return item after it in 'list' - return -1 if unavailable
-
-      return 'get_next_file' + item_id
+      if(list.value) {
+         const index_of_current = list.value.findIndex((item) => item.id === item_id)
+         const index_of_next = index_of_current < list.value.length - 1 ? index_of_current + 1 : index_of_current
+         return list.value[index_of_next]
+      }
+      return null
    }
+
    return {
 
       list,
