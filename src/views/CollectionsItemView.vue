@@ -49,7 +49,7 @@ console.log('in CollectionItemRecord - list:',FolderItemsListStore.list)
    <div v-if="is_loading" class="loading_spin"></div>
 
 
-   <section v-if="item" >
+   <section v-if="item" style="background:white;" >
 
       <div style="margin:0;padding:0;width:100%;display:flex;justify-content:space-between;">
          <div>prev {{ FolderItemsListStore.get_prev_file(item.id)}}</div>
@@ -70,6 +70,7 @@ section.record_view_container {
   display:grid;
   -ms-grid-columns:       1fr;
   grid-template-columns:  1fr;
+  background:white;
   /* to do : reverse order in stack - so img on top? */
 }
 @media (min-width: 768px) {
@@ -78,6 +79,7 @@ section.record_view_container {
       display:grid;
       -ms-grid-columns:       1fr 1fr;
       grid-template-columns:  1fr 1fr;
+      background:white;
    }
 }
 </style>

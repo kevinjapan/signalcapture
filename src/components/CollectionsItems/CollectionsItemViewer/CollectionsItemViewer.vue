@@ -51,6 +51,9 @@ const next = (item_id:number) => {
    const next_item = FolderItemsListStore.get_next_file(item_id)
    item.value = next_item
 }
+const do_nothing = () => {
+   
+}
 </script>
 
 
@@ -77,14 +80,12 @@ const next = (item_id:number) => {
                </div>
             
 
-            <CollectionsItemRecord :item="item" />
+            <CollectionsItemRecord @click.stop="do_nothing()" :item="item" />
 
          </section>
 
       </div>
       
-      <div @click="close()">close</div>
-
    </section>
 
 </template>
@@ -138,7 +139,7 @@ section.collections_item_viewer::before {
    background:black;
    color:white;
    font-weight:100;
-   opacity:.6;
+   opacity:.8;
    padding:1rem;
    padding-bottom:1.25rem;
    cursor:pointer;

@@ -16,18 +16,18 @@ const props = defineProps<{
 </script>
 
 <template>
-   <section class="record_view_container mt_2 page_break">
+   <section class="record_view_container mt_2 page_break" >
 
-      <section v-if="props.item.id">
+      <section v-if="props.item.id" style="background:white;">
         
         <section class="img_container">
-            <img :src="'\\collection\\' + item?.folder_path + item?.file_name"/>
+            <img :src="'\\collection\\' + item?.folder_path + item?.file_name" />
         </section>
 
 
     </section>
 
-    <section v-if="props.item.id" >
+    <section v-if="props.item.id" style="background:white;">
 
       <section  class="card_part record_card_header">
       <div class="v_center text_flex_end">title</div><div class="lg_text">{{ item?.title }}</div>
@@ -76,7 +76,7 @@ section.card_part {
     padding:1rem;
 }
 section.record_card_header{
-    margin:1rem 2rem;
+    margin:0 2rem;
     margin-bottom:0;
     background:white;
     border-radius:.5rem .5rem 0 0;

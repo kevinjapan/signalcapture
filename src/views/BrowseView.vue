@@ -8,6 +8,8 @@ import CollectionsItemListContainer from '@/components/CollectionsItems/Collecti
 
 // BrowseView
 
+// to do : new open in-page CollectionsItemViewer is not working w/ store correctly in Browse
+
 const AppStore = useAppStore()
 const CollectionsItemsListStore = useCollectionsItemsListStore()
 CollectionsItemsListStore.load_collection_items()
