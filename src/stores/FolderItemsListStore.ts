@@ -121,7 +121,7 @@ export const useFolderItemsListStore = defineStore('folder_items_list_store', ()
       if(list.value) {
          const index_of_current = list.value.findIndex((item) => item.id === item_id)
          const index_of_prev = index_of_current > 0 ? index_of_current - 1 : 0
-         return list.value[index_of_prev]
+         return index_of_current === index_of_prev ? null : list.value[index_of_prev]
       }
       return null
    }
@@ -131,7 +131,7 @@ export const useFolderItemsListStore = defineStore('folder_items_list_store', ()
       if(list.value) {
          const index_of_current = list.value.findIndex((item) => item.id === item_id)
          const index_of_next = index_of_current < list.value.length - 1 ? index_of_current + 1 : index_of_current
-         return list.value[index_of_next]
+         return index_of_current === index_of_next ? null : list.value[index_of_next]
       }
       return null
    }

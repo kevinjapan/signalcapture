@@ -23,7 +23,8 @@ const emit = defineEmits([
 // Refs
 const item = ref<CollectionsItem | null>(null)
 const is_loading = ref<boolean>(true)
-
+const current_is_first_item = ref<boolean>(true)
+const current_is_last_item = ref<boolean>(false)
 
 // Stores
 const CollectionsItemStore = useCollectionsItemStore()
@@ -45,15 +46,24 @@ const close = () => {
 // to do : tidy UX of prev/next at edge of array
 const prev = (item_id:number) => {
    const prev_item = FolderItemsListStore.get_prev_file(item_id)
+   if(prev_item === null) {
+      current_is_first_item.value = true
+      return
+   }
+   current_is_last_item.value = false
    item.value = prev_item
 }
 const next = (item_id:number) => {
    const next_item = FolderItemsListStore.get_next_file(item_id)
+   if(next_item === null) {
+      current_is_last_item.value = true
+      return
+   }
+   current_is_first_item.value = false
    item.value = next_item
 }
-const do_nothing = () => {
-   
-}
+
+
 </script>
 
 
@@ -68,19 +78,20 @@ const do_nothing = () => {
 
          <section v-if="item" >
 
-               <div class="nav_btn prev_btn" @click.stop="prev(item.id)">
+               <div v-if="!current_is_first_item" class="nav_btn prev_btn" @click.stop="prev(item.id)">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-caret-left" viewBox="0 0 16 16">
                      <path d="M10 12.796V3.204L4.519 8zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753"/>
                   </svg>prev
                </div>
-               <div class="nav_btn next_btn" @click.stop="next(item.id)">next
+
+               <div v-if="!current_is_last_item" class="nav_btn next_btn" @click.stop="next(item.id)">next
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16">
                      <path d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753"/>
                   </svg>
                </div>
             
 
-            <CollectionsItemRecord @click.stop="do_nothing()" :item="item" />
+            <CollectionsItemRecord @click.stop :item="item" />
 
          </section>
 
