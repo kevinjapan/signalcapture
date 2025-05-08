@@ -23,12 +23,13 @@ const emit = defineEmits([
 // Refs
 const item = ref<CollectionsItem | null>(null)
 const is_loading = ref<boolean>(true)
-const current_is_first_item = ref<boolean>(true)
+const current_is_first_item = ref<boolean>(false)
 const current_is_last_item = ref<boolean>(false)
 
 // Stores
 const CollectionsItemStore = useCollectionsItemStore()
 CollectionsItemStore.load_single_collection_item(props.current_item_id)
+
 const FolderItemsListStore = useFolderItemsListStore()
 
 
@@ -38,14 +39,19 @@ watchEffect(() => {
    item.value = CollectionsItemStore.single_collection_item
 })
 
+watchEffect(() => {
+   if(item?.value) {
+      current_is_first_item.value = FolderItemsListStore.is_first_item(item?.value?.id)
+      current_is_last_item.value = FolderItemsListStore.is_last_item(item?.value?.id)
+   }
+})
 
 const close = () => {
    emit('close-collection-item-viewer')
 }
 
-// to do : tidy UX of prev/next at edge of array
 const prev = (item_id:number) => {
-   const prev_item = FolderItemsListStore.get_prev_file(item_id)
+   const prev_item = FolderItemsListStore.get_prev_item(item_id)
    if(prev_item === null) {
       current_is_first_item.value = true
       return
@@ -53,8 +59,9 @@ const prev = (item_id:number) => {
    current_is_last_item.value = false
    item.value = prev_item
 }
+
 const next = (item_id:number) => {
-   const next_item = FolderItemsListStore.get_next_file(item_id)
+   const next_item = FolderItemsListStore.get_next_item(item_id)
    if(next_item === null) {
       current_is_last_item.value = true
       return
@@ -63,6 +70,8 @@ const next = (item_id:number) => {
    item.value = next_item
 }
 
+// to do : click on img to zoom/full screen / inc zoom cursor when mouse is over img  (click on full screen returns it..)
+
 
 </script>
 
@@ -70,32 +79,50 @@ const next = (item_id:number) => {
 
 <template>
 
+   <!-- item viewer -->
+
    <section class="collections_item_viewer" @click="close()">
 
-      <div class="inner">
+      <section  v-if="item" class="viewer_card">
 
-         this is CollectionsItemViewer : {{ props.current_item_id }}
 
-         <section v-if="item" >
+         <!-- navbar -->
+          <!-- future : can we make navbar fix at top of screen once we scrol down further -->
 
-               <div v-if="!current_is_first_item" class="nav_btn prev_btn" @click.stop="prev(item.id)">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-caret-left" viewBox="0 0 16 16">
-                     <path d="M10 12.796V3.204L4.519 8zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753"/>
-                  </svg>prev
-               </div>
-
-               <div v-if="!current_is_last_item" class="nav_btn next_btn" @click.stop="next(item.id)">next
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16">
-                     <path d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753"/>
-                  </svg>
-               </div>
-            
-
-            <CollectionsItemRecord @click.stop :item="item" />
-
+         <section class="collections_item_viewer_navbar">
+            <div class="flex gap_.5">
+               <div class="grey_text">{{ item.id }}</div>
+               <div class="capitalize_first_letter">{{ item.title }}</div>
+            </div>
+            <div>
+               Download
+            </div>
          </section>
+         
+   
+         <!-- prev / next btns -->
 
-      </div>
+         <div v-if="!current_is_first_item" class="nav_btn prev_btn" @click.stop="prev(item.id)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="46" height="22" fill="currentColor" stroke="white" stroke-width="1" class="bi bi-chevron-left" viewBox="0 0 16 16">
+               <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+            </svg>
+         </div>
+         <div v-if="!current_is_last_item" class="nav_btn next_btn" @click.stop="next(item.id)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="46" height="22" fill="currentColor" stroke="white" stroke-width="1" class="bi bi-chevron-right" viewBox="0 0 16 16">
+               <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+            </svg>
+         </div>
+
+            
+         <!-- the item record -->
+
+         <CollectionsItemRecord @click.stop :item="item" />
+
+
+         <!-- future : related items teasers here? -->
+
+
+      </section>
       
    </section>
 
@@ -105,6 +132,7 @@ const next = (item_id:number) => {
 
 <style scoped>
 
+/* the viewer includes dimmer background - so it full screen */
 section.collections_item_viewer {
    position:fixed;
    top:0;
@@ -113,14 +141,24 @@ section.collections_item_viewer {
    width:100vw;
    height:100vh;
    overflow-y:scroll;
+
 }
-div.inner {
+section.viewer_card {
    width:80%;
    height:80%;
    position:absolute;
    top:10%;
    left:10%;
    background:white;
+
+   border-radius:.5rem;
+   padding:1rem;
+   height:fit-content;
+}
+section.collections_item_viewer_navbar {
+   display:flex;
+   justify-content:space-between;
+   line-height:unset;
 }
 /* dimmer */
 section.collections_item_viewer::before {
@@ -130,7 +168,7 @@ section.collections_item_viewer::before {
    top:0;
    left:0;
    background:black;
-   opacity:.25;
+   opacity:.3;
 
    width:100%;
 
@@ -147,12 +185,13 @@ section.collections_item_viewer::before {
    margin:.25rem;
    /* width:2rem;
    height:2rem; */
+   /* we need bg since there may be text/content behind dimmer */
    background:black;
    color:white;
    font-weight:100;
-   opacity:.8;
-   padding:1rem;
-   padding-bottom:1.25rem;
+   opacity:.45;
+   padding:.5rem 0;
+   padding-bottom:.75rem;
    cursor:pointer;
    border-radius:.5rem;
 }
@@ -168,4 +207,6 @@ section.collections_item_viewer::before {
 .next_btn {
    right:0;
 }
+
+
 </style>

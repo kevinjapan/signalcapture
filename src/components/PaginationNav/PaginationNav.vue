@@ -112,7 +112,7 @@ input.curr_page_input {
    width:3rem;
    text-align:center;
    padding:0;
-   color:hsl(0, 0%, 40%);
+   color:hsl(0, 0%, 50%);
    font-size:.8rem;
    font-weight:100;
    padding:.15rem;

@@ -16,7 +16,7 @@ const props = defineProps<{
 </script>
 
 <template>
-   <section class="record_view_container mt_2 page_break" >
+   <section class="record_view_container mt_1 page_break" >
 
       <section v-if="props.item.id" style="background:white;">
         
@@ -85,7 +85,7 @@ section.record_card_header > *:nth-child(2n + 1),
 section.record_card_footer > *:nth-child(2n + 1),
 section.record_card_tags > *:nth-child(2n + 1) {
     text-align:right;
-    color:hsl(0, 0%, 40%);
+    color:hsl(0, 0%, 50%);
     padding-right:.5rem;
     font-size:.95rem;
     /* we retain user select on field contents, but remove awkward highlights where we can */

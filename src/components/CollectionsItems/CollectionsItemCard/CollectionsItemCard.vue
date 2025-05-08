@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+// import { useRouter } from 'vue-router'
 import { useAppStore } from '@/stores/AppStore'
 import CollectionsItemViewer from '@/components/CollectionsItems/CollectionsItemViewer/CollectionsItemViewer.vue'
 
@@ -17,7 +17,7 @@ const props = defineProps<{
    item: CollectionsItem
 }>()
 
-const router = useRouter()
+// const router = useRouter()
 
 const AppStore = useAppStore()
 
@@ -35,9 +35,9 @@ const close_item_viewer = () => {
    show_viewer.value = false
 }
 
-const open_nav_link = (route:string) => {
-   router.push(route)
-}
+// const open_nav_link = (route:string) => {
+//    router.push(route)
+// }
 </script>
 
 <template>
@@ -62,7 +62,7 @@ const open_nav_link = (route:string) => {
 
         </section>
         <!-- to do : remove old version once completed transition -->
-        <a @click.stop="open_nav_link(`/browse/collections-item/${props.item.id}`)" >old version</a>
+        <!-- <a @click.stop="open_nav_link(`/browse/collections-item/${props.item.id}`)" >old version</a> -->
       </a>
     </section>
 

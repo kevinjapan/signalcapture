@@ -38,7 +38,7 @@ form {
 
 input {
    font-weight:100;
-   color:hsl(0, 0%, 40%);
+   color:hsl(0, 0%, 50%);
    margin-top:.2rem;
    margin-bottom:.2rem;
 }

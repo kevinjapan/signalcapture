@@ -116,7 +116,24 @@ export const useFolderItemsListStore = defineStore('folder_items_list_store', ()
       page.value = 1
    }
 
-   function get_prev_file(item_id: number) {
+
+   function is_first_item(item_id: number) : boolean {
+      if(list.value) {
+         const index_of_current = list.value.findIndex((item) => item.id === item_id)
+         return index_of_current <= 0 ? true : false
+      }
+      return false
+   }
+
+   function is_last_item(item_id: number) : boolean {
+      if(list.value) {
+         const index_of_current = list.value.findIndex((item) => item.id === item_id)
+         return index_of_current >= list.value.length - 1 ? true : false
+      }
+      return false
+   }
+
+   function get_prev_item(item_id: number) {
 
       if(list.value) {
          const index_of_current = list.value.findIndex((item) => item.id === item_id)
@@ -126,7 +143,7 @@ export const useFolderItemsListStore = defineStore('folder_items_list_store', ()
       return null
    }
 
-   function get_next_file(item_id: number) {
+   function get_next_item(item_id: number) {
 
       if(list.value) {
          const index_of_current = list.value.findIndex((item) => item.id === item_id)
@@ -152,8 +169,10 @@ export const useFolderItemsListStore = defineStore('folder_items_list_store', ()
       set_page,
       flush,
       get_collection_items_by_id,
-      get_prev_file,
-      get_next_file
+      is_first_item,
+      is_last_item,
+      get_prev_item,
+      get_next_item
    }
 })
 

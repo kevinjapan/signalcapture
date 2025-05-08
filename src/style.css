@@ -186,7 +186,7 @@ button:hover {
    padding-left:.5rem;
    padding-right:.5rem;
 }
-.flex_column {
+.flex_column, .flex_col {
    -webkit-box-orient:vertical; 
    -webkit-box-direction:normal; 
    -ms-flex-direction:column;
@@ -207,6 +207,7 @@ button:hover {
    -ms-flex-pack:flex-end;
    justify-content:flex-end;
 }
+.gap_0 {gap:0;}
 .gap_\.25 {gap:.25rem;}
 .gap_\.5 {gap:.5rem;}
 .gap_1 {gap:1rem;}
@@ -383,7 +384,8 @@ input::placeholder {
   Utility classes
 */
 .m_\.5 {margin:.5rem;}
-.mt_1 {margin-top:1;}
+.mt_\.5, .mt_0\.5 {margin-top:.5rem;}
+.mt_1 {margin-top:1rem;}
 .mt_2 {margin-top:2rem;}
 .mt_3 {margin-top:3rem;}
 .mt_4 {margin-top:4rem;}
@@ -402,9 +404,10 @@ input::placeholder {
 .cursor_pointer {
    cursor:pointer;
 }
+
 .greyed_out,
 .grey_text {
-   color:lightgrey;
+   color:hsl(0, 0%, 50%);
    cursor:none;
 }
 
@@ -425,7 +428,6 @@ input::placeholder {
 .bg_selected {background:hsl(60, 100%, 75%);}
 
 .font_weight_900 {font-weight:900;}
-.grey_text {color:hsl(0, 0%, 30%);}
 
 .v_center {
    display:-webkit-box;
@@ -476,4 +478,8 @@ ensure we still allow user convenience of select and copy text where appropriate
    padding:1rem 2rem;
    border:solid 1px grey;
    /*border-radius:.5rem;*/
+}
+
+.capitalize_first_letter::first-letter {
+   text-transform: capitalize;
 }

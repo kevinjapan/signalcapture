@@ -75,7 +75,7 @@ section.package_record_card {
 }
 section.package_record_card > *:nth-child(2n + 1) {
     text-align:right;
-    color:hsl(0, 0%, 40%);
+    color:hsl(0, 0%, 50%);
     padding-right:.5rem;
     font-size:.95rem;
 }
@@ -94,6 +94,6 @@ img {
     padding-top:1rem;
     font-style:italic;
     font-size:.95rem;
-    color:hsl(0, 0%, 40%);
+    color:hsl(0, 0%, 50%);
 }
 </style>
