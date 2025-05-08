@@ -52,8 +52,8 @@ console.log('in CollectionItemRecord - list:',FolderItemsListStore.list)
    <section v-if="item" style="background:white;" >
 
       <div style="margin:0;padding:0;width:100%;display:flex;justify-content:space-between;">
-         <div>prev {{ FolderItemsListStore.get_prev_file(item.id)}}</div>
-         <div>next {{ FolderItemsListStore.get_next_file(item.id) }}</div>
+         <div>prev {{ FolderItemsListStore.get_prev_item(item.id)}}</div>
+         <div>next {{ FolderItemsListStore.get_next_item(item.id) }}</div>
       </div>
 
       <CollectionsItemRecord :item="item" />

@@ -11,17 +11,19 @@ const props = defineProps<{
     item: CollectionsItem
 }>()
 
-
+const slugify = (title: string) => {
+   return title.replaceAll(' ','-')
+}
 
 </script>
 
 <template>
-   <section class="record_view_container mt_1 page_break" >
+   <section class="record_view_container mt_1 page_break" :id="item.slug ? item.slug : slugify(item.title)">
 
       <section v-if="props.item.id" style="background:white;">
         
         <section class="img_container">
-            <img :src="'\\collection\\' + item?.folder_path + item?.file_name" />
+            <img :src="'\\collection\\' + item?.folder_path + item?.file_name"/>
         </section>
 
 

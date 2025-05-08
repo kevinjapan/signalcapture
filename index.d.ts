@@ -100,7 +100,7 @@ interface RouteError {
 
 interface CollectionsItem {
    title:string
-   slug?:string
+   slug:string
    content_desc?:string
    file_name:string
    file_type:string

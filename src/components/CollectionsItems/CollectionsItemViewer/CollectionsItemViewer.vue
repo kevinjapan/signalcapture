@@ -9,9 +9,6 @@ import CollectionsItemRecord from '@/components/CollectionsItems/CollectionsItem
 // CollectionsItemViewer
 // opens item record in in-page viewer (dlg like)
 
-// to do : review unsplash behaviour - eg can scroll once modal/dlg open?
-
-
 // Definitions
 const props = defineProps<{
    current_item_id: number
@@ -70,8 +67,28 @@ const next = (item_id:number) => {
    item.value = next_item
 }
 
-// to do : click on img to zoom/full screen / inc zoom cursor when mouse is over img  (click on full screen returns it..)
+// to do : duplicated in CollectionsItemRecord
+const slugify = (title: string) => {
+   return title.replaceAll(' ','-')
+}
 
+const toggle_item_zoom = () => {
+   if(item.value) {
+
+      const viewer = document.getElementById('viewer_card')
+
+
+      // get record_view_container element
+      const slug = item.value.slug ? item.value.slug : slugify(item.value.title)
+      const section_elem = document.getElementById(slug)
+
+
+      if(section_elem && viewer) {
+         viewer.classList.toggle('full_screen_zoom')
+         section_elem.classList.toggle('full_screen_zoom')
+      }
+   }
+}
 
 </script>
 
@@ -83,7 +100,7 @@ const next = (item_id:number) => {
 
    <section class="collections_item_viewer" @click="close()">
 
-      <section  v-if="item" class="viewer_card">
+      <section  v-if="item" class="viewer_card" id="viewer_card">
 
 
          <!-- navbar -->
@@ -116,7 +133,7 @@ const next = (item_id:number) => {
             
          <!-- the item record -->
 
-         <CollectionsItemRecord @click.stop :item="item" />
+         <CollectionsItemRecord @click.stop="toggle_item_zoom()" :item="item" />
 
 
          <!-- future : related items teasers here? -->
@@ -151,7 +168,7 @@ section.viewer_card {
    left:10%;
    background:white;
 
-   border-radius:.5rem;
+   border-radius:.5rem;border:solid 4px red;
    padding:1rem;
    height:fit-content;
 }
@@ -208,5 +225,24 @@ section.collections_item_viewer::before {
    right:0;
 }
 
+section.viewer_card:hover {
+   cursor:zoom-in;
+}
+
+section.viewer_card.full_screen_zoom {
+   position:absolute;
+   top:0;
+   left:0;
+   width:100vw;
+   min-height:100vh;
+}
+section.viewer_card.full_screen_zoom:hover {
+   cursor:zoom-out;
+}
+section.full_screen_zoom {
+   position:relative;
+   top:0;
+   left:0;
+}
 
 </style>
