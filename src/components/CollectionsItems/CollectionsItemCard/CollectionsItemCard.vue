@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-// import { useRouter } from 'vue-router'
 import { useAppStore } from '@/stores/AppStore'
 import CollectionsItemViewer from '@/components/CollectionsItems/CollectionsItemViewer/CollectionsItemViewer.vue'
+import { img_size_filter } from '@/utilities/utilities/utilities'
 
 
 // CollectionItemCard
@@ -20,6 +20,7 @@ const props = defineProps<{
 // const router = useRouter()
 
 const AppStore = useAppStore()
+const { root_folder, use_img_widths, sm_img_width } = AppStore
 
 // flag to show CollectionsItemViewer dlg
 const show_viewer = ref<boolean>(false)
@@ -43,8 +44,14 @@ const close_item_viewer = () => {
 <template>
     <section v-if="props.item" class="default_item_card">
       <a @click.stop="open_item_viewer(props.item.id)" >
+         <!-- 
+         to do :
+          we can force Wordpress to return smaller size image using ?w=xxxx query value
+          obviously this will break our local server - so need a flag if we are using WP server
+          -->
         <section class="img_container">
-            <img :src="AppStore.root_folder + props.item.folder_path + props.item.file_name" />
+            <!-- if WordPress, get img sizes depending on eg "?w=300" url query string -->
+            <img :src="root_folder + props.item.folder_path + props.item.file_name + img_size_filter(use_img_widths,sm_img_width)"/>
         </section>
         <section class="text_container">
 

@@ -1,19 +1,21 @@
 <script setup lang="ts">
+import { useAppStore } from '@/stores/AppStore'
 import RecordCardTags from '@/components/Tags/RecordCardTags/RecordCardTags.vue'
+import { img_size_filter, slugify } from '@/utilities/utilities/utilities'
+
+
 
 // CollectionsItemRecordContainer
 // container for CollectionsItemRecord component
 // the container will retrieve the record and pass it to child component
 
-
-
 const props = defineProps<{
     item: CollectionsItem
 }>()
 
-const slugify = (title: string) => {
-   return title.replaceAll(' ','-')
-}
+const AppStore = useAppStore()
+const { root_folder, use_img_widths, lg_img_width } = AppStore
+
 
 </script>
 
@@ -22,8 +24,10 @@ const slugify = (title: string) => {
 
       <section v-if="props.item.id" style="background:white;">
         
+
         <section class="img_container">
-            <img :src="'\\collection\\' + item?.folder_path + item?.file_name"/>
+            <!-- if WordPress, get img sizes depending on eg "?w=300" url query string -->
+            <img :src="root_folder + item?.folder_path + item?.file_name + img_size_filter(use_img_widths,lg_img_width)"/>
         </section>
 
 

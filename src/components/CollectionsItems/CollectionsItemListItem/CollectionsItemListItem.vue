@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { useAppStore } from '@/stores/AppStore'
+import { img_size_filter } from '@/utilities/utilities/utilities'
 
 
 // CollectionItemCard
@@ -13,10 +14,13 @@ const props = defineProps<{
 const router = useRouter()
 
 const AppStore = useAppStore()
+const { root_folder, use_img_widths, sm_img_width } = AppStore
 
 const open_nav_link = (route:string) => {
    router.push(route)
 }
+
+// to do : handle if error return img file - some notification?
 
 </script>
 
@@ -25,7 +29,8 @@ const open_nav_link = (route:string) => {
     <section class="collection_item_list_item">
 
         <a class="img_container" @click.stop="open_nav_link(`/browse/collections-item/${props.item.id}`)" >
-            <img :src="AppStore.root_folder + props.item.folder_path + props.item.file_name"/>
+            <!-- if WordPress, get img sizes depending on eg "?w=300" url query string -->
+            <img :src="root_folder + props.item.folder_path + props.item.file_name + img_size_filter(use_img_widths,sm_img_width)"/>
         </a>
     
         <h3>
