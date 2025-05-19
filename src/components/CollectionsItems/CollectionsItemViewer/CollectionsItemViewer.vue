@@ -3,6 +3,7 @@ import { ref, watchEffect } from 'vue'
 import { useCollectionsItemStore } from '@/stores/CollectionsItemStore'
 import { useFolderItemsListStore } from '@/stores/FolderItemsListStore'
 import CollectionsItemRecord from '@/components/CollectionsItems/CollectionsItemRecord/CollectionsItemRecord.vue'
+import { slugify } from '@/utilities/utilities/utilities'
 
 
 
@@ -67,11 +68,6 @@ const next = (item_id:number) => {
    item.value = next_item
 }
 
-// to do : duplicated in CollectionsItemRecord
-const slugify = (title: string) => {
-   return title.replaceAll(' ','-')
-}
-
 const toggle_item_zoom = () => {
    if(item.value) {
 
@@ -111,9 +107,7 @@ const toggle_item_zoom = () => {
                <div class="grey_text">{{ item.id }}</div>
                <div class="capitalize_first_letter">{{ item.title }}</div>
             </div>
-            <div>
-               Download
-            </div>
+            <div>Download</div>
          </section>
          
    
