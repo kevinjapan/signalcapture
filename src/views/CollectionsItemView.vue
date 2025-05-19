@@ -9,7 +9,7 @@ import CollectionsItemRecord from '@/components/CollectionsItems/CollectionsItem
 
 // CollectionsItemView - view a single record
 
-// to do : currently Friockheim imgs - not all are fetched - we need to handle '.JPG' as well as '.jpg'
+// future : currently Friockheim imgs - not all are fetched - we need to handle '.JPG' as well as '.jpg'
 // to do : make UI pretty - psychology - eg masonary tiling - different sizes for some of them -
 //         make it pleasurable to browse etc - not just boring and functional like a spreadsheet/list
 

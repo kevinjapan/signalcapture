@@ -82,7 +82,6 @@ export const useSearchStore = defineStore('search_store', () => {
    // if we duplicate whole search term eg ['Arbroath Harbour','Arbroath','Harbour'] we get duplicates eg on [0] and [1] 
    const register_as_recent_search = (search_term: string) =>  {
 
-   // to do : return something on next line
       if(!search_term) return
       if(recent_searches.value.length > max_recent_searches.value) recent_searches.value.shift()
 

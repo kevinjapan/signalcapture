@@ -18,7 +18,6 @@ const sort_list_by = () => {
    const selected_order_by = 'title'
 
    // prevent initial click on ctrl triggering re-order
-   // to do : return something on next line
    if(selected_order_by === prev_order_by.value) return
 
    emit('sort-list-by',selected_order_by)

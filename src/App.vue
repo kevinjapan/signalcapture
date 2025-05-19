@@ -37,14 +37,6 @@ const close_bg_dimmer = () => {
    AppHelpStore.close()
 }
 
-// to do : something is breaking display w/in <main> for safari..
-// - every view is broken - suggests app level issue ?
-// - checked components in this file - nothing obvious
-// - checked css - nothing obvious
-// - to do : javascript?
-// - note, every view does import a store of some description (?) - may be js therein?
-// -  i might have to do a re-build from the ground up - adding parts as we go...
-
 </script>
 
 <template>

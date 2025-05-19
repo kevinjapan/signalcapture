@@ -65,7 +65,6 @@ export const usePackagesListStore = defineStore('packages_store', () => {
 
    // we need to update state herein on changes in useFetch composable
    watchEffect(() => {
-      // to do : return something on next line
       if(!payload.value) return
       if(is_valid_payload(payload.value as Payload<Package[]>)) {
          packages_list.value = payload.value?.data
