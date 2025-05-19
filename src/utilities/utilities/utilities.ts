@@ -19,6 +19,9 @@ export const truncate = (str: string,len = 20,trailing:boolean = true) => {
    return str
 }
 
+export const slugify = (title: string) => {
+   return title.replaceAll(' ','-')
+}
 
 export const is_empty_obj = (obj: object) => {
    return Object.keys(obj).length === 0
@@ -74,3 +77,13 @@ export const remove_stopwords = (search_term_tokens: string[]) => {
    }
    return tokens      
 } 
+
+
+// If using images from WordPress server,  filter size to improve performance (reduce size for list teasers)
+export const img_size_filter = (use_img_sizes: boolean, width: number) => {
+
+   if(typeof width !== 'number') return ''
+
+   return use_img_sizes ? "?w=" + width : ''
+
+}
