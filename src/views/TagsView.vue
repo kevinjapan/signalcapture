@@ -84,7 +84,7 @@ const tag_selected = (tag_id: number) => {
 }
 
 const sort_list_by = (order_by: string) => {
-   console.log('to do : sort list in store',order_by)
+   return order_by
 }
 </script>
 

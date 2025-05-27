@@ -44,11 +44,6 @@ const close_item_viewer = () => {
 <template>
     <section v-if="props.item" class="default_item_card">
       <a @click.stop="open_item_viewer(props.item.id)" >
-         <!-- 
-         to do :
-          we can force Wordpress to return smaller size image using ?w=xxxx query value
-          obviously this will break our local server - so need a flag if we are using WP server
-          -->
         <section class="img_container">
             <!-- if WordPress, get img sizes depending on eg "?w=300" url query string -->
             <img :src="root_folder + props.item.folder_path + props.item.file_name + img_size_filter(use_img_widths,sm_img_width)"/>
@@ -64,12 +59,14 @@ const close_item_viewer = () => {
             <!-- bottom text -->
             <div>
                <p>{{ props.item.item_Date }}</p>
-               <p>{{ props.item.folder_path }}</p>
+               <!-- 
+               folder is not valid from files.json since it may be WordPress src
+               Collections folder *is* valid in Collections.json as info only - not img resolution
+               <p>{{ props.item.folder_path }}</p> 
+               -->
             </div>
 
         </section>
-        <!-- to do : remove old version once completed transition -->
-        <!-- <a @click.stop="open_nav_link(`/browse/collections-item/${props.item.id}`)" >old version</a> -->
       </a>
     </section>
 

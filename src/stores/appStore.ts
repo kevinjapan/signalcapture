@@ -14,7 +14,7 @@ export const useAppStore = defineStore('app_store', () => {
    // Toggle web_api/static
    const is_static = false
    
-   // we use presence/absence as web_api/static toggle flag : to do : depr?
+   // we use presence/absence as web_api/static toggle flag
    const app_api = is_static ? ref('http://songs-api-laravel/api') : ref('')
 
    // we track view to highlight nav links on page refreshes

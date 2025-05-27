@@ -114,6 +114,9 @@ button {
 button:hover {
    background:hsl(240, 100%, 20%);
 }
+.clickable {
+   cursor:pointer;
+}
 /* 
 .btn_row {
    
@@ -231,6 +234,7 @@ button:hover {
    color:white;
    overflow:hiddedn;
    cursor:pointer;
+   max-height:fit-content;
 }
 .default_item_card  .text_container {
    position:absolute;
@@ -267,7 +271,7 @@ button:hover {
    opacity:.5;
    pointer-events:none;
    /* darken under top and bottom texts */
-   background: linear-gradient(black, transparent, black);
+   /* background: linear-gradient(black, transparent, black); */
 }
 .default_item_card:hover .text_container {
    display:flex;

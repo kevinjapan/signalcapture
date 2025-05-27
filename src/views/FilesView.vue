@@ -49,6 +49,13 @@ const folder_opened = (id: number) => {
    console.log('retain: you opened a folder',id)
 }
 
+const toggle_tree_view = () => {
+   const file_view_container = document.getElementById('file_view')
+   if(file_view_container) {
+      file_view_container.classList.toggle('close_files')
+   }
+}
+
 </script>
 
 <template>
@@ -58,12 +65,22 @@ const folder_opened = (id: number) => {
       <p>Oops! Error encountered: {{ FilesTreeStore?.error }}</p>
    </div>
 
-   <section v-else class="file_view">
+   <section v-else class="file_view" id="file_view">
 
-      <section class="">
+      <!-- to do : why this wrapper section? -->
+      <section style="max-width:fit-content;">
 
          <section class="tree_view">
-            <ul>
+
+            <section class="tree_view_navbar">
+               <div @click="toggle_tree_view()" class="clickable">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-layout-sidebar" viewBox="0 0 16 16">
+                     <path d="M0 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm5-1v12h9a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1zM4 2H2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h2z"/>
+                  </svg>
+               </div>
+            </section>
+
+            <ul class="tree_view_tree">
                <FilesTreeNode v-if="tree"
                   :level="parent_level"
                   :model="tree"
@@ -95,20 +112,54 @@ section.file_view {
    section.file_view {
       display:-ms-grid;
       display:grid;
-      -ms-grid-columns:1fr 3.5fr;
-      grid-template-columns:1fr 3.5fr;
+      -ms-grid-columns:1fr 4fr;
+      grid-template-columns:1fr 4fr;
+   }
+
+   /* 
+   toggle to show/hide side files tree_view 
+   */
+   /* section.file_view section.tree_view {
+      width:100%;
+   } */
+   section.file_view.close_files {
+      -ms-grid-columns:1fr 7fr;
+      grid-template-columns:1fr 7fr;
+      /* overflow:hidden; */
+   }
+   section.file_view.close_files  ul.tree_view_tree {
+      display:none;
    }
 }
 section.tree_view {
-   height:80vh;
+   position:fixed;
+   
+   /* to do : since fixed, can we emulate changes to record_view underneath in columns? change on media query..? */
+   display:grid;
+   grid-template-columns:1fr 7fr;
+
+   height:100vh;
    max-height:88vh;
-   border:solid 1px lightgrey;
+   border-right:solid 1px lightgrey;
+
    overflow-x:hidden;
    overflow-y:scroll;
    scrollbar-color: hsl(0, 0%, 60%) hsl(0, 0%, 94%); 
    scrollbar-width:thin;
    background:white;
    margin-top:1rem;
+
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+section.tree_view ::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+section.tree_view_navbar {
+   display:flex;
+   justify-content:flex-end;
+   padding:.25rem;
 }
 .rounded_container {
    border-radius:.5rem;

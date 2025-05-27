@@ -24,11 +24,6 @@ const open_nav_link = (route:string) => {
 
 <template>
     <section v-if="props.item" class="collection_item_teaser_card">
-         <!-- 
-         to do :
-          we can force Wordpress to return smaller size image using ?w=xxxx query value
-          obviously this will break our local server - so need a flag if we are using WP server
-          -->
         <section class="img_container">
             <a @click.stop="open_nav_link(`/browse/collections-item/${props.item.id}`)" >
                <!-- if WordPress, get img sizes depending on eg "?w=300" url query string -->

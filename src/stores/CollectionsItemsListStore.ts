@@ -71,7 +71,7 @@ export const useCollectionsItemsListStore = defineStore('collections_items_store
          build_paginated_list()
       }
       else {
-         console.log('Invalid payload received for ColllectionsItemsList')
+         console.log('Invalid payload received for ColllectionsItemsList',payload.value)
       }
    })
 

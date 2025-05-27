@@ -68,9 +68,6 @@ const close_bg_dimmer = () => {
                 display won't work as it doesn't show transition
 */
 .bg_dimmer {
-
-   /* to do : investigating this for ios safari - non-display issues may be related to dimmer? 
-     - checked this w/out dimmer - this was *not* the problem - re-instated */
    visibility:hidden;
    position:fixed;
    top:0;

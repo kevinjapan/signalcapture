@@ -13,8 +13,6 @@ import CollectionsItemRecord from '@/components/CollectionsItems/CollectionsItem
 // to do : make UI pretty - psychology - eg masonary tiling - different sizes for some of them -
 //         make it pleasurable to browse etc - not just boring and functional like a spreadsheet/list
 
-// to do : can we use free wordpress.com to save images and somehow retrieve from there? how to add text/meta data?
-
 const item = ref<CollectionsItem | null>(null)
 const is_loading = ref<boolean>(true)
 
