@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted, ref, watch } from 'vue'
 import { useAppStore } from '@/stores/AppStore'
 import RecordCardTags from '@/components/Tags/RecordCardTags/RecordCardTags.vue'
 import { img_size_filter, slugify } from '@/utilities/utilities/utilities'
@@ -16,7 +17,62 @@ const props = defineProps<{
 const AppStore = useAppStore()
 const { root_folder, use_img_widths, lg_img_width } = AppStore
 
+const src = ref<string>('')
+const is_loading = ref<boolean>(false)
 
+onMounted(() => {
+   load_img()
+})
+
+watch(() => props.item,async() => {
+   load_img()
+})
+
+// to do : if can't find image.. not loaded.. but still shows spinner currenlty...
+
+const load_img = async() => {
+   // to show 'loading' spinner we load img into local img object, then set the src in <img>
+   is_loading.value = true
+   const img = new Image()
+   img.src = root_folder + props.item?.folder_path + props.item?.file_name + img_size_filter(use_img_widths,lg_img_width)
+
+
+   try {
+      await new Promise((resolve,reject) => {
+         img.onload = resolve
+         img.onerror = reject
+      src.value = img.src
+      is_loading.value = false
+   })
+   }
+   catch(error) {
+      
+      // to do : replace 'notfound.jpg' with appropriate img !
+      src.value = '/imgs/notfound.jpg'
+      is_loading.value = false
+   }
+
+}
+
+// to do : tidy up
+
+const show_error = () => {
+   if(src.value === '') { 
+      console.log('EMPTY')
+      return
+   }
+   if(is_loading.value = true) return null
+   console.log('error here')
+   if(is_loading.value) {
+      console.log('still loading')
+   }
+   return null
+}
+
+const img_loaded = () => {
+   console.log('img loaded',src.value)
+}
+   
 </script>
 
 <template>
@@ -26,8 +82,10 @@ const { root_folder, use_img_widths, lg_img_width } = AppStore
         
 
         <section class="img_container">
+         <div v-if="is_loading" class="loading_spin mb_5"></div>
             <!-- if WordPress, get img sizes depending on eg "?w=300" url query string -->
-            <img :src="root_folder + item?.folder_path + item?.file_name + img_size_filter(use_img_widths,lg_img_width)"/>
+            <!-- <img :src="root_folder + item?.folder_path + item?.file_name + img_size_filter(use_img_widths,lg_img_width)"/> -->
+            <img v-else-if="src !== ''" :src="src" @error="show_error" @load="img_loaded" />
         </section>
 
 
